@@ -13,25 +13,24 @@ class Material:
         Elements can be specified in two ways in dictionary.
           - {Element('Cu'): 99.0, Element('Ni'): 1.0}
           - {'Cu': 99.0, 'Ni': 1.0}
+
+        Chemical Formula will be normalized to 1.0
         """
         self.density = density
         self.elements = {}
 
         stoich_sum = 0.0
         for element in elements:
+            fraction = elements[element]
+
             if not isinstance(element, Element):
                 element = Element(element)
 
-            fraction = elements[element]
             stoich_sum += fraction
             if fraction <= 0.0:
                 raise ValueError('cannot have {} of element {}'.format(
                     fraction, element.symbol))
             
-            if element in self.elements:
-                error_str = 'cannot have duplicate elements {} in stoichiometry'
-                raise ValueError(error_str.format(element.symbol))
-
             self.elements.update({element: float(fraction)})
 
         # Normalize the Chemical Composisiton to 1.0
@@ -50,12 +49,17 @@ class Material:
          - CO2
          - AuFe1.5
          - Al10.0Fe90.0
+
+        Chemical Formula will be normalized to 1.0
         """
-        single_element = '([A-Z][a-z]?)([0-9]*(?:\.[0-9]*))?'
+        single_element = '([A-Z][a-z]?)([0-9]*(?:\.[0-9]*)?)?'
         elements = {}
 
         if re.match('^(?:{})+$'.format(single_element), chemical_formula):
             matches = re.findall(single_element, chemical_formula)
+        else:
+            error_str = 'chemical formula string {} does not match regex'
+            raise ValueError(error_str.format(chemical_formula))
 
         # Check for errors in stoichiometry
         for symbol, fraction in matches:
@@ -89,6 +93,6 @@ class Material:
         for element in self.elements:
             if not element in material.elements:
                 return False
-            if self.elements[element] != materials.elements[element]:
+            if abs(self.elements[element] - material.elements[element]) > 1e-6:
                 return False
         return True

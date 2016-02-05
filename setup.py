@@ -5,7 +5,7 @@ setup(
     version='0.1.0',
     packages=find_packages(),
     package_data={
-        'srim': ['data/*.txt']
+        'srim': ['data/*.yaml']
     },
     description='Srim Automation of Tasks',
     long_description='Pythonic Wrapper to SRIM (LONG)',
