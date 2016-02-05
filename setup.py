@@ -15,6 +15,7 @@ setup(
     download_url='https://github.com/costrouc/srim-python/tarball/master',
     keywords=['srim', 'automation', 'plotting'],
     setup_requires=['pytest-runner'],
-    tests_require=['pytest'],
+    install_requires=['pyyaml'],
+    tests_require=['pytest', 'pytest-mock'],
     # scripts=['scripts/']       
 )
