@@ -32,7 +32,7 @@ setup(
     keywords=['srim', 'automation', 'plotting'],
     setup_requires=['pytest-runner'],
     install_requires=['pyyaml'],
-    tests_require=['pytest', 'pytest-mock'],
+    tests_require=['pytest>=2.7.0', 'pytest-mock'],
     cmdclass = {'test': PyTest},
     # scripts=['scripts/']       
 )
