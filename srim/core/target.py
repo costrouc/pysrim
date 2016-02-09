@@ -1,4 +1,4 @@
-class Target:
+class Target(object):
     """ Target that Ion impacts
 
     """

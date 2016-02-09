@@ -2,7 +2,7 @@ import re
 
 from .element import Element
 
-class Material:
+class Material(object):
     """ Material Representation """
     def __init__(self, elements, density):
         """Create Material from elements and density

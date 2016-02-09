@@ -1,6 +1,6 @@
 from .elementdb import ElementDB
 
-class Element:
+class Element(object):
     """ Element from periodic table
 
     """

@@ -6,7 +6,7 @@ class Layer(Material):
     """
     def __init__(self, elements, width):
         self.width = width
-        super(self, Material).__init__(elements)
+        super(Layer, self).__init__(elements)
 
     def __repr__(self):
         return "<Layer material:{} width:{}>".format(self.chemical_formula, self.width)

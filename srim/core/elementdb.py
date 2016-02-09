@@ -10,7 +10,7 @@ def create_elementdb():
     return yaml.load(open(dbpath, "r"))
 
 
-class ElementDB:
+class ElementDB(object):
     _db = create_elementdb()
 
     @classmethod
