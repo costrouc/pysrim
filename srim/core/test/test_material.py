@@ -1,7 +1,7 @@
 import pytest
 
-from srim.core import Element
-from srim.core import Material
+from srim.core.element import Element
+from srim.core.material import Material
 
 
 # Material Init

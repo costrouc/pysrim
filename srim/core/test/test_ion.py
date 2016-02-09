@@ -1,6 +1,6 @@
 import pytest
 
-from srim.core import Ion
+from srim.core.ion import Ion
 
 # Test Ion Init
 def test_init_symbol():
