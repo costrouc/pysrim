@@ -18,7 +18,7 @@ class Ion(Element):
             raise ValueError('energy {} cannot be 0.0 or less'.format(energy))
 
         self._energy = energy
-        super().__init__(identifier, mass)
+        super(self, Element).__init__(identifier, mass)
 
     def __repr__(self):
         return "<Ion element:{} mass:{} energy:{} keV>".format(
