@@ -13,4 +13,4 @@ install:
   - pip list
   - pip install .
 script:
-  - python setup.py test
+  - py.test

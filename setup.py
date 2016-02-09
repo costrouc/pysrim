@@ -18,7 +18,7 @@ class PyTest(TestCommand):
 
 setup(
     name='srim',
-    version='0.1.0',
+    version='0.1',
     packages=find_packages(),
     package_data={
         'srim': ['data/*.yaml']
