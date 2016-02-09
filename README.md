@@ -1,5 +1,7 @@
+![alt text](https://travis-ci.org/costrouc/srim-python.svg?branch=master)
+
 # srim-python
 
-automate SRIM
+A package for automating SRIM input and output analysis.
 
-Adding some nice plotting functionality.
+
