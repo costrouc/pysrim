@@ -11,22 +11,42 @@ import numpy as np
 double_regex = r'[-+]?\d+\.\d+(?:[eE][-+]?\d+)?'
 int_regex = '[+-]?\d+'
 
-class Ioniz(object):
+class SRIM_Output(object):
+    def read_name(self, output):
+        raise NotImplementedError()
+
+    def read_target_materail(self):
+        raise NotImplementedError()
+
+    def read_table(self, output):
+        match = re.search((
+            b'=+(.*)'
+            b'-+(?:\s+-+)+'
+        ), output, re.DOTALL)
+        # Read Data from table
+        
+        if match:
+            # Headers TODO: name the columns in table
+            header = None
+
+            # Data
+            data = np.genfromtxt(BytesIO(output[match.end():]), max_rows=100)
+            return data
+        return None
+
+
+class Ioniz(SRIM_Output):
     def __init__(self, directory, filename='IONIZ.txt'):
         with open(os.path.join(directory, filename), 'rb') as f:
             output = f.read()
-        
-            # Data Location
-            match = re.search(b'-----------  -----------  -----------', output)
-            if match:
-                # Using seek to hack it
-                data = np.loadtxt(BytesIO(output[match.end():]))
-            else:
-                raise Exception('IONIZ.txt in bad format')
+            data = self.read_table(output)
 
-        self._depth = data[:, 0].copy()
-        self._ions = data[:, 1].copy()
-        self._recoils = data[:, 2].copy()
+            if data is None:
+                raise Exception('{} in bad IONIZ format'.format(filename))
+
+        self._depth = data[:, 0]
+        self._ions = data[:, 1]
+        self._recoils = data[:, 2]
 
     @property
     def depth(self):
@@ -49,27 +69,51 @@ class Ioniz(object):
         return self._recoils
 
 
-class Vacancy(object):
+class Vacancy(SRIM_Output):
     """ Table of the final distribution of vacancies """
-    pass
-
-
-class NoVacancy(object):
-    """ Table of Replacement Collisions """
-    def __init__(self, directory, filename='IONIZ.txt'):
+    def __init__(self, directory, filename='VACANCY.txt'):
         with open(os.path.join(directory, filename), 'rb') as f:
             output = f.read()
-        
-            # Data Location
-            match = re.search(b'-----------  -----------', output)
-            if match:
-                # Using seek to hack it
-                data = np.loadtxt(BytesIO(output[match.end():]))
-            else:
-                raise Exception('NOVAC.txt in bad format')
+            data = self.read_table(output)
 
-        self._depth = data[:, 0].copy()
-        self._number = data[:, 1].copy()
+            if data is None:
+                raise Exception('{} in bad VACANCY format'.format(filename))
+
+        self._depth = data[:, 0]
+        self._ion_knock_ons = data[:, 1]
+        self._vacancies = data[:, 2:]
+
+    @property
+    def depth(self):
+        """ Depth [Ang] of bins in SRIM Calculation """
+        return self._depth
+
+    @property
+    def knock_ons(self):
+        """ Vacancies produced [Vacancies/(Angstrom-Ion) by ion] """
+        return self._ion_knock_ons
+
+    @property
+    def vacancies(self):
+        """ Vacancies produced of element in layer 
+
+        TODO: improve interface
+        """
+        return self._vacancies
+
+
+class NoVacancy(SRIM_Output):
+    """ Table of Replacement Collisions """
+    def __init__(self, directory, filename='NOVAC.txt'):
+        with open(os.path.join(directory, filename), 'rb') as f:
+            output = f.read()
+            data = self.read_table(output)
+
+            if data is None:
+                raise Exception('{} in bad NOVAC format'.format(filename))
+
+        self._depth = data[:, 0]
+        self._number = data[:, 1]
 
     @property
     def depth(self):
@@ -82,10 +126,44 @@ class NoVacancy(object):
         return self._number
 
 
+class EnergyToRecoils(SRIM_Output):
+    """ Energy transfered to atoms through binary collision """
+    def __init__(self, directory, filename='E2RECOIL.txt'):
+        with open(os.path.join(directory, filename), 'rb') as f:
+            output = f.read()
+            data = self.read_table(output)
+
+            if data is None:
+                raise Exception('{} in bad E2RECOIL format'.format(filename))
+
+        self._depth = data[:, 0]
+        self._ions = data[:, 1]
+        self._recoils = data[:, 2:]
+
+    @property
+    def depth(self):
+        """ Depth [Ang] of bins in SRIM Calculation """
+        return self._depth
+
+    @property
+    def ions(self):
+        """ Energy [eV/(Angstrom-Ion)] transfered to material through ion collisions """
+        return self._ions
+
+    @property
+    def absorbed(self):
+        """ Energy [eV/(Angstrom-Ion)] absorbed from collisions with Atom 
+
+        TODO: fix terminology
+        """
+        return self._recoils
+
+
 class Range(object):
     """ Table of the final distribution of the ions, and any recoiling target atoms
     """
     pass
+
 
 class Backscat(object):
     """ The kinetics of all backscattered ions (energy, location and trajectory)

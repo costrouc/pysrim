@@ -1,10 +1,11 @@
 import re
 
+from .utils import check_input, is_positive, is_zero_or_one
 from .element import Element
 
 class Material(object):
     """ Material Representation """
-    def __init__(self, elements, density):
+    def __init__(self, elements, density, phase=0, name=None):
         """Create Material from elements and density
 
         :param dict elements: Dictionary of elements with fraction
@@ -16,6 +17,7 @@ class Material(object):
 
         Chemical Formula will be normalized to 1.0
         """
+        self.phase = phase
         self.density = density
         self.elements = {}
 
@@ -38,7 +40,7 @@ class Material(object):
             self.elements[element] /= stoich_sum
 
     @classmethod        
-    def from_str(cls, chemical_formula, density):
+    def from_str(cls, chemical_formula, density, phase=0):
         """ Creation Material from chemical formula string and density
 
         :params str chemical_formula: Chemical formula string in specific format
@@ -73,7 +75,23 @@ class Material(object):
                 fraction = 1.0
 
             elements.update({element: float(fraction)})
-        return Material(elements, density)
+        return Material(elements, density, phase)
+
+    @property
+    def density(self):
+        return self._density
+
+    @density.setter
+    def density(self, value):
+        self._density = check_input(float, is_positive, value)
+
+    @property
+    def phase(self):
+        return self._phase
+
+    @phase.setter
+    def phase(self, value):
+        self._phase = check_input(int, is_zero_or_one, value)
             
     @property
     def chemical_formula(self):

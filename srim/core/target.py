@@ -5,7 +5,6 @@ class Target(object):
     def __init__(self, layers):
         self.layers = layers
 
-
     @property
     def width(self):
         """ total width of target """
