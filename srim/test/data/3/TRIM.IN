@@ -1,0 +1,33 @@
+==> SRIM-2012.01 This file controls TRIM Calculations.
+Ion: Z1 ,  M1,  Energy (keV), Angle,Number,Bragg Corr,AutoSave Number.
+     5      11         200       0   99999        0    10000
+Cascades(1=No;2=Full;3=Sputt;4-5=Ions;6-7=Neutrons), Random Number Seed, Reminders
+                      2                                   0       0
+Diskfiles (0=no,1=yes): Ranges, Backscatt, Transmit, Sputtered, Collisions(1=Ion;2=Ion+Recoils), Special EXYZ.txt file
+                          0       0           0       0               0                               0
+Target material : Number of Elements & Layers
+"B into W/SiO2/Silicon (Double Peak)     "       4               3
+PlotType (0-5); Plot Depths: Xmin, Xmax(Ang.) [=0 0 for Viewing Full Target]
+       1                         0            3000
+Target Elements:    Z   Mass(amu)
+Atom 1 = W =      74     183
+Atom 2 = Si =      14      28
+Atom 3 = O =       8      16
+Atom 4 = Si =      14      28
+Layer   Layer Name /               Width Density     W(74)  Si(14)    O(8)  Si(14)
+Numb.   Description                (Ang) (g/cm3)    Stoich  Stoich  Stoich  Stoich
+ 1      "Tungsten"           1000  19.3       1       0       0       0
+ 2      "SiO@2"           1000  2.33       0 .333333 .666667       0
+ 3      "Silicon"           1000  2.32       0       0       0       1
+0  Target layer phases (0=Solid, 1=Gas)
+0 0 0 
+Target Compound Corrections (Bragg)
+ 1   1   1  
+Individual target atom displacement energies (eV)
+      21      22      23      22
+Individual target atom lattice binding energies (eV)
+     2.1     2.2     2.3     2.2
+Individual target atom surface binding energies (eV)
+     3.1     3.2     3.3     3.2
+Stopping Power Version (1=2011, 0=2011)
+ 0 

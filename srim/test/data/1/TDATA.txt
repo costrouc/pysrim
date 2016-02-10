@@ -1,0 +1,36 @@
+====== Ni (5000) into Nickel Layer              =======
+        SRIM-2013.00
+=======================================
+      Data  of  TRIM  Calculation      
+=======================================
+Ion = Ni (28)   Ion Mass= 057.9400
+Energy  = 5000000.E-03 keV
+Ion Angle to Surface = 0 degrees
+============= TARGET MATERIAL ======================================
+  Layer # 1 - Nickel Layer
+  Layer # 1 - Bottom Depth=     3.E+04 A
+  Layer # 1- Density = 9.127E22 atoms/cm3 = 8.895 g/cm3
+  Layer # 1- Ni = 100  Atomic Percent = 100  Mass Percent
+====================================================================
+Target energies for target atom = Ni
+    Displacement = 25 eV, Binding = 3 eV, Surface = 4.46 eV
+====================================================================
+Depth Range of Tabulated Data=  000000.E+00  -  250000.E-01  Angstroms
+====================================================================
+Total Ions calculated =  001000
+Average Range         =   15953.E+00 Angstroms
+Average Straggling    =   30801.E-01 Angstroms
+Average Vacancy/Ion   =   44597.E+00
+====================================================================
+Total Backscattered Ions=  0 
+Total Transmitted Ions  =  0 
+====================================================================
+See files SRIM Outputs\*.txt for tables :
+   TDATA.txt    -- Details of the calculation.
+   RANGE.txt    -- Final distribution of Ions/Recoils
+   VACANCY.txt  -- Distribution of Vacancies
+   IONIZ.txt    -- Distribution of Ionization
+   PHONON.txt   -- Distribution of Phonons
+   E2RECOIL.txt -- Energy transferred to recoils
+   NOVAC.txt    -- Replacement collisions
+   LATERAL.txt  -- Lateral Spread of Ions

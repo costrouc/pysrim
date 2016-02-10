@@ -1,0 +1,53 @@
+====== B into W/SiO2/Silicon (Double Peak)      =======
+        SRIM-2013.00
+=======================================
+      Data  of  TRIM  Calculation      
+=======================================
+Ion =  B ( 5)   Ion Mass= 011.0000
+Energy  = 2000000.E-04 keV
+Ion Angle to Surface = 0 degrees
+============= TARGET MATERIAL ======================================
+  Layer # 1 - Tungsten
+  Layer # 1 - Bottom Depth=     1.E+03 A
+  Layer # 1- Density = 6.351E22 atoms/cm3 = 19.3 g/cm3
+  Layer # 1-  W = 100  Atomic Percent = 100  Mass Percent
+====================================================================
+  Layer # 2 - SiO@2
+  Layer # 2 - Bottom Depth=     2.E+03 A
+  Layer # 2- Density = 7.015E22 atoms/cm3 = 2.33 g/cm3
+  Layer # 2- Si = 33.3 Atomic Percent = 46.6 Mass Percent
+  Layer # 2-  O = 66.6 Atomic Percent = 53.3 Mass Percent
+====================================================================
+  Layer # 3 - Silicon
+  Layer # 3 - Bottom Depth=     3.E+03 A
+  Layer # 3- Density = 4.989E22 atoms/cm3 = 2.32 g/cm3
+  Layer # 3- Si = 100  Atomic Percent = 100  Mass Percent
+====================================================================
+Target energies for target atom =  W
+    Displacement = 21 eV, Binding = 2.1 eV, Surface = 3.1 eV
+Target energies for target atom = Si
+    Displacement = 22 eV, Binding = 2.2 eV, Surface = 3.2 eV
+Target energies for target atom =  O
+    Displacement = 23 eV, Binding = 2.3 eV, Surface = 3.3 eV
+Target energies for target atom = Si
+    Displacement = 22 eV, Binding = 2.2 eV, Surface = 3.2 eV
+====================================================================
+Depth Range of Tabulated Data=  000000.E+00  -  300000.E-02  Angstroms
+====================================================================
+Total Ions calculated =  000382
+Average Range         =   18181.E-01 Angstroms
+Average Straggling    =   75856.E-02 Angstroms
+Average Vacancy/Ion   =   47854.E-02
+====================================================================
+Total Backscattered Ions=  20 
+Total Transmitted Ions  =  275 
+====================================================================
+See files SRIM Outputs\*.txt for tables :
+   TDATA.txt    -- Details of the calculation.
+   RANGE.txt    -- Final distribution of Ions/Recoils
+   VACANCY.txt  -- Distribution of Vacancies
+   IONIZ.txt    -- Distribution of Ionization
+   PHONON.txt   -- Distribution of Phonons
+   E2RECOIL.txt -- Energy transferred to recoils
+   NOVAC.txt    -- Replacement collisions
+   LATERAL.txt  -- Lateral Spread of Ions

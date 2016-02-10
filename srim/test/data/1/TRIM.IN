@@ -1,0 +1,28 @@
+==> SRIM-2013.00 This file controls TRIM Calculations.
+Ion: Z1 ,  M1,  Energy (keV), Angle,Number,Bragg Corr,AutoSave Number.
+    28   57.94        5000       0    1000        1     1000
+Cascades(1=No;2=Full;3=Sputt;4-5=Ions;6-7=Neutrons), Random Number Seed, Reminders
+                      2                                   0       0
+Diskfiles (0=no,1=yes): Ranges, Backscatt, Transmit, Sputtered, Collisions(1=Ion;2=Ion+Recoils), Special EXYZ.txt file
+                          1       0           0       0               0                               0
+Target material : Number of Elements & Layers
+"Ni (5000) into Nickel Layer             "       1               1
+PlotType (0-5); Plot Depths: Xmin, Xmax(Ang.) [=0 0 for Viewing Full Target]
+       0                         0           25000
+Target Elements:    Z   Mass(amu)
+Atom 1 = Ni =       28   58.69
+Layer   Layer Name /               Width Density    Ni(28)
+Numb.   Description                (Ang) (g/cm3)    Stoich
+ 1      "Nickel Layer"           25000  8.8955       1
+0  Target layer phases (0=Solid, 1=Gas)
+0 
+Target Compound Corrections (Bragg)
+ 1  
+Individual target atom displacement energies (eV)
+      25
+Individual target atom lattice binding energies (eV)
+       3
+Individual target atom surface binding energies (eV)
+    4.46
+Stopping Power Version (1=2011, 0=2011)
+ 0 
