@@ -1,3 +1,4 @@
 pyyaml
 pytest>=2.7.0
 pytest-mock
+numpy

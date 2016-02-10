@@ -1,0 +1,39 @@
+====== Au (3000) into Layer 1                   =======
+        SRIM-2013.00
+=======================================
+      Data  of  TRIM  Calculation      
+=======================================
+Ion = Au (79)   Ion Mass= 196.9670
+Energy  = 3000000.E-03 keV
+Ion Angle to Surface = 0 degrees
+============= TARGET MATERIAL ======================================
+  Layer # 1 - Layer 1
+  Layer # 1 - Bottom Depth=     8.E+03 A
+  Layer # 1- Density = 9.641E22 atoms/cm3 = 3.21 g/cm3
+  Layer # 1- Si = 50   Atomic Percent = 70.0 Mass Percent
+  Layer # 1-  C = 50   Atomic Percent = 29.9 Mass Percent
+====================================================================
+Target energies for target atom = Si
+    Displacement = 15 eV, Binding = 2 eV, Surface = 4.7 eV
+Target energies for target atom =  C
+    Displacement = 28 eV, Binding = 3 eV, Surface = 7.41 eV
+====================================================================
+Depth Range of Tabulated Data=  000000.E+00  -  800000.E-02  Angstroms
+====================================================================
+Total Ions calculated =  001000
+Average Range         =   46183.E-01 Angstroms
+Average Straggling    =   71642.E-02 Angstroms
+Average Vacancy/Ion   =   19693.E+00
+====================================================================
+Total Backscattered Ions=  0 
+Total Transmitted Ions  =  0 
+====================================================================
+See files SRIM Outputs\*.txt for tables :
+   TDATA.txt    -- Details of the calculation.
+   RANGE.txt    -- Final distribution of Ions/Recoils
+   VACANCY.txt  -- Distribution of Vacancies
+   IONIZ.txt    -- Distribution of Ionization
+   PHONON.txt   -- Distribution of Phonons
+   E2RECOIL.txt -- Energy transferred to recoils
+   NOVAC.txt    -- Replacement collisions
+   LATERAL.txt  -- Lateral Spread of Ions
