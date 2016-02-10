@@ -1,6 +1,8 @@
 """ Read output files of SRIM simulation
 
 """
+from __future__ import unicode_literals
+
 import os
 import re
 from io import StringIO
