@@ -1,11 +1,9 @@
 """ Read output files of SRIM simulation
 
 """
-from __future__ import unicode_literals
-
 import os
 import re
-from io import StringIO
+from io import StringIO, open   # open for python2/3 compatibility
 
 import numpy as np
 
@@ -17,7 +15,10 @@ class Ioniz(object):
             # Data Location
             match = re.search('-----------  -----------  -----------', output)
             if match:
+                # Using seek to hack it
                 data = np.loadtxt(StringIO(output[match.end():]))
+            else:
+                raise Exception('IONIZ.txt in bad format')
 
 class Range(object):
     """ Table of the final distribution of the ions, and any recoiling target atoms
