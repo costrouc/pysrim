@@ -17,7 +17,7 @@ class AutoTRIM(object):
 
     def write(self):
         """ write AUTOTRIM in current directory """
-        with open('AUTOTRIM', 'w') as f:
+        with open('TRIMAUTO', 'w') as f:
             f.write('{}'.format(self._mode))
 
 
@@ -37,22 +37,22 @@ class TRIMInput(object):
                 'Ion: Z, Mass [amu], Energy [keV], Angle [degrees], Number Ions, Bragg Corr, AutoSave Number\r\n'
             ))
             # Line 3: Ion information
-            f.write('{} {} {} {} {} {} {}\r\n').format(
+            f.write('{} {} {} {} {} {} {}\r\n'.format(
                 self._srim.ion.atomic_number,
                 self._srim.ion.mass,
                 self._srim.ion.energy / 1000.0, # eV -> keV
-                self._srim.angle_ions,
+                self._srim.settings.angle_ions,
                 self._srim.number_ions,
-                self._srim.bragg_correction,
+                self._srim.settings.bragg_correction,
                 self._srim.settings.autosave
-            )
+            ))
             # Line 4: Comment
             f.write('Cascades(1=Kitchn-Peese, 2=Full-Cascade, 3=Sputtering, 4-5=Ions;6-7=Neutrons), Random Number Seed, Reminders\r\n')
             # Line 5: Type of calculation and random seed
             f.write('{} {} {}\r\n'.format(
                 self._srim.calculation,
-                self._srim.random_seed,
-                self._strim.settings.reminders
+                self._srim.settings.random_seed,
+                self._srim.settings.reminders
             ))
             # Line 6: Comment
             f.write('Diskfiles (0=no,1=yes): RANGES.txt, BACKSCATT.txt, TRANSMIT.txt, Sputtered, COLLISIONS.txt(0=no, 1=Ion, 2=Ion+Recoils), Special EXYZ.txt file\r\n')
@@ -82,12 +82,12 @@ class TRIMInput(object):
                 self._srim.settings.plot_xmax
             ))
             # Line 12: Comment
-            f.write('Target Elements:    Z   Mass [amu]')
+            f.write('Target Elements:    Z   Mass [amu]\r\n')
             # Line 13 to (12 + num_atoms):
             index = 1
-            for layer in self._srim.layers:
+            for layer in self._srim.target.layers:
                 for element in layer.elements:
-                    f.write('Atom {} = {} = {} {}\r\n'.format(
+                    f.write('Atom {} = {} =  {} {}\r\n'.format(
                         index, element.symbol, 
                         element.atomic_number,
                         element.mass
@@ -104,7 +104,7 @@ class TRIMInput(object):
             # Layer descriptions
             element_index = 0
             for layer_index, layer in enumerate(self._srim.target.layers):
-                layer_str = '{} "{}"'.format(
+                layer_str = '{} "{}" {} {}'.format(
                     layer_index, 
                     layer.name,
                     layer.width,
@@ -112,23 +112,40 @@ class TRIMInput(object):
                 )
                 layer_str = layer_str + ' 0.0' * element_index
                 for element in layer.elements:
-                    layer_str = layer_str + ' {}'.format(layer.elements[element])
+                    layer_str = layer_str + ' {}'.format(layer.elements[element]['stoich'])
                 layer_str = layer_str + ' 0.0' * (srim_num_elements - element_index - len(layer.elements))
                 f.write(layer_str + '\r\n')
                 element_index += len(layer.elements)
             # Layer Phases: Comment
             f.write('0  Target layer phases (0=Solid, 1=Gas)\r\n')
             # Layer Phases: (solid or gas)
-            f.write(' '.join(layer.phase for layer in self._srim.target.layers) + '\r\n')
+            f.write(' '.join(str(layer.phase) for layer in self._srim.target.layers) + '\r\n')
 
-            # Still more to write last 10 lines
-            # displacment energies, lattice_binding energies, surface binding energies
-
+            # Layer Bragg Correction
+            f.write('Target Compound Corrections (Bragg)\r\n')
+            f.write(' 1' * len(self._srim.target.layers) + '\r\n')
+            # Per Atom Displacement Energies
+            f.write('Individual target atom displacement energies (eV)\r\n')
+            line = ''
+            for layer in self._srim.target.layers:
+                for element in layer.elements:
+                    line = line + ' {}'.format(layer.elements[element]['E_d'])
+            f.write(line + '\r\n')
+            #Per Atom Lattice Binding Energy
+            f.write('Individual target atom lattice binding energies (eV)\r\n')
+            line = ''
+            for layer in self._srim.target.layers:
+                for element in layer.elements:
+                    line = line + ' {}'.format(layer.elements[element]['lattice'])
+            f.write(line + '\r\n')
+            #Per Atom Lattice Binding Energy
+            f.write('Individual target atom surface binding energies (eV)\r\n')
+            line = ''
+            for layer in self._srim.target.layers:
+                for element in layer.elements:
+                    line = line + ' {}'.format(layer.elements[element]['surface'])
+            f.write(line + '\r\n')
             
             # Stopping power version
             f.write('Stopping Power Version (1=2011, 0=2011)\r\n')
             f.write('{}\r\n'.format(self._srim.settings.version))
-
-            
-            
-

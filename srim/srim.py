@@ -6,7 +6,7 @@ import subprocess
 
 from .core.utils import (
     check_input,
-    is_zero, is_zero_or_one, is_zero_to_two, is_zero_to_five, is_zero_to_seven,
+    is_zero, is_zero_or_one, is_zero_to_two, is_zero_to_five, is_one_to_seven,
     is_srim_degrees,
     is_positive,
     is_quoteless
@@ -28,9 +28,9 @@ class Settings(object):
             'description': check_input(str, is_quoteless, args.get('description', 'srim-python run')),
             'reminders': check_input(int, is_zero_or_one, args.get('reminders', 0)),
             'autosave': check_input(int, is_zero_or_one, args.get('autosave', 0)),
-            'plot_mode': check_input(int, is_zero_to_five, args.get('reminders', 0)),
+            'plot_mode': check_input(int, is_zero_to_five, args.get('plot_mode', 5)),
             'plot_xmin': check_input(float, is_positive, args.get('plot_xmin', 0.0)),
-            'plot_ymin': check_input(float, is_positive, args.get('plot_xmax', 0.0)), 
+            'plot_xmax': check_input(float, is_positive, args.get('plot_xmax', 0.0)), 
             'ranges': check_input(int, is_zero_or_one, args.get('ranges', 0)),
             'backscattered': check_input(int, is_zero_or_one, args.get('backscattered', 0)),
             'transmit': check_input(int, is_zero_or_one, args.get('transmit', 0)),
@@ -43,10 +43,10 @@ class Settings(object):
             'version': check_input(int, is_zero_or_one, args.get('version', 0)),
         }
 
-        if self.settings.plot_xmin >= self.settings.plot_ymin:
+        if self.plot_xmin > self.plot_xmax:
             raise ValueError('xmin must be <= xmax')
 
-    def __getattribute__(self, attr):
+    def __getattr__(self, attr):
         return self._settings[attr]
 
 
@@ -54,13 +54,13 @@ class SRIM(object):
     """ Automate SRIM Calculations
 
     """
-    def _init__(self, target, ion, calculation=0, number_ions=1000, **args):
+    def __init__(self, target, ion, calculation=1, number_ions=1000, **args):
         """ Initialize srim object with settings 
 
         TODO: fill out doc strings
         """
         self.settings = Settings(**args)
-        self.calculation = check_input(int, is_zero_to_seven, calculation)
+        self.calculation = check_input(int, is_one_to_seven, calculation)
         self.number_ions = check_input(int, is_positive, number_ions)
         self.target = target
         self.ion = ion
