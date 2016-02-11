@@ -12,13 +12,20 @@ double_regex = r'[-+]?\d+\.\d+(?:[eE][-+]?\d+)?'
 int_regex = '[+-]?\d+'
 
 class SRIM_Output(object):
-    def read_name(self, output):
+    def _read_name(self, output):
         raise NotImplementedError()
 
-    def read_target_materail(self):
+    def _read_num_ions(self, output):
+        match = re.search(b'Total Ions calculated\s+=(\d+.\d+)', output)
+        if match:
+            # Cast string -> float -> round down to nearest int
+            return int(float(match.group(1)))
+        raise ValueError("unable to extract total ions from file")
+
+    def _read_target_material(self):
         raise NotImplementedError()
 
-    def read_table(self, output):
+    def _read_table(self, output):
         match = re.search((
             b'=+(.*)'
             b'-+(?:\s+-+)+'
@@ -32,21 +39,25 @@ class SRIM_Output(object):
             # Data
             data = np.genfromtxt(BytesIO(output[match.end():]), max_rows=100)
             return data
-        return None
+        raise ValueError("unable to extract table from file")
 
 
 class Ioniz(SRIM_Output):
     def __init__(self, directory, filename='IONIZ.txt'):
         with open(os.path.join(directory, filename), 'rb') as f:
             output = f.read()
-            data = self.read_table(output)
+            num_ions = self._read_num_ions(output)
+            data = self._read_table(output)
 
-            if data is None:
-                raise Exception('{} in bad IONIZ format'.format(filename))
-
+        self._num_ions = num_ions
         self._depth = data[:, 0]
         self._ions = data[:, 1]
         self._recoils = data[:, 2]
+
+    @property
+    def num_ions(self):
+        """ Number of Ions in SRIM simulation """
+        return self._num_ions
 
     @property
     def depth(self):
@@ -74,14 +85,18 @@ class Vacancy(SRIM_Output):
     def __init__(self, directory, filename='VACANCY.txt'):
         with open(os.path.join(directory, filename), 'rb') as f:
             output = f.read()
-            data = self.read_table(output)
+            num_ions = self._read_num_ions(output)
+            data = self._read_table(output)
 
-            if data is None:
-                raise Exception('{} in bad VACANCY format'.format(filename))
-
+        self._num_ions = num_ions
         self._depth = data[:, 0]
         self._ion_knock_ons = data[:, 1]
         self._vacancies = data[:, 2:]
+
+    @property
+    def num_ions(self):
+        """ Number of Ions in SRIM simulation """
+        return self._num_ions
 
     @property
     def depth(self):
@@ -107,13 +122,17 @@ class NoVacancy(SRIM_Output):
     def __init__(self, directory, filename='NOVAC.txt'):
         with open(os.path.join(directory, filename), 'rb') as f:
             output = f.read()
-            data = self.read_table(output)
+            num_ions = self._read_num_ions(output)
+            data = self._read_table(output)
 
-            if data is None:
-                raise Exception('{} in bad NOVAC format'.format(filename))
-
+        self._num_ions = num_ions
         self._depth = data[:, 0]
         self._number = data[:, 1]
+
+    @property
+    def num_ions(self):
+        """ Number of Ions in SRIM simulation """
+        return self._num_ions
 
     @property
     def depth(self):
@@ -131,14 +150,18 @@ class EnergyToRecoils(SRIM_Output):
     def __init__(self, directory, filename='E2RECOIL.txt'):
         with open(os.path.join(directory, filename), 'rb') as f:
             output = f.read()
-            data = self.read_table(output)
+            num_ions = self._read_num_ions(output)
+            data = self._read_table(output)
 
-            if data is None:
-                raise Exception('{} in bad E2RECOIL format'.format(filename))
-
+        self._num_ions = num_ions
         self._depth = data[:, 0]
         self._ions = data[:, 1]
         self._recoils = data[:, 2:]
+
+    @property
+    def num_ions(self):
+        """ Number of Ions in SRIM simulation """
+        return self._num_ions
 
     @property
     def depth(self):
