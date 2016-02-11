@@ -120,10 +120,30 @@ class TRIMInput(object):
             f.write('0  Target layer phases (0=Solid, 1=Gas)\r\n')
             # Layer Phases: (solid or gas)
             f.write(' '.join(layer.phase for layer in self._srim.target.layers) + '\r\n')
-
-            # Still more to write last 10 lines
-            # displacment energies, lattice_binding energies, surface binding energies
-
+            # Layer Bragg Correction
+            f.write('Target Compound Corrections (Bragg)\r\n')
+            f.write(' 1' * len(self._srim.target.layers) + '\r\n') 
+            # Per Atom Displacement Energies
+            f.write('Individual target atom displacement energies (eV)\r\n')
+            line = ''
+            for layer in self._srim.target.layers:
+                for element in layer.elements:
+                    line = line + ' {}'.format(layer.elements[element]['E_d'])
+            f.write(line + '\r\n')
+            #Per Atom Lattice Binding Energy
+            f.write('Individual target atom lattice binding energies (eV)\r\n')
+            line = ''
+            for layer in self._srim.target.layers:
+                for element in layer.elements:
+                    line = line + ' {}'.format(layer.elements[element]['lattice'])
+            f.write(line + '\r\n')
+            #Per Atom Lattice Binding Energy
+            f.write('Individual target atom surface binding energies (eV)\r\n')
+            line = ''
+            for layer in self._srim.target.layers:
+                for element in layer.elements:
+                    line = line + ' {}'.format(layer.elements[element]['surface'])
+            f.write(line + '\r\n')
             
             # Stopping power version
             f.write('Stopping Power Version (1=2011, 0=2011)\r\n')

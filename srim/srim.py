@@ -38,7 +38,7 @@ class Settings(object):
             'collisions': check_input(int, is_zero_to_two, args.get('collisions', 0)),
             'exyz': check_input(int, is_zero_or_one, args.get('exyz', 0)),
             'angle_ions': check_input(float, is_srim_degrees, args.get('angle_ions', 0.0)),
-            'bragg_correction': float(args.get('bragg_correction', 0.0)), # TODO: Not sure what correct values are
+            'bragg_correction': float(args.get('bragg_correction', 1.0)), # TODO: Not sure what correct values are
             'random_seed': check_input(int, is_positive, args.get('random_seed', 0)),
             'version': check_input(int, is_zero_or_one, args.get('version', 0)),
         }
