@@ -19,7 +19,7 @@ class ElementDB(object):
 
         :param str or int identifier: Unique symbol, name, or atomic number of element
         """
-        if isinstance(identifier, str):
+        if isinstance(identifier, (bytes, str)):
             if re.match("^[A-Z][a-z]?$", identifier):   # Symbol
                 return cls._lookup_symbol(identifier)
             elif re.match("^[A-Z][a-z]*$", identifier): # Name
