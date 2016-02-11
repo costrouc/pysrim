@@ -8,12 +8,26 @@ from io import BytesIO
 
 import numpy as np
 
-double_regex = r'[-+]?\d+\.\d+(?:[eE][-+]?\d+)?'
+from .core.ion import Ion
+
+# Valid double_regex [4, 4.0, 4.0e100
+double_regex = r'[-+]?\d+(?:\.\d+)?(?:[eE][-+]?\d+)?'
+symbol_regex = r'[A-Z][a-z]?'
 int_regex = '[+-]?\d+'
 
 class SRIM_Output(object):
     def _read_name(self, output):
         raise NotImplementedError()
+
+    def _read_ion(self, output):
+        ion_regex = 'Ion\s+=\s+({})\s+Energy\s+=\s+({})\s+keV'.format(
+            symbol_regex, double_regex)
+        match = re.search(ion_regex.encode('utf-8'), output)
+        if match:
+            symbol = match.group(1).decode('utf-8')
+            energy = float(match.group(2)) #keV
+            return Ion(symbol, 1000.0 * energy)
+        raise ValueError("unable to extract ion from file")
 
     def _read_num_ions(self, output):
         match = re.search(b'Total Ions calculated\s+=(\d+.\d+)', output)
@@ -46,13 +60,23 @@ class Ioniz(SRIM_Output):
     def __init__(self, directory, filename='IONIZ.txt'):
         with open(os.path.join(directory, filename), 'rb') as f:
             output = f.read()
+            ion = self._read_ion(output)
             num_ions = self._read_num_ions(output)
             data = self._read_table(output)
 
+        self._ion = ion
         self._num_ions = num_ions
         self._depth = data[:, 0]
         self._ions = data[:, 1]
         self._recoils = data[:, 2]
+
+    @property
+    def ion(self):
+        """ Ion used in SRIM calculation 
+
+        **mass** could be wrong
+        """
+        return self._ion
 
     @property
     def num_ions(self):
@@ -85,13 +109,23 @@ class Vacancy(SRIM_Output):
     def __init__(self, directory, filename='VACANCY.txt'):
         with open(os.path.join(directory, filename), 'rb') as f:
             output = f.read()
+            ion = self._read_ion(output)
             num_ions = self._read_num_ions(output)
             data = self._read_table(output)
 
+        self._ion = ion
         self._num_ions = num_ions
         self._depth = data[:, 0]
         self._ion_knock_ons = data[:, 1]
         self._vacancies = data[:, 2:]
+
+    @property
+    def ion(self):
+        """ Ion used in SRIM calculation 
+
+        **mass** could be wrong
+        """
+        return self._ion
 
     @property
     def num_ions(self):
@@ -110,7 +144,7 @@ class Vacancy(SRIM_Output):
 
     @property
     def vacancies(self):
-        """ Vacancies produced of element in layer 
+        """ Vacancies [Vacancies/(Angstrom-Ion)] produced of element in layer 
 
         TODO: improve interface
         """
@@ -122,12 +156,22 @@ class NoVacancy(SRIM_Output):
     def __init__(self, directory, filename='NOVAC.txt'):
         with open(os.path.join(directory, filename), 'rb') as f:
             output = f.read()
+            ion = self._read_ion(output)
             num_ions = self._read_num_ions(output)
             data = self._read_table(output)
 
+        self._ion = ion
         self._num_ions = num_ions
         self._depth = data[:, 0]
         self._number = data[:, 1]
+
+    @property
+    def ion(self):
+        """ Ion used in SRIM calculation 
+
+        **mass** could be wrong
+        """
+        return self._ion
 
     @property
     def num_ions(self):
@@ -150,13 +194,23 @@ class EnergyToRecoils(SRIM_Output):
     def __init__(self, directory, filename='E2RECOIL.txt'):
         with open(os.path.join(directory, filename), 'rb') as f:
             output = f.read()
+            ion = self._read_ion(output)
             num_ions = self._read_num_ions(output)
             data = self._read_table(output)
 
+        self._ion = ion
         self._num_ions = num_ions
         self._depth = data[:, 0]
         self._ions = data[:, 1]
         self._recoils = data[:, 2:]
+
+    @property
+    def ion(self):
+        """ Ion used in SRIM calculation 
+
+        **mass** could be wrong
+        """
+        return self._ion
 
     @property
     def num_ions(self):
