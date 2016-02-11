@@ -32,6 +32,7 @@ def test_init_atomic_number():
     assert element.atomic_number == 79
     assert abs(element.mass - 196.966995239) < 1e-8
 
+
 # Element equality
 def test_equality_eqaul():
     element1 = Element('Au', 2.0)
