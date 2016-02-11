@@ -124,6 +124,7 @@ class TRIMInput(object):
             # Layer Bragg Correction
             f.write('Target Compound Corrections (Bragg)\r\n')
             f.write(' 1' * len(self._srim.target.layers) + '\r\n')
+
             # Per Atom Displacement Energies
             f.write('Individual target atom displacement energies (eV)\r\n')
             line = ''
