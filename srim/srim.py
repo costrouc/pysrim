@@ -15,7 +15,7 @@ from .core.utils import (
 from .input import AutoTRIM, TRIMInput
  
 
-SRIM_DIRECTORY = os.path.join('/tmp', 'srim')
+SRIM_DIRECTORY = os.path.join(os.sep, 'tmp', 'srim')
 
 
 class Settings(object):
