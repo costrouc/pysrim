@@ -3,6 +3,7 @@
 """
 import os
 import subprocess
+import shutil
 
 from .core.utils import (
     check_input,
@@ -12,6 +13,7 @@ from .core.utils import (
     is_quoteless
 )
 
+from .output import Results
 from .input import AutoTRIM, TRIMInput
  
 
@@ -68,21 +70,44 @@ class SRIM(object):
 
     def _write_input_files(self):
         """ Write necissary TRIM input files for calculation """
-
         AutoTRIM().write()
         TRIMInput(self).write()
 
-    def _copy_output_files(self):
-        pass
+    @staticmethod
+    def copy_output_files(src_directory, dest_directory, check_srim_output=True):
+        known_files = {
+            'TRIM.IN', 'PHONON.txt', 'E2RECOIL.txt', 'IONIZ.txt', 
+            'LATERAL.txt', 'NOVAC.txt', 'RANGE.txt', 'VACANCY.txt',
+            'COLLISION.txt', 'BACKSCAT.txt', 'SPUTTER.txt',
+            'RANGE_3D.txt', 'TRANSMIT.txt', 'TRIMOUT.txt'
+        }
 
-    def run(self, run_directory=SRIM_DIRECTORY):
+        if not os.path.isdir(src_directory):
+            raise ValueError('src_directory must be path')
+
+        if not os.path.isdir(dest_directory):
+            raise ValueError('dest_directory must be path')
+
+        for known_file in known_files:
+            if os.path.isfile(os.path.join(
+                    src_directory, known_file)):
+                shutil.copy(os.path.join(
+                    src_directory, known_file), dest_directory)
+            elif os.path.isfile(os.path.join(
+                    src_directory, 'SRIM Outputs', known_file)) and check_srim_output:
+                shutil.copy(os.path.join(
+                    src_directory, 'SRIM Outputs', known_file), dest_directory)
+
+    def run(self, srim_directory=SRIM_DIRECTORY):
         current_directory = os.getcwd()
-
-        os.chdir(run_directory)
-
+        os.chdir(srim_directory)
         self._write_input_files()
-        subprocess.check_call(['./TRIM.exe'])
-        self._copy_output_files()
-
+        # Make sure compatible with Windows, OSX, and Linux
+        subprocess.check_call([str(os.path.join('.', 'TRIM.exe'))])
         os.chdir(current_directory)
+        
+        return Results(srim_directory)
+
+
+        
 
