@@ -11,7 +11,7 @@ import numpy as np
 from .core.ion import Ion
 
 # Valid double_regex [4, 4.0, 4.0e100
-double_regex = r'[-+]?\d+(?:\.\d+)?(?:[eE][-+]?\d+)?'
+double_regex = r'[-+]?\d+\.?\d*(?:[eE][-+]?\d+)?'
 symbol_regex = r'[A-Z][a-z]?'
 int_regex = '[+-]?\d+'
 
@@ -29,15 +29,41 @@ class SRIM_Output(object):
             return Ion(symbol, 1000.0 * energy)
         raise ValueError("unable to extract ion from file")
 
+    def _read_target(self, output):
+        match_target = re.search(b'(?<=====\r\n)Layer\s+\d+\s+:.*?(?=====)', output, re.DOTALL)
+        if match_target:
+            print(match_target.group(0))
+            layer_regex = (
+                'Layer\s+(?P<i>\d+)\s+:\s+(.+)\r\n'
+                'Layer Width\s+=\s+({0})\s+A\s+;\r\n'
+                '\s+Layer #\s+(?P=i)- Density = ({0}) atoms/cm3 = ({0}) g/cm3\r\n'
+                '((?:\s+Layer #\s+(?P=i)-\s+{1}\s+=\s+{0}\s+Atomic Percent = {0}\s+Mass Percent\r\n)+)'
+            ).format(double_regex, symbol_regex)
+            layers = re.findall(layer_regex.encode('utf-8'), match_target.group(0))
+            if layers:
+                element_regex = (
+                    '\s+Layer #\s+(\d+)-\s+({1})\s+=\s+({0})\s+Atomic Percent = ({0})\s+Mass Percent\r\n'
+                ).format(double_regex, symbol_regex)
+                element_regex = element_regex.encode()
+
+                layers_elements = []
+                for layer in layers:
+                    # We know that elements will match
+                    layers_elements.append(re.findall(element_regex, layer[5]))
+
+                raise NotImpementedError()
+                
+                import pytest
+                pytest.set_trace()
+                     
+        raise ValueError("unable to extract total target from file")
+
     def _read_num_ions(self, output):
         match = re.search(b'Total Ions calculated\s+=(\d+.\d+)', output)
         if match:
             # Cast string -> float -> round down to nearest int
             return int(float(match.group(1)))
         raise ValueError("unable to extract total ions from file")
-
-    def _read_target_material(self):
-        raise NotImplementedError()
 
     def _read_table(self, output):
         match = re.search((
@@ -61,6 +87,7 @@ class Ioniz(SRIM_Output):
         with open(os.path.join(directory, filename), 'rb') as f:
             output = f.read()
             ion = self._read_ion(output)
+            target = self._read_target(output)
             num_ions = self._read_num_ions(output)
             data = self._read_table(output)
 

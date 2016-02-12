@@ -17,7 +17,7 @@ def test_ioniz_init(input_file):
     assert ion.recoils.shape == (100,)
 
 @pytest.mark.parametrize("input_file", [("1"), ("2"), ("3")])
-def test_ioniz_init(input_file):
+def test_phonons_init(input_file):
     phonons = Phonons(os.path.join(TESTDATA_DIRECTORY, input_file))
     assert phonons.depth.shape == (100,)
     assert phonons.ions.shape == (100,)
