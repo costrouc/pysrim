@@ -87,7 +87,6 @@ class Ioniz(SRIM_Output):
         with open(os.path.join(directory, filename), 'rb') as f:
             output = f.read()
             ion = self._read_ion(output)
-            target = self._read_target(output)
             num_ions = self._read_num_ions(output)
             data = self._read_table(output)
 
