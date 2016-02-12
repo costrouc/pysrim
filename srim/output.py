@@ -236,6 +236,56 @@ class EnergyToRecoils(SRIM_Output):
         return self._recoils
 
 
+class Phonons(SRIM_Output):
+    """ Distribution of Phonons """
+    def __init__(self, directory, filename='PHONON.txt'):
+        with open(os.path.join(directory, filename), 'rb') as f:
+            output = f.read()
+            ion = self._read_ion(output)
+            num_ions = self._read_num_ions(output)
+            data = self._read_table(output)
+
+        self._ion = ion
+        self._num_ions = num_ions
+        self._depth = data[:, 0]
+        self._ions = data[:, 1]
+        self._recoils = data[:, 2]
+
+    @property
+    def ion(self):
+        """ Ion used in SRIM calculation 
+
+        **mass** could be wrong
+        """
+        return self._ion
+
+    @property
+    def num_ions(self):
+        """ Number of Ions in SRIM simulation """
+        return self._num_ions
+
+    @property
+    def depth(self):
+        """ Depth [Ang] of bins in SRIM Calculation """
+        return self._depth
+
+    @property
+    def ions(self):
+        """ Number of phonons [Phonons/(Angstrom Ion)] created from ions collisions
+
+        """
+        return self._ions
+
+    @property
+    def recoils(self):
+        """Number of phonons [Phonons/(Angstrom Ion)] created from recoils
+        resulting from ion collisions
+
+        """
+        return self._recoils
+
+
+
 class Range(object):
     """ Table of the final distribution of the ions, and any recoiling target atoms
     """
