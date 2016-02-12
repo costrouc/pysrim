@@ -15,18 +15,9 @@ double_regex = r'[-+]?\d+\.?\d*(?:[eE][-+]?\d+)?'
 symbol_regex = r'[A-Z][a-z]?'
 int_regex = '[+-]?\d+'
 
-def get_outputs(directory):
-    """ Retrives all the calculation files in a given folder
 
-    """
-    return {
-        'Ioniz': Ioniz(directory),
-        'Vacancies': Vacancy(directory),
-        'NoVacancy': NoVacancy(directory),
-        'EnergyToRecoils': EnergyToRecoils(directory),
-        'Phonons': Phonons(directory),
-        'Range': Range(directory)
-    }
+class SRIMOutputParseError(Exception):
+    pass
 
 
 class SRIM_Output(object):
@@ -41,7 +32,7 @@ class SRIM_Output(object):
             symbol = match.group(1).decode('utf-8')
             energy = float(match.group(2)) #keV
             return Ion(symbol, 1000.0 * energy)
-        raise ValueError("unable to extract ion from file")
+        raise SRIMOutputParseError("unable to extract ion from file")
 
     def _read_target(self, output):
         match_target = re.search(b'(?<=====\r\n)Layer\s+\d+\s+:.*?(?=====)', output, re.DOTALL)
@@ -70,14 +61,14 @@ class SRIM_Output(object):
                 import pytest
                 pytest.set_trace()
                      
-        raise ValueError("unable to extract total target from file")
+        raise SRIMOutputParseError("unable to extract total target from file")
 
     def _read_num_ions(self, output):
         match = re.search(b'Total Ions calculated\s+=(\d+.\d+)', output)
         if match:
             # Cast string -> float -> round down to nearest int
             return int(float(match.group(1)))
-        raise ValueError("unable to extract total ions from file")
+        raise SRIMOutputParseError("unable to extract total ions from file")
 
     def _read_table(self, output):
         match = re.search((
@@ -93,7 +84,26 @@ class SRIM_Output(object):
             # Data
             data = np.genfromtxt(BytesIO(output[match.end():]), max_rows=100)
             return data
-        raise ValueError("unable to extract table from file")
+        raise SRIMOutputParseError("unable to extract table from file")
+
+
+class Results(object):
+    """ Gathers all results from folder """
+    def __init__(self, directory):
+        """ Retrives all the calculation files in a given folder
+
+        """
+        self.ioniz = Ioniz(directory)
+        self.vacancy = Vacancy(directory)
+
+        try:
+            self.novac = NoVacancy(directory)
+        except ValueError:
+            self.novac = None
+
+        self.etorecoils = EnergyToRecoils(directory)
+        self.phonons = Phonons(directory)
+        self.range = Range(directory)
 
 
 class Ioniz(SRIM_Output):
