@@ -15,6 +15,20 @@ double_regex = r'[-+]?\d+\.?\d*(?:[eE][-+]?\d+)?'
 symbol_regex = r'[A-Z][a-z]?'
 int_regex = '[+-]?\d+'
 
+def get_outputs(directory):
+    """ Retrives all the calculation files in a given folder
+
+    """
+    return {
+        'Ioniz': Ioniz(directory),
+        'Vacancies': Vacancy(directory),
+        'NoVacancy': NoVacancy(directory),
+        'EnergyToRecoils': EnergyToRecoils(directory),
+        'Phonons': Phonons(directory),
+        'Range': Range(directory)
+    }
+
+
 class SRIM_Output(object):
     def _read_name(self, output):
         raise NotImplementedError()
@@ -311,11 +325,52 @@ class Phonons(SRIM_Output):
         return self._recoils
 
 
-
-class Range(object):
+class Range(SRIM_Output):
     """ Table of the final distribution of the ions, and any recoiling target atoms
     """
-    pass
+    def __init__(self, directory, filename='RANGE.txt'):
+        with open(os.path.join(directory, filename), 'rb') as f:
+            output = f.read()
+            ion = self._read_ion(output)
+            num_ions = self._read_num_ions(output)
+            data = self._read_table(output)
+
+        self._ion = ion
+        self._num_ions = num_ions
+        self._depth = data[:, 0]
+        self._ions = data[:, 1]
+        self._elements = data[:, 2:]
+
+    @property
+    def ion(self):
+        """ Ion used in SRIM calculation 
+
+        **mass** could be wrong
+        """
+        return self._ion
+
+    @property
+    def num_ions(self):
+        """ Number of Ions in SRIM simulation """
+        return self._num_ions
+
+    @property
+    def depth(self):
+        """ Depth [Ang] of bins in SRIM Calculation """
+        return self._depth
+
+    @property
+    def ions(self):
+        """ Ion final distribution [(Atoms/cm3)/(Atoms/cm2)] """
+        return self._ions
+
+    @property
+    def elements(self):
+        """ Per elements [(Atoms/cm3)/(Atoms/cm2)] distribution of each element
+
+        """
+        return self._elements
+
 
 
 class Backscat(object):

@@ -75,10 +75,14 @@ class SRIM(object):
     def _copy_output_files(self):
         pass
 
-    def run(self):
-        os.chdir(SRIM_DIRECTORY)
-        
+    def run(self, run_directory=SRIM_DIRECTORY):
+        current_directory = os.getcwd()
+
+        os.chdir(run_directory)
+
         self._write_input_files()
         subprocess.check_call(['./TRIM.exe'])
         self._copy_output_files()
+
+        os.chdir(current_directory)
 
