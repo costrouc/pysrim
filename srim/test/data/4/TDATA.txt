@@ -1,0 +1,47 @@
+====== Pb (5000) into Layer 1                   =======
+        SRIM-2013.00
+=======================================
+      Data  of  TRIM  Calculation      
+=======================================
+====== TRIM Calc.= Pb(5 MeV) ==> Layer 1(  1.5 um) ===========================
+------------------------------------------------------------------------------
+--------------------------------------------------------------------
+    Recoil/Damage Calculations made with Kinchin-Pease Estimates    
+--------------------------------------------------------------------
+Ion = Pb (82)   Ion Mass= 207.9770
+Energy  = 5000000.E-03 keV
+Ion Angle to Surface = 0 degrees
+============= TARGET MATERIAL ======================================
+  Layer # 1 - Layer 1
+  Layer # 1 - Bottom Depth=     2.E+04 A
+  Layer # 1- Density = 8.355E22 atoms/cm3 = 4.528 g/cm3
+  Layer # 1- Ti = 50   Atomic Percent = 73.3 Mass Percent
+  Layer # 1- Si = 16.6 Atomic Percent = 14.3 Mass Percent
+  Layer # 1-  C = 33.3 Atomic Percent = 12.2 Mass Percent
+====================================================================
+Target energies for target atom = Ti
+    Displacement = 40 eV, Binding = 0 eV, Surface = 4.89 eV
+Target energies for target atom = Si
+    Displacement = 35 eV, Binding = 2 eV, Surface = 4.7 eV
+Target energies for target atom =  C
+    Displacement = 20 eV, Binding = 2 eV, Surface = 7.41 eV
+====================================================================
+Depth Range of Tabulated Data=  000000.E+00  -  150000.E-01  Angstroms
+====================================================================
+Total Ions calculated =  020000
+Average Range         =   62275.E-01 Angstroms
+Average Straggling    =   11465.E-01 Angstroms
+Average Vacancy/Ion   =   17181.E+00
+====================================================================
+Total Backscattered Ions=  0 
+Total Transmitted Ions  =  0 
+====================================================================
+See files SRIM Outputs\*.txt for tables :
+   TDATA.txt    -- Details of the calculation.
+   RANGE.txt    -- Final distribution of Ions/Recoils
+   VACANCY.txt  -- Distribution of Vacancies
+   IONIZ.txt    -- Distribution of Ionization
+   PHONON.txt   -- Distribution of Phonons
+   E2RECOIL.txt -- Energy transferred to recoils
+   NOVAC.txt    -- Replacement collisions
+   LATERAL.txt  -- Lateral Spread of Ions

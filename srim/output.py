@@ -196,6 +196,12 @@ class NoVacancy(SRIM_Output):
     def __init__(self, directory, filename='NOVAC.txt'):
         with open(os.path.join(directory, filename), 'rb') as f:
             output = f.read()
+
+            # Check if it is KP calculation
+            if re.search(b'Recoil/Damage Calculations made with Kinchin-Pease Estimates', 
+                         output):
+                raise ValueError('NOVAC has no data for KP calculations')
+
             ion = self._read_ion(output)
             num_ions = self._read_num_ions(output)
             data = self._read_table(output)
