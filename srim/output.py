@@ -29,7 +29,7 @@ class SRIM_Output(object):
             symbol_regex, double_regex)
         match = re.search(ion_regex.encode('utf-8'), output)
         if match:
-            symbol = match.group(1).decode('utf-8')
+            symbol = str(match.group(1).decode('utf-8'))
             energy = float(match.group(2)) #keV
             return Ion(symbol, 1000.0 * energy)
         raise SRIMOutputParseError("unable to extract ion from file")
