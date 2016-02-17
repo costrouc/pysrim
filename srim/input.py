@@ -22,10 +22,11 @@ class AutoTRIM(object):
 
 
 class TRIMInput(object):
-    """ Input File representation of SRIM run """
-    def __init__(self, srim, newline='\r\n'):
+    """ Input File representation of TRIM run """
+    newline = '\r\n'
+
+    def __init__(self, srim):
         self._srim = srim
-        self.newline = newline
 
     @property
     def srim_num_elements(self):
@@ -210,3 +211,83 @@ class TRIMInput(object):
 
             f.write(input_str.encode('utf-8'))
             
+
+class SRInput(object):
+    """ Input file for Stopping and Range (Calculations) """
+    
+    newline = '\r\n'
+    
+    def __init__(self, sr):
+        self._sr = sr
+
+    def _write_filename(self):
+        return (
+            '---Stopping/Range Input Data (Number-format: Period = Decimal Point)'
+        ) + self.newline + (
+            '---Output File Name'
+        ) + '{}'.format(self._sr.settings.output_filename) + self.newline
+    
+    def _write_ion(self):
+        return (
+            '---Ion(Z), Ion Mass(u)'
+        ) + self.newline + '{} {}'.format(
+            self._sr.ion.atomic_number,
+            self._sr.ion.Mass
+        ) + self.newline
+
+    def _write_layer_info(self):
+        return (
+            '---Target Data: (Solid=0,Gas=1), Density(g/cm3), Compound Corr.'
+        ) + self.newline + '{} {} {}'.format(
+            self._sr.layer.phase,
+            self._sr.layer.density,
+            self._sr.settings.correction
+        ) + self.newline + (
+            '---Number of Target Elements'
+        ) + self.newline + '{}'.format(
+            len(self._sr.layer.elements)
+        ) + self.newline
+
+    def _write_elements(self):
+        elements_str = (
+            '---Target Elements: (Z), Target name, Stoich, Target Mass(u)'
+        ) + self.newline
+
+        for element in self._sr.layer.elements:
+            elements_str += '{} "{}" {} {}'.format(
+                element.atomic_number,
+                element.name,
+                self._sr.layer.elements[element]['stoich'],
+                element.mass
+            ) + self.newline
+
+    def _write_output_options(self):
+        return (
+            '---Output Stopping Units (1-8)'
+        ) + self.newline + '{}'.format(
+            self._sr.settings.output_type
+        ) + self.newline
+            
+    def _write_ion_energy_range(self):
+        return (
+            '---Ion Energy : E-Min(keV), E-Max(keV)'
+        ) + self.newline + '{} {}'.format(
+            self._sr.settings.energy_min / 1.0e3,
+            self._sr.ion.energy / 1.0e3
+        )
+
+    def write(self):
+        with open('SR.IN', 'wb') as f:
+            methods = [ 
+                self._write_filename,
+                self._write_ion,
+                self._write_layer_info,
+                self._write_elements,
+                self._write_ouput_options,
+                self._write_ion_energy_range
+            ]
+
+            for method in methods:
+                input_str += method.__call__()
+
+            f.write(input_str.encode('utf-8'))

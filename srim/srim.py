@@ -20,7 +20,7 @@ from .input import AutoTRIM, TRIMInput
 SRIM_DIRECTORY = os.path.join(os.sep, 'tmp', 'srim')
 
 
-class Settings(object):
+class SRIMSettings(object):
     """ SRIM Settings 
 
     TODO: Readonly becuase I have not constructed getter and setters
@@ -61,7 +61,7 @@ class SRIM(object):
 
         TODO: fill out doc strings
         """
-        self.settings = Settings(**args)
+        self.settings = SRIMSettings(**args)
         self.calculation = check_input(int, is_one_to_seven, calculation)
         self.number_ions = check_input(int, is_positive, number_ions)
         self.target = target
