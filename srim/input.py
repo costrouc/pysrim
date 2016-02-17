@@ -225,14 +225,16 @@ class SRInput(object):
             '---Stopping/Range Input Data (Number-format: Period = Decimal Point)'
         ) + self.newline + (
             '---Output File Name'
-        ) + '{}'.format(self._sr.settings.output_filename) + self.newline
+        ) + self.newline + '{}'.format(
+            self._sr.settings.output_filename
+        ) + self.newline
     
     def _write_ion(self):
         return (
             '---Ion(Z), Ion Mass(u)'
         ) + self.newline + '{} {}'.format(
             self._sr.ion.atomic_number,
-            self._sr.ion.Mass
+            self._sr.ion.mass
         ) + self.newline
 
     def _write_layer_info(self):
@@ -260,6 +262,7 @@ class SRInput(object):
                 self._sr.layer.elements[element]['stoich'],
                 element.mass
             ) + self.newline
+        return elements_str
 
     def _write_output_options(self):
         return (
@@ -274,7 +277,7 @@ class SRInput(object):
         ) + self.newline + '{} {}'.format(
             self._sr.settings.energy_min / 1.0e3,
             self._sr.ion.energy / 1.0e3
-        )
+        ) + self.newline
 
     def write(self):
         with open('SR.IN', 'wb') as f:
@@ -283,10 +286,11 @@ class SRInput(object):
                 self._write_ion,
                 self._write_layer_info,
                 self._write_elements,
-                self._write_ouput_options,
+                self._write_output_options,
                 self._write_ion_energy_range
             ]
 
+            input_str = ''
             for method in methods:
                 input_str += method.__call__()
 
