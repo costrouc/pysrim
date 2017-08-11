@@ -3,6 +3,7 @@ srim-python
 
 A package for automating SRIM input and output analysis.
 
+.. image:: examples/image/length-heatmap-log.png
 
 Features
 ========
@@ -11,9 +12,9 @@ Features
 
 - *Post processes* SRIM runs
 
-See `jupyter notebook <https://gitlab.aves.io/costrouc/pysrim/raw/master/examples/notebooks/Analysis.ipynb>`_ for full demonstration of features.
+See `jupyter notebook <https://gitlab.aves.io/costrouc/pysrim/blob/master/examples/notebooks/Analysis.ipynb>`_ for full demonstration of features.
 
-An example of creating some publication graphics with pysrim can also be found in that `directory <https://gitlab.aves.io/costrouc/pysrim/raw/master/examples/notebooks/SiC.ipynb>`_
+An example of creating some publication graphics with pysrim can also be found in that `directory <https://gitlab.aves.io/costrouc/pysrim/blob/master/examples/notebooks/SiC.ipynb>`_
 
 
 Installation
