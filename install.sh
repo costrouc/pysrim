@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# sudo apt install wine-stable
+
 SRIMDIR=/tmp/srim
 
 mkdir -p $SRIMDIR
