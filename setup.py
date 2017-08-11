@@ -52,7 +52,7 @@ setup(
     keywords='material srim automation plotting',
     url='https://gitlab.aves.io/costrouc/pysrim',
     download_url = 'https://gitlab.aves.io/costrouc/pysrim/repository/archive.zip?ref=v%s' % version,
-    packages=find_packages(exclude=['examples']),
+    packages=find_packages(exclude=['examples', 'tests']),
     package_data={
         'srim': ['data/*.yaml']
     },

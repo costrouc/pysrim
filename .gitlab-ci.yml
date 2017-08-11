@@ -1,0 +1,29 @@
+variables:
+    PYPI_USER: SECURE
+    PYPI_PASSWORD: SECURE
+
+stages:
+  - test
+  - deploy
+  - build_image
+
+unittest:
+  image: registry.aves.io/mattoolkit/docker/pymatgen:2017.7.4 # shorten bulid times
+  stage: test
+  script:
+    - echo "============== Testing Package ============="
+    - python --version
+    - pip install . # quieter
+    - python setup.py test
+    - echo "============================================"
+
+deploy_pypi:
+  stage: deploy
+  image: python:3
+  script:
+    - echo "======== Deploying Package to PyPi ========="
+    - printf "[distutils]\nindex-servers =\n   pypi\n\n[pypi]\nusername=$PYPI_USERNAME\npassword=$PYPI_PASSWORD\n" > ~/.pypirc
+    - python setup.py register -r pypi
+    - python setup.py sdist upload -r pypi
+  only:
+    - /^v\d+\.\d+\.\d+([abc]\d*)?$/  # PEP-440 compliant version (tags)
