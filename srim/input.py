@@ -41,7 +41,7 @@ class TRIMInput(object):
     def _write_ion(self):
         return (
             'Ion: Z, Mass [amu], Energy [keV], Angle [degrees], '
-            'Number Ions, Bragg Corr, AutoSave Number' 
+            'Number Ions, Bragg Corr, AutoSave Number'
         ) + self.newline + '{} {} {} {} {} {} {}'.format(
             self._srim.ion.atomic_number,
             self._srim.ion.mass,
@@ -51,7 +51,7 @@ class TRIMInput(object):
             self._srim.settings.bragg_correction,
             self._srim.settings.autosave
         ) + self.newline
-    
+
     def _write_cascade_options(self):
         return (
             'Cascades(1=Kitchn-Peese, 2=Full-Cascade, 3=Sputtering, '
@@ -81,8 +81,8 @@ class TRIMInput(object):
             'Target material : Number of Elements, Number of Layers'
         ) + self.newline + '"{}" {} {}'.format(
             self._srim.settings.description,
+            self.srim_num_elements,
             len(self._srim.target.layers),
-            self.srim_num_elements
         ) + self.newline
 
     def _write_plot_options(self):
@@ -93,7 +93,7 @@ class TRIMInput(object):
             self._srim.settings.plot_mode,
             self._srim.settings.plot_xmin,
             self._srim.settings.plot_xmax
-        )
+        ) + self.newline
 
     def _write_elements(self):
         elements_str = (
@@ -102,9 +102,9 @@ class TRIMInput(object):
         index = 1
         for layer in self._srim.target.layers:
             for element in layer.elements:
-                elements_str += 'Atom {} = {} =  {} {}'.format(
+                elements_str += 'Atom {} = {} =     {} {}'.format(
                     index,
-                    element.symbol, 
+                    element.symbol,
                     element.atomic_number,
                     element.mass
                 ) + self.newline
@@ -113,33 +113,32 @@ class TRIMInput(object):
 
     def _write_layer(self):
         layer_str = (
-            'Layer    Layer Name   Width Density' 
-        ) 
+            'Layer    Layer Name   Width Density'
+        )
 
         for layer in self._srim.target.layers:
             for element in layer.elements:
                 layer_str += '  {}({})'.format(element.symbol, element.atomic_number)
-        
+
         layer_str += self.newline + (
-            'Number   Description  (Ang) (g/cm^3)' 
+            'Number   Description  (Ang) (g/cm^3)'
         ) + '  Stoich' * self.srim_num_elements + self.newline
 
-        
+
         element_index = 0
         for layer_index, layer in enumerate(self._srim.target.layers, start=1):
             layer_str += '{} "{}" {} {}'.format(
-                layer_index, 
+                layer_index,
                 layer.name,
                 layer.width,
                 layer.density
             )
             layer_str += ' 0.0' * element_index
             for element in layer.elements:
-                layer_str += ' {}'.format(layer.elements[element]['stoich'])
+                layer_str += ' {} '.format(layer.elements[element]['stoich'])
                 layer_str += ' 0.0' * (self.srim_num_elements - element_index - len(layer.elements))
-                layer_str += self.newline
                 element_index += len(layer.elements)
-        return layer_str
+        return layer_str + self.newline
 
     def _write_solid_gas(self):
         return (
@@ -188,7 +187,7 @@ class TRIMInput(object):
 
     def write(self):
         with open('TRIM.IN', 'wb') as f:
-            methods = [ 
+            methods = [
                 self._write_title,
                 self._write_ion,
                 self._write_cascade_options,
@@ -210,13 +209,13 @@ class TRIMInput(object):
                 input_str += method.__call__()
 
             f.write(input_str.encode('utf-8'))
-            
+
 
 class SRInput(object):
     """ Input file for Stopping and Range (Calculations) """
-    
+
     newline = '\r\n'
-    
+
     def __init__(self, sr):
         self._sr = sr
 
@@ -228,7 +227,7 @@ class SRInput(object):
         ) + self.newline + '{}'.format(
             self._sr.settings.output_filename
         ) + self.newline
-    
+
     def _write_ion(self):
         return (
             '---Ion(Z), Ion Mass(u)'
@@ -270,7 +269,7 @@ class SRInput(object):
         ) + self.newline + '{}'.format(
             self._sr.settings.output_type
         ) + self.newline
-            
+
     def _write_ion_energy_range(self):
         return (
             '---Ion Energy : E-Min(keV), E-Max(keV)'
@@ -281,7 +280,7 @@ class SRInput(object):
 
     def write(self):
         with open('SR.IN', 'wb') as f:
-            methods = [ 
+            methods = [
                 self._write_filename,
                 self._write_ion,
                 self._write_layer_info,

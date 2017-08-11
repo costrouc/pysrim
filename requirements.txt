@@ -1,4 +1,0 @@
-pyyaml
-pytest>=2.7.0
-pytest-mock
-numpy>=1.10.0

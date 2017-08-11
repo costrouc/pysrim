@@ -57,10 +57,10 @@ class SRIM_Output(object):
                     layers_elements.append(re.findall(element_regex, layer[5]))
 
                 raise NotImpementedError()
-                
+
                 import pytest
                 pytest.set_trace()
-                     
+
         raise SRIMOutputParseError("unable to extract total target from file")
 
     def _read_num_ions(self, output):
@@ -76,7 +76,7 @@ class SRIM_Output(object):
             b'-+(?:\s+-+)+'
         ), output, re.DOTALL)
         # Read Data from table
-        
+
         if match:
             # Headers TODO: name the columns in table
             header = None
@@ -122,7 +122,7 @@ class Ioniz(SRIM_Output):
 
     @property
     def ion(self):
-        """ Ion used in SRIM calculation 
+        """ Ion used in SRIM calculation
 
         **mass** could be wrong
         """
@@ -171,7 +171,7 @@ class Vacancy(SRIM_Output):
 
     @property
     def ion(self):
-        """ Ion used in SRIM calculation 
+        """ Ion used in SRIM calculation
 
         **mass** could be wrong
         """
@@ -194,7 +194,7 @@ class Vacancy(SRIM_Output):
 
     @property
     def vacancies(self):
-        """ Vacancies [Vacancies/(Angstrom-Ion)] produced of element in layer 
+        """ Vacancies [Vacancies/(Angstrom-Ion)] produced of element in layer
 
         TODO: improve interface
         """
@@ -208,7 +208,7 @@ class NoVacancy(SRIM_Output):
             output = f.read()
 
             # Check if it is KP calculation
-            if re.search(b'Recoil/Damage Calculations made with Kinchin-Pease Estimates', 
+            if re.search(b'Recoil/Damage Calculations made with Kinchin-Pease Estimates',
                          output):
                 raise ValueError('NOVAC has no data for KP calculations')
 
@@ -223,7 +223,7 @@ class NoVacancy(SRIM_Output):
 
     @property
     def ion(self):
-        """ Ion used in SRIM calculation 
+        """ Ion used in SRIM calculation
 
         **mass** could be wrong
         """
@@ -262,7 +262,7 @@ class EnergyToRecoils(SRIM_Output):
 
     @property
     def ion(self):
-        """ Ion used in SRIM calculation 
+        """ Ion used in SRIM calculation
 
         **mass** could be wrong
         """
@@ -285,7 +285,7 @@ class EnergyToRecoils(SRIM_Output):
 
     @property
     def absorbed(self):
-        """ Energy [eV/(Angstrom-Ion)] absorbed from collisions with Atom 
+        """ Energy [eV/(Angstrom-Ion)] absorbed from collisions with Atom
 
         TODO: fix terminology
         """
@@ -309,7 +309,7 @@ class Phonons(SRIM_Output):
 
     @property
     def ion(self):
-        """ Ion used in SRIM calculation 
+        """ Ion used in SRIM calculation
 
         **mass** could be wrong
         """
@@ -359,7 +359,7 @@ class Range(SRIM_Output):
 
     @property
     def ion(self):
-        """ Ion used in SRIM calculation 
+        """ Ion used in SRIM calculation
 
         **mass** could be wrong
         """
@@ -483,7 +483,7 @@ class Collision:
                 'lat_y_dist': float(tokens[3]),
                 'lat_z_dist': float(tokens[4]),
                 'stopping_energy': float(tokens[5]),
-                'atom': re.search("([A-Z][a-z])", tokens[6]).group(1),
+                'atom': re.search("([A-Z][a-z]?)", tokens[6]).group(1),
                 'recoil_energy': float(tokens[7]),
                 'target_disp': target_disp,
                 'target_vac': target_vac,
@@ -491,6 +491,10 @@ class Collision:
                 'target_inter': target_inter,
                 'cascade': cascade
             })
+
+            # Handles weird case where no summary of cascade
+            if target_disp is None:
+                break;
 
         # Reads ion footer
         ion_number = re.search(int_regex, next(lines)).group(0)
@@ -527,6 +531,7 @@ class Collision:
 
         assert re.match("^=+\r$", line)
 
+
         line = next(lines)
         assert re.match((
                 "  Recoil Atom Energy\(eV\)   X \(A\)      Y \(A\)      Z \(A\)"
@@ -539,6 +544,7 @@ class Collision:
                 break
             tokens = line.split()[1:-1]
 
+            print(tokens)
             cascade.append({
                 'recoil': int(tokens[0]),
                 'atom': int(tokens[1]),
@@ -550,13 +556,23 @@ class Collision:
                 'repl': int(tokens[7])
             })
 
+        if line.count('=') > 100:
+            return None, None, None, None, cascade
+
         line = next(lines)
         tokens = line.split(chr(179))[1:-1]
 
-        target_disp = float(tokens[2])
-        target_vac = float(tokens[3])
-        target_replac = float(tokens[4])
-        target_inter = float(tokens[5])
+        if tokens:
+
+            target_disp = float(tokens[2])
+            target_vac = float(tokens[3])
+            target_replac = float(tokens[4])
+            target_inter = float(tokens[5])
+        else:
+            target_disp = None
+            target_vac = None
+            target_replac = None
+            target_inter = None
 
         return target_disp, target_vac, target_replac, target_inter, cascade
 
@@ -601,4 +617,3 @@ def buffered_findall(filename, string, start=0):
                         positions.append(f.tell() - len(buffer) + position)
             else:
                 return positions
-

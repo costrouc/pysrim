@@ -1,38 +1,61 @@
-import sys
-
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
+# To use a consistent encoding
+from codecs import open
+from os import path
+import sys
+import shlex
 
 class PyTest(TestCommand):
     user_options = [('pytest-args=', 'a', "Arguments to pass to py.test")]
-    
+
     def initialize_options(self):
         TestCommand.initialize_options(self)
         self.pytest_args = []
-        
+
+    def finalize_options(self):
+        TestCommand.finalize_options(self)
+        self.test_args = []
+        self.test_suite = True
+
     def run_tests(self):
         #import here, cause outside the eggs aren't loaded
         import pytest
+        if isinstance(self.pytest_args, str):
+            self.pytest_args = shlex.split(self.pytest_args)
         errno = pytest.main(self.pytest_args)
         sys.exit(errno)
 
+here = path.abspath(path.dirname(__file__))
+
+with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
+
+
+version='0.1'
 setup(
-    name='srim',
-    version='0.1',
-    packages=find_packages(),
+    name='pysrim',
+    version=version,
+    description='Srim Automation of Tasks',
+    long_description='Pythonic Wrapper to SRIM',
+    author='Christopher Ostrouchov',
+    author_email='chris.ostrouchov+pysrim@gmail.com',
+    classifiers=[
+        'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+    ],
+    cmdclass = {'test': PyTest},
+    keywords='material srim automation plotting',
+    url='https://gitlab.aves.io/costrouc/pysrim',
+    download_url = 'https://gitlab.aves.io/costrouc/pysrim/repository/archive.zip?ref=v%s' % version,
+    packages=find_packages(exclude=['examples']),
     package_data={
         'srim': ['data/*.yaml']
     },
-    description='Srim Automation of Tasks',
-    long_description='Pythonic Wrapper to SRIM (LONG)',
-    author='Christopher Ostrouchov',
-    author_email='chris.ostrouchov+srim@gmail.com',
-    url='https://github.com/costrouc/srim-python',
-    download_url='https://github.com/costrouc/srim-python/tarball/master',
-    keywords=['srim', 'automation', 'plotting'],
-    setup_requires=['pytest-runner'],
     install_requires=['pyyaml', 'numpy>=1.10.0'],
-    tests_require=['pytest>=2.7.0', 'pytest-mock'],
-    cmdclass = {'test': PyTest},
-    # scripts=['scripts/']       
+    tests_require=['pytest'],
 )
