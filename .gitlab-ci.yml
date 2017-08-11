@@ -8,7 +8,7 @@ stages:
   - build_image
 
 unittest:
-  image: registry.aves.io/mattoolkit/docker/pymatgen:2017.7.4 # shorten bulid times
+  image: python:3 # shorten bulid times
   stage: test
   script:
     - echo "============== Testing Package ============="
