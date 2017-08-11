@@ -32,7 +32,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 
-version='0.1.4'
+version='0.1.5'
 setup(
     name='pysrim',
     version=version,
