@@ -32,7 +32,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 
-version='0.1.1'
+version='0.1.2'
 setup(
     name='pysrim',
     version=version,
@@ -54,7 +54,8 @@ setup(
     download_url = 'https://gitlab.aves.io/costrouc/pysrim/repository/archive.zip?ref=v%s' % version,
     packages=find_packages(exclude=['examples', 'tests']),
     package_data={
-        'srim': ['data/*.yaml']
+        '': 'README.md'
+        'srim': ['data/*.yaml'],
     },
     install_requires=['pyyaml', 'numpy>=1.10.0'],
     tests_require=['pytest'],
