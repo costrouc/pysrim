@@ -54,7 +54,7 @@ setup(
     download_url = 'https://gitlab.aves.io/costrouc/pysrim/repository/archive.zip?ref=v%s' % version,
     packages=find_packages(exclude=['examples', 'tests']),
     package_data={
-        '': 'README.md'
+        '': 'README.md',
         'srim': ['data/*.yaml'],
     },
     install_requires=['pyyaml', 'numpy>=1.10.0'],
