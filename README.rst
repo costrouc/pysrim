@@ -13,7 +13,7 @@ Features
 
 See `jupyter notebook <https://gitlab.aves.io/costrouc/pysrim/raw/master/examples/notebooks/Analysis.ipynb>`_ for full demonstration of features.
 
-An example of creating some publication graphics with pysrim can also be found in that `directory <https://gitlab.aves.io/costrouc/pysrim/raw/master/examples/notebooks/Analysis.ipynb>`_
+An example of creating some publication graphics with pysrim can also be found in that `directory <https://gitlab.aves.io/costrouc/pysrim/raw/master/examples/notebooks/SiC.ipynb>`_
 
 
 Installation
