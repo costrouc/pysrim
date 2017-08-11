@@ -3,7 +3,7 @@ srim-python
 
 A package for automating SRIM input and output analysis.
 
-.. image:: examples/image/length-heatmap-log.png
+.. image:: https://gitlab.aves.io/costrouc/pysrim/raw/master/examples/images/length-heatmap-log.png
 
 Features
 ========
