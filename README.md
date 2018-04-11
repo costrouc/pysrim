@@ -68,12 +68,12 @@ fig.tight_layout()
 ![srim heatmap](https://gitlab.com/costrouc/srim-python/raw/master/examples/images/ionization-vs-depth.png)
 
 See [jupyter
-notebook](<https://gitlab.aves.io/costrouc/pysrim/blob/master/examples/notebooks/Analysis.ipynb)
+notebook](<https://gitlab.com/costrouc/srim-python/blob/master/examples/notebooks/Analysis.ipynb)
 for full demonstration of features.
 
 An example of creating some publication graphics with pysrim can also
 be found in that
-[directory](https://gitlab.aves.io/costrouc/pysrim/blob/master/examples/notebooks/SiC.ipynb). I
+[directory](https://gitlab.com/costrouc/srim-python/blob/master/examples/notebooks/SiC.ipynb). I
 have used this in a
 [publication](https://doi.org/10.1016/j.cossms.2017.09.003).
 
