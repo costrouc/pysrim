@@ -2,7 +2,7 @@
 
 A package for automating SRIM input and output analysis.
 
-![srim heatmap](https://gitlab.aves.io/costrouc/pysrim/raw/master/examples/images/length-heatmap-log.png)
+![srim heatmap](https://gitlab.com/costrouc/srim-python/raw/master/examples/images/length-heatmap-log.png)
 
 # Features
 
@@ -64,6 +64,8 @@ fig.suptitle('Ionization Energy vs Depth', fontsize=15)
 fig.set_size_inches((10, 4))
 fig.tight_layout()
 ```
+
+![srim heatmap](https://gitlab.com/costrouc/srim-python/raw/master/examples/images/ionization-vs-depth.png)
 
 See [jupyter
 notebook](<https://gitlab.aves.io/costrouc/pysrim/blob/master/examples/notebooks/Analysis.ipynb)
