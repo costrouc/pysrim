@@ -8,6 +8,17 @@ A package for automating SRIM input and output analysis.
 
 ## Automate running SRIM with Windows and Linux (wine)
 
+`/tmp/srim` is the path to the SRIM executable. `pysrim` will add all
+the necessary input files. If this ran successfully for you a SRIM
+window will popup and start the calculation. If a plot of the cascade
+is showing make sure to minimize it to speed it up!
+
+Also some advice. Since you can automate the calculation, it is nice
+to break the calculation into several pieces so that if it crashes you
+do not lose all your results. For example if you need to do 10,000
+ions maybe break it into 1,000 ions x 10 calculations. We all know
+that SRIM has a tendancy to crash at the worst times...
+
 ``` python
 ion = Ion('Ni', energy=3.0e6)
 layer = Layer({
@@ -24,11 +35,20 @@ results = srim.run('/tmp/srim')
 
 ## Copy SRIM output files to directory
 
+After a SRIM calculation has completed run `copy_output_files` to take
+all of the output files and move them to a directory of your liking.
+
 ``` python
 SRIM.copy_output_files('/tmp/srim', '/home/costrouc/scratch/srim')
 ```
 
 ## Post processes SRIM output as numpy arrays
+
+`srim-python` was not designed to create nice plots for you becuase
+this would never be flexible enough for your use case. Instead
+`srim-python` provides classes with properties for each column of the
+output results file as nice numpy arrays. The posibilities are endless
+at this point.
 
 ``` python
 def plot_damage_energy(folder, ax):
@@ -84,7 +104,7 @@ have used this in a
 
 SRIM can run perfectly on linux with `wine <https://www.winehq.org/>`_
 
-Run the `installation script <https://gitlab.aves.io/costrouc/pysrim/raw/master/install.sh>`_ with bash.
+Run the `installation script <https://gitlab.com/costrouc/srim-python/raw/master/install.sh>`_ with bash.
 
 Click extract and then done.
 
