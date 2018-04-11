@@ -1,29 +1,27 @@
 variables:
-    PYPI_USER: SECURE
-    PYPI_PASSWORD: SECURE
+    TWINE_USERNAME: SECURE
+    TWINE_PASSWORD: SECURE
+    TWINE_REPOSITORY_URL: https://upload.pypi.org/legacy/
 
 stages:
   - test
   - deploy
-  - build_image
 
-unittest:
-  image: python:3 # shorten bulid times
+test:
+  image: python:3
   stage: test
   script:
-    - echo "============== Testing Package ============="
-    - python --version
-    - pip install . # quieter
-    - python setup.py test
-    - echo "============================================"
+    - pip install .
+    - python setup.py test --addopts "--cov=srim"
 
 deploy_pypi:
-  stage: deploy
   image: python:3
+  stage: deploy
   script:
-    - echo "======== Deploying Package to PyPi ========="
-    - printf "[distutils]\nindex-servers =\n   pypi\n\n[pypi]\nusername=$PYPI_USERNAME\npassword=$PYPI_PASSWORD\n" > ~/.pypirc
-    - python setup.py register -r pypi
-    - python setup.py sdist upload -r pypi
+    - pip install -U twine setuptools
+    - pip list
+    - python setup.py sdist bdist_wheel
+    - twine upload dist/*.tar.gz
+    - twine upload dist/*.whl
   only:
     - /^v\d+\.\d+\.\d+([abc]\d*)?$/  # PEP-440 compliant version (tags)
