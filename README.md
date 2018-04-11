@@ -6,7 +6,7 @@ A package for automating SRIM input and output analysis.
 
 # Features
 
-**Automates** running SRIM with Windows and Linux (wine)
+## Automate running SRIM with Windows and Linux (wine)
 
 ``` python
 ion = Ion('Ni', energy=3.0e6)
@@ -22,13 +22,13 @@ srim = SRIM(target, ion, number_ions=100, calculation=1) # Calculation=2 => full
 results = srim.run('/tmp/srim')
 ```
 
-**Copy SRIM output** files to directory
+## Copy SRIM output files to directory
 
 ``` python
 SRIM.copy_output_files('/tmp/srim', '/home/costrouc/scratch/srim')
 ```
 
-**Post processes** SRIM runs as numpy arrays
+## Post processes SRIM output as numpy arrays
 
 ``` python
 def plot_damage_energy(folder, ax):
