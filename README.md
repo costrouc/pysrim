@@ -93,3 +93,12 @@ Click extract and then done.
 A collegue of mine has gotten it to work easily on Windows but I
 myself have no experience. It should just work if you point the
 package to the SRIM executable.
+
+# Contributing
+
+All contributions, bug reports, bug fixes, documentation improvements,
+enhancements and ideas are welcome!
+
+# License
+
+MIT
