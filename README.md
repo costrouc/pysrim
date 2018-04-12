@@ -25,6 +25,14 @@
   <td>Coverage</td>
   <td><img src="https://gitlab.com/costrouc/srim-python/badges/master/coverage.svg" alt="coverage" /></td>
 </tr>
+<tr>
+  <td>Documentation</td>
+  <td>
+    <a href="https://pysrim.readthedocs.io/en/latest/">
+    <img src="https://readthedocs.org/projects/pysrim/badge/?version=latest" alt="readthedocs documentation" />
+    </a>
+  </td>
+</tr>
 </table>
 
 

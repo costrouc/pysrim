@@ -14,7 +14,7 @@ notebook gives an example of plots that were created for a
 `publication <https://doi.org/10.1016/j.cossms.2017.09.003>`_.
 
 The primary purpose of this documentation for now is to document the
-api.
+api. For now it is probably best to read the source code.
 
 .. toctree::
    :maxdepth: 2
