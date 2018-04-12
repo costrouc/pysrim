@@ -15,3 +15,5 @@ numpy = "*"
 
 sphinx = "*"
 sphinx-rtd-theme = "*"
+jupyterlab = "*"
+matplotlib = "*"

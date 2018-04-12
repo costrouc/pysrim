@@ -7,6 +7,10 @@
   <td>Latest Release</td>
   <td><img src="https://img.shields.io/pypi/v/pysrim.svg" alt="latest release" /></td>
 </tr>
+</tr>
+  <td></td>
+  <td><img src="https://anaconda.org/costrouc/pysrim/badges/version.svg" alt="latest release" /></td>
+</tr>
 <tr>
   <td>Package Status</td>
   <td><img src="https://img.shields.io/pypi/status/pysrim.svg" alt="status" /></td>
@@ -28,6 +32,14 @@
   <td><img src="https://gitlab.com/costrouc/srim-python/badges/master/coverage.svg" alt="coverage" /></td>
 </tr>
 <tr>
+  <td>Conda</td>
+  <td>
+    <a href="https://gitlab.com/costrouc/srim-python">
+    <img src="https://anaconda.org/costrouc/pysrim/badges/downloads.svg" alt="conda downloads" />
+    </a>
+  </td>
+</tr>
+<tr>
   <td>Documentation</td>
   <td>
     <a href="https://pysrim.readthedocs.io/en/latest/">
@@ -40,7 +52,7 @@
 
 # Features
 
-## Automate running SRIM with Windows and Linux (wine)
+## Automate running SRIM and TRIM with Windows, OSX (wine), and Linux (wine)
 
 `/tmp/srim` is the path to the SRIM executable directory. `pysrim`
 will add all the necessary input files. If this ran successfully for
