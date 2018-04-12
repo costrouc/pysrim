@@ -11,10 +11,9 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 
-version='0.1.5'
 setup(
     name='pysrim',
-    version=version,
+    version='0.2.0',
     description='Srim Automation of Tasks via Python',
     long_description='Pythonic Wrapper to SRIM',
     url='https://gitlab.com/costrouc/srim-python',
@@ -33,8 +32,8 @@ setup(
         'Programming Language :: Python :: 3.6',
     ],
     keywords='material srim automation plotting',
-    download_url = 'https://gitlab.aves.io/costrouc/pysrim/repository/archive.zip?ref=v%s' % version,
-    packages=find_packages(exclude=['examples', 'tests']),
+    download_url='https://gitlab.com/costrouc/srim-python/repository/master/archive.zip',
+    packages=find_packages(exclude=['examples', 'tests', 'test_files']),
     package_data={
         'srim': ['data/*.yaml'],
     },
