@@ -1,3 +1,5 @@
+# srim-python
+
 <table>
 <tr>
   <td>Latest Release</td>
@@ -25,8 +27,6 @@
 </tr>
 </table>
 
-
-# srim-python
 
 A package for automating SRIM input and output analysis.
 
