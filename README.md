@@ -146,9 +146,20 @@ have used this in a
 
 # Installation
 
-## Linux
+Available on PyPi
 
-SRIM can run perfectly on linux with [wine](https://www.winehq.org/)
+ -  `pip install pysrim`
+
+Available on Conda
+
+ - `conda install -c costrouc pysrim`
+
+
+## Linux and OSX
+
+SRIM can run perfectly on linux and OSX with
+[wine](https://www.winehq.org/). See
+[compatibility](https://appdb.winehq.org/objectManager.php?sClass=version&iId=13202).
 
 Run the [installation script](https://gitlab.com/costrouc/srim-python/raw/master/install.sh) with bash.
 
