@@ -4,6 +4,7 @@
 import os
 import subprocess
 import shutil
+import distutils.spawn
 
 from .core.utils import (
     check_input,
@@ -102,7 +103,11 @@ class SRIM(object):
         os.chdir(srim_directory)
         self._write_input_files()
         # Make sure compatible with Windows, OSX, and Linux
-        subprocess.check_call(['wine', str(os.path.join('.', 'TRIM.exe'))])
+        # If 'wine' command exists use it to launch TRIM
+        if distutils.spawn.find_executable("wine"):
+            subprocess.check_call(['wine', str(os.path.join('.', 'TRIM.exe'))])
+        else:
+            subprocess.check_call([str(os.path.join('.', 'TRIM.exe'))])
         os.chdir(current_directory)
 
         return Results(srim_directory)
@@ -138,5 +143,9 @@ class SR(object):
         os.chdir(os.path.join(srim_directory, 'SR Module'))
         self._write_input_file()
         # Make sure compatible with Windows, OSX, and Linux
-        subprocess.check_call([str(os.path.join('.', 'SRModule.exe'))])
+        # If 'wine' command exists use it to launch TRIM
+        if distutils.spawn.find_executable("wine"):
+            subprocess.check_call(['wine', str(os.path.join('.', 'SRModule.exe'))])
+        else:
+            subprocess.check_call([str(os.path.join('.', 'SRModule.exe'))])
         os.chdir(current_directory)
