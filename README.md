@@ -176,6 +176,12 @@ package to the SRIM executable.
 All contributions, bug reports, bug fixes, documentation improvements,
 enhancements and ideas are welcome!
 
+Contributors:
+ - [Chris Ostrouchov](https://gitlab.com/costrouc) (maintainer)
+ - [Alex Hanson](https://gitlab.com/wahanson)
+ - [dschwen](https://github.com/dschwen)
+
+
 # License
 
 MIT
