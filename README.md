@@ -148,9 +148,9 @@ have used this in a
 
 ## Linux
 
-SRIM can run perfectly on linux with `wine <https://www.winehq.org/>`_
+SRIM can run perfectly on linux with [wine](https://www.winehq.org/)
 
-Run the `installation script <https://gitlab.com/costrouc/srim-python/raw/master/install.sh>`_ with bash.
+Run the [installation script](https://gitlab.com/costrouc/srim-python/raw/master/install.sh) with bash.
 
 Click extract and then done.
 
