@@ -92,6 +92,8 @@ class Results(object):
     def __init__(self, directory):
         """ Retrives all the calculation files in a given folder
 
+        Args:
+          directory (str): directory that srim output files are located
         """
         self.ioniz = Ioniz(directory)
         self.vacancy = Vacancy(directory)

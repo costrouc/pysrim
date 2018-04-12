@@ -33,7 +33,7 @@ setup(
     ],
     keywords='material srim automation plotting',
     download_url='https://gitlab.com/costrouc/srim-python/repository/master/archive.zip',
-    packages=find_packages(exclude=['examples', 'tests', 'test_files']),
+    packages=find_packages(exclude=['examples', 'tests', 'test_files', 'docs']),
     package_data={
         'srim': ['data/*.yaml'],
     },
