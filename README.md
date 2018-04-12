@@ -1,3 +1,31 @@
+<table>
+<tr>
+  <td>Latest Release</td>
+  <td><img src="https://img.shields.io/pypi/v/pysrim.svg" alt="latest release" /></td>
+</tr>
+<tr>
+  <td>Package Status</td>
+  <td><img src="https://img.shields.io/pypi/status/pysrim.svg" alt="status" /></td>
+</tr>
+<tr>
+  <td>License</td>
+  <td><img src="https://img.shields.io/pypi/l/pysrim.svg" alt="license" /></td>
+</tr>
+<tr>
+  <td>Build Status</td>
+  <td>
+    <a href="https://gitlab.com/costrouc/srim-python/pipelines">
+    <img src="https://gitlab.com/costrouc/srim-python/badges/master/pipeline.svg" alt="gitlab pipeline status" />
+    </a>
+  </td>
+</tr>
+<tr>
+  <td>Coverage</td>
+  <td><img src="https://gitlab.com/costrouc/srim-python/badges/master/coverage.svg" alt="coverage" /></td>
+</tr>
+</table>
+
+
 # srim-python
 
 A package for automating SRIM input and output analysis.
@@ -8,10 +36,10 @@ A package for automating SRIM input and output analysis.
 
 ## Automate running SRIM with Windows and Linux (wine)
 
-`/tmp/srim` is the path to the SRIM executable. `pysrim` will add all
-the necessary input files. If this ran successfully for you a SRIM
-window will popup and start the calculation. If a plot of the cascade
-is showing make sure to minimize it to speed it up!
+`/tmp/srim` is the path to the SRIM executable directory. `pysrim`
+will add all the necessary input files. If this ran successfully for
+you a SRIM window will popup and start the calculation. If a plot of
+the cascade is showing make sure to minimize it to speed it up!
 
 Also some advice. Since you can automate the calculation, it is nice
 to break the calculation into several pieces so that if it crashes you
