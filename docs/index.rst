@@ -20,6 +20,8 @@ api. For now it is probably best to read the source code.
    :maxdepth: 2
    :caption: Contents:
 
+   installation
+   tutorial
 
 
 Indices and tables

@@ -1,18 +1,21 @@
-""" Write Inputfile for SRIM calculations
+""" Write Inputfile for SRIM and TRIM calculations
 
 """
 
 
 class AutoTRIM(object):
-    """ Determines state of TRIM calculation
-
-     - [0] TRIM runs normally.
-     - [1] TRIM runs without keyboard input
-     - [2] TRIM resumes running its last saved calculation
-
-    [1] is really the only one you would want for python calculations
-    """
     def __init__(self, mode=1, restart_directroy=None):
+        """Determines state of TRIM calculation
+
+        Parameters
+        ----------
+        mode : int
+            (0) TRIM runs normally, (1) TRIM runs without keyboard input,
+            (2) TRIM resumes running its last saved calculation. Default 1
+            and is really the only sane option when using Python for automation
+        restart_directory : str
+            currently not implemented. default None
+        """
         self._mode = mode
 
     def write(self):
@@ -22,7 +25,7 @@ class AutoTRIM(object):
 
 
 class TRIMInput(object):
-    """ Input File representation of TRIM run """
+    """Input File representation of TRIM run"""
     newline = '\r\n'
 
     def __init__(self, srim):
