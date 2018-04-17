@@ -1,4 +1,4 @@
-""" Utility functions
+"""Utility functions that are used to construct Target and Ion
 
 """
 

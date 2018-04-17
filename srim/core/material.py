@@ -1,7 +1,7 @@
 import re
 
 from .utils import (
-    check_input, 
+    check_input,
     is_positive, is_greater_than_zero,
     is_zero_or_one
 )
@@ -12,18 +12,34 @@ class Material(object):
     def __init__(self, elements, density, phase=0):
         """Create Material from elements, density, and phase
 
-        :param dict elements: Dictionary of elements with properties (stoich, E_d, lattice, surface)
-        :param float density: Density [g/cm^3] of material
-        :params int phase: Phase of material (solid = 0, gas = 1)
+        Parameters
+        ----------
+        elements : :obj:`dict`
+             dictionary of elements (:class:`srim.core.elements.Element`, :obj:`str`, or :obj:`int`) with properties
+               - ``stoich``  (float, int, required): Stoichiometry of element (fraction)
+               - ``E_d``     (float, int, optional): Displacement energy [eV] default 25.0 eV
+               - ``lattice`` (float, int, optional): Lattice binding energies [eV] default 0.0 eV
+               - ``surface`` (float, int, optional): Surface binding energies [eV] default 3.0 eV
+        density : :obj:`float`
+             density [g/cm^3] of material
+        phase : :obj:`int`
+             phase of material (solid = 0, gas = 1). Default solid (0).
+
+
+        Notes
+        -----
+        This class is more featureful that `srim.core.layer.Layer`
+        would lead you to believe. In general this class will not be
+        called by the user.
 
         Structure of dictionary elements properties:
-        - stoich  (required): Stoichiometry of element (fraction)
-        - E_d     (optional): Displacement energy [eV] default 25.0 eV
-        - lattice (optional): Lattice binding energies [eV] default 0.0 eV
-        - surface (optional): Surface binding energies [eV] default 3.0 eV
+         - stoich  (required): Stoichiometry of element (fraction)
+         - E_d     (optional): Displacement energy [eV] default 25.0 eV
+         - lattice (optional): Lattice binding energies [eV] default 0.0 eV
+         - surface (optional): Surface binding energies [eV] default 3.0 eV
 
         dictionary element properties can be:
-        
+
         float or int: stoich
           all others take default values for now
 
@@ -34,7 +50,7 @@ class Material(object):
         elements list structure:
           [stoich, E_d, lattice, surface]
           first element is required all others optional
-          
+
         For example a single element in elements can be specified as:
           - {'Cu': 1.0}
           - {Element('Cu'): 1.0}
@@ -44,7 +60,8 @@ class Material(object):
 
         All stoichiometries will be normalized to 1.0
 
-        Eventually the materials will have better defaults that come from databases.
+        Eventually the materials will have better defaults that come
+        from databases.
         """
         self.phase = phase
         self.density = density
@@ -78,12 +95,12 @@ class Material(object):
             e_disp = check_input(float, is_positive, e_disp)
             lattice = check_input(float, is_positive, lattice)
             surface = check_input(float, is_positive, surface)
-            
+
             stoich_sum += stoich
 
             if not isinstance(element, Element):
                 element = Element(element)
-            
+
             self.elements.update({element: {
                 'stoich': stoich, 'E_d': e_disp,
                 'lattice': lattice, 'surface': surface
@@ -97,16 +114,25 @@ class Material(object):
     @classmethod
     def from_formula(cls, chemical_formula, density, phase=0):
         """ Creation Material from chemical formula string and density
-        :params str chemical_formula: Chemical formula string in specific format
-        :params float density: Density [g/cm^3] of material
-        :params int phase: Phase of material (solid = 0, gas = 1)
-        Examples of chemical_formula:
+
+        Parameters
+        ----------
+        chemical_formula : :obj:`str`
+            chemical formula string in specific format
+        density : :obj:`float`
+            density [g/cm^3] of material
+        phase : :obj:`int`, optional
+            phase of material (solid = 0, gas = 1). Default solid (0).
+
+        Notes
+        -----
+        Examples of chemical_formula that can be used:
          - SiC
          - CO2
          - AuFe1.5
          - Al10.0Fe90.0
 
-        Chemical Formula will be normalized to 1.0. E_d, 
+        Chemical Formula will be normalized to 1.0
         """
         elements = cls._formula_to_elements(chemical_formula)
         return Material(elements, density, phase)
@@ -116,29 +142,30 @@ class Material(object):
         """ Convert chemical formula to elements """
         single_element = '([A-Z][a-z]?)([0-9]*(?:\.[0-9]*)?)?'
         elements = {}
-        
+
         if re.match('^(?:{})+$'.format(single_element), chemical_formula):
             matches = re.findall(single_element, chemical_formula)
         else:
             error_str = 'chemical formula string {} does not match regex'
             raise ValueError(error_str.format(chemical_formula))
-        
+
         # Check for errors in stoichiometry
         for symbol, fraction in matches:
             element = Element(symbol)
-        
+
             if element in elements:
                 error_str = 'cannot have duplicate elements {} in stoichiometry'
                 raise ValueError(error_str.format(element.symbol))
-            
+
             if fraction == '':
                 fraction = 1.0
-            
+
             elements.update({element: float(fraction)})
         return elements
-        
+
     @property
     def density(self):
+        """Material's density"""
         return self._density
 
     @density.setter
@@ -147,14 +174,16 @@ class Material(object):
 
     @property
     def phase(self):
+        """Material's phase"""
         return self._phase
 
     @phase.setter
     def phase(self, value):
         self._phase = check_input(int, is_zero_or_one, value)
-            
+
     @property
     def chemical_formula(self):
+        """Material's chemical formula"""
         return ' '.join('{} {:1.2f}'.format(element.symbol, self.elements[element]) for element in self.elements)
 
     def __repr__(self):
@@ -164,7 +193,7 @@ class Material(object):
     def __eq__(self, material):
         if abs(self.density - material.density) > 1e-6:
             return False
-        
+
         if len(self.elements) != len(material.elements):
             return False
 
