@@ -5,10 +5,27 @@ class Element(object):
 
     Parameters
     ----------
-    identifier : str, int
+    identifier : :obj:`str`, :obj:`int`
         Symbol, Name, or Atomic Number of element
-    mass : float, optional
-        Mass [amu] of element. Default is most common isotope atomic weight
+    mass : :obj:`float`, optional
+        Mass [amu] of element. Default is most common isotope atomic
+        weight
+
+    Examples
+    --------
+    Constructing a Helium Atom.
+
+    >>> Element('He')
+    <Element symbol:He name:Helium mass:4.00>
+
+    >>> Element('Helium')
+    <Element symbol:He name:Helium mass:4.00>
+
+    >>> Element(2)
+    <Element symbol:He name:Helium mass:4.00>
+
+    >>> Element('He', 4.3)
+    <Element symbol:He name:Helium mass:4.30>
     """
     def __init__(self, identifier, mass=None):
         """Initializes element from identifier and mass"""
@@ -42,16 +59,20 @@ class Element(object):
 
     @property
     def symbol(self):
+        """Element's atomic symbol"""
         return self._symbol
 
     @property
     def name(self):
+        """Element's formal name"""
         return self._name
 
     @property
     def atomic_number(self):
+        """Element's atomic number"""
         return self._atomic_number
 
     @property
     def mass(self):
+        """Element's mass"""
         return self._mass

@@ -11,13 +11,22 @@ def create_elementdb():
 
 
 class ElementDB(object):
+    """Element database at ``srim.data.elements.yaml``"""
     _db = create_elementdb()
 
     @classmethod
     def lookup(cls, identifier):
         """ Looks up element from symbol, name, or atomic number
 
-        :param str or int identifier: Unique symbol, name, or atomic number of element
+        Parameters
+        ----------
+        identifier : :obj:`str`, :obj:`int`
+            Unique symbol, name, or atomic number of element
+
+        Notes
+        -----
+            This class is used for creation of elements, ions,
+            etc. but generally will not be needed by the user.
         """
         if isinstance(identifier, (bytes, str)):
             if re.match("^[A-Z][a-z]?$", identifier):   # Symbol
@@ -31,7 +40,7 @@ class ElementDB(object):
 
     @classmethod
     def _lookup_symbol(cls, symbol):
-        """ Looks up symbol in element database 
+        """ Looks up symbol in element database
 
         :param str symbol: Symbol of atomic element
         """
