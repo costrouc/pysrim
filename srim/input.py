@@ -55,7 +55,7 @@ class TRIMInput(object):
         ) + self.newline + '{} {} {} {} {} {} {}'.format(
             self._trim.ion.atomic_number,
             self._trim.ion.mass,
-            self._trim.ion.energy / 1000.0,1 # eV -> keV
+            self._trim.ion.energy / 1000.0, # eV -> keV
             self._trim.settings.angle_ions,
             self._trim.number_ions,
             self._trim.settings.bragg_correction,
