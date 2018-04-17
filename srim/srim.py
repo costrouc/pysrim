@@ -26,50 +26,49 @@ class SRIMSettings(object):
     """ SRIM Settings (ReadOnly)
 
     This object can construct all options available when running a calculation.
+
+    Parameters
+    ----------
+    description : str
+       A name to give calculation. Has no effect on the actual calculation.
+    reminders : str
+       TODO: could not find description. default 0
+    autosave : int
+       save calculations after every `autosave` steps. default 0 will not autosave except at end
+    plot_mode : int
+       (0) ion distribution with recoils projected on y-plane
+       (1) ion distribution with recoils projected on z-plane
+       (2) ion distribution without recoils projected on y-plane
+       (3) transverse plot of ions + recoil cascades, yz-plane
+       (4) all four (0-3) on one screen
+       (5) no graphics (default and at least 5X faster than others)
+    plot_xmin : float
+       minimum x depth to plot only really matters if ``plot_mode`` between 0-4.
+    plot_xmax : float
+       maximum x depth to plot only really matters if ``plot_mode`` between 0-4.
+    ranges : bool
+       whether include RANGES.txt, RANGE_3D.txt to output files. Default (0) False
+    backscattered : bool
+       whether include BACKSCAT.txt to output files. Default (0) False
+    transmit : bool
+       whether include TRANSMIT.txt to output files. Default (0) False
+    sputtered : bool
+       whether include SPUTTER.txt to output files. Default (0) False
+    collisions : bool
+       whether include COLLISON.txt to output files. Yes they did mispell collisions. Default (0) False
+    exyz : int
+       increment in eV to use for EXYZ.txt file. Default (0)
+    angle_ions : float
+       angle of incidence of the ion with respect to the target surface. Default (0) perpendicular to the target surface along x-axis. Values 0 - 89.9.
+    bragg_correction : float
+       bragg correction to stopping. Default (0) no correction
+    random_seed : int
+       a random seed to start calculation with. Default (0) results should be reproducible (not always what you want)
+    version : int
+       SRIM-2008 or SRIM-2008 so not really much choice. Default (0)
     """
     def __init__(self, **args):
-        """Initialize settings for a TRIM running
-
-        Parameters
-        ----------
-        description : str
-           A name to give calculation. Has no effect on the actual calculation.
-        reminders : str
-           TODO: could not find description. default 0
-        autosave : int
-           save calculations after every `autosave` steps. default 0 will not autosave except at end
-        plot_mode : int
-           (0) ion distribution with recoils projected on y-plane
-           (1) ion distribution with recoils projected on z-plane
-           (2) ion distribution without recoils projected on y-plane
-           (3) transverse plot of ions + recoil cascades, yz-plane
-           (4) all four (0-3) on one screen
-           (5) no graphics (default and at least 5X faster than others)
-        plot_xmin : float
-           minimum x depth to plot only really matters if ``plot_mode`` between 0-4.
-        plot_xmax : float
-           maximum x depth to plot only really matters if ``plot_mode`` between 0-4.
-        ranges : bool
-           whether include RANGES.txt, RANGE_3D.txt to output files. Default (0) False
-        backscattered : bool
-           whether include BACKSCAT.txt to output files. Default (0) False
-        transmit : bool
-           whether include TRANSMIT.txt to output files. Default (0) False
-        sputtered : bool
-           whether include SPUTTER.txt to output files. Default (0) False
-        collisions : bool
-           whether include COLLISON.txt to output files. Yes they did mispell collisions. Default (0) False
-        exyz : int
-           increment in eV to use for EXYZ.txt file. Default (0)
-        angle_ions : float
-           angle of incidence of the ion with respect to the target surface. Default (0) perpendicular to the target surface along x-axis. Values 0 - 89.9.
-        bragg_correction : float
-           bragg correction to stopping. Default (0) no correction
-        random_seed : int
-           a random seed to start calculation with. Default (0) results should be reproducible (not always what you want)
-        version : int
-           SRIM-2008 or SRIM-2008 so not really much choice. Default (0)
-        """
+        """Initialize settings for a TRIM running"""
         self._settings = {
             'description': check_input(str, is_quoteless, args.get('description', 'srim-python run')),
             'reminders': check_input(int, is_zero_or_one, args.get('reminders', 0)),
