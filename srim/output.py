@@ -10,13 +10,14 @@ import numpy as np
 
 from .core.ion import Ion
 
-# Valid double_regex [4, 4.0, 4.0e100
+# Valid double_regex 4, 4.0, 4.0e100
 double_regex = r'[-+]?\d+\.?\d*(?:[eE][-+]?\d+)?'
 symbol_regex = r'[A-Z][a-z]?'
 int_regex = '[+-]?\d+'
 
 
 class SRIMOutputParseError(Exception):
+    """SRIM error reading output file"""
     pass
 
 
@@ -88,13 +89,25 @@ class SRIM_Output(object):
 
 
 class Results(object):
-    """ Gathers all results from folder """
-    def __init__(self, directory):
-        """ Retrives all the calculation files in a given folder
+    """ Gathers all results from folder
 
-        Args:
-          directory (str): directory that srim output files are located
-        """
+    Parameters
+    ----------
+    directory : :obj:`str`
+        directory to look for TRIM calculations
+
+    Notes
+    -----
+    Files that are looked for:
+      - ``IONIZ.txt`` handled by :class:`srim.output.Ioniz`
+      - ``VACANCY.txt`` handled by :class:`srim.output.Vacancy`
+      - ``NOVAC.txt`` handled by :class:`srim.output.NoVacancy`
+      - ``E2RECOIL.txt`` handled by :class:`srim.output.EnergyToRecoils`
+      - ``PHONON.txt`` handled by :class:`srim.output.Phonons`
+      - ``RANGE.txt`` handled by :class:`srim.output.Range`
+    """
+    def __init__(self, directory):
+        """ Retrives all the calculation files in a given directory"""
         self.ioniz = Ioniz(directory)
         self.vacancy = Vacancy(directory)
 
@@ -109,6 +122,15 @@ class Results(object):
 
 
 class Ioniz(SRIM_Output):
+    """``IONIZ.txt`` Ionization by ions and depth. Includes header information about calculation
+
+    Parameters
+    ----------
+    directory : :obj:`str`
+         directory of calculation
+    filename : :obj:`str`, optional
+         filename for Ioniz. Default ``IONIZ.txt``
+    """
     def __init__(self, directory, filename='IONIZ.txt'):
         with open(os.path.join(directory, filename), 'rb') as f:
             output = f.read()
@@ -143,21 +165,26 @@ class Ioniz(SRIM_Output):
     @property
     def ions(self):
         """Ionization energy [eV/(Angstrom Ion)] lost to electronic stopping
-        in incident ions
-
-        """
+        in incident ions"""
         return self._ions
 
     @property
     def recoils(self):
         """Ionization energy [eV/(Angstrom Ion)] lost to electronic stopping
-        in recoil ions
-        """
+        in recoil ions"""
         return self._recoils
 
 
 class Vacancy(SRIM_Output):
-    """ Table of the final distribution of vacancies """
+    """``VACANCY.txt`` Table of the final distribution of vacancies vs depth
+
+    Parameters
+    ----------
+    directory : :obj:`str`
+         directory of calculation
+    filename : :obj:`str`, optional
+         filename for Vacancy. Default ``VACANCY.txt``
+    """
     def __init__(self, directory, filename='VACANCY.txt'):
         with open(os.path.join(directory, filename), 'rb') as f:
             output = f.read()
@@ -181,30 +208,35 @@ class Vacancy(SRIM_Output):
 
     @property
     def num_ions(self):
-        """ Number of Ions in SRIM simulation """
+        """Number of Ions in SRIM simulation"""
         return self._num_ions
 
     @property
     def depth(self):
-        """ Depth [Ang] of bins in SRIM Calculation """
+        """Depth [Ang] of bins in SRIM Calculation"""
         return self._depth
 
     @property
     def knock_ons(self):
-        """ Vacancies produced [Vacancies/(Angstrom-Ion) by ion] """
+        """Vacancies produced [Vacancies/(Angstrom-Ion) by ion]"""
         return self._ion_knock_ons
 
     @property
     def vacancies(self):
-        """ Vacancies [Vacancies/(Angstrom-Ion)] produced of element in layer
-
-        TODO: improve interface
-        """
+        """Vacancies [Vacancies/(Angstrom-Ion)] produced of element in layer"""
         return self._vacancies
 
 
 class NoVacancy(SRIM_Output):
-    """ Table of Replacement Collisions """
+    """ ``NOVAC.txt`` Table of Replacement Collisions
+
+    Parameters
+    ----------
+    directory : :obj:`str`
+         directory of calculation
+    filename : :obj:`str`, optional
+         filename for NoVacancy. Default ``NOVAC.txt``
+    """
     def __init__(self, directory, filename='NOVAC.txt'):
         with open(os.path.join(directory, filename), 'rb') as f:
             output = f.read()
@@ -233,22 +265,30 @@ class NoVacancy(SRIM_Output):
 
     @property
     def num_ions(self):
-        """ Number of Ions in SRIM simulation """
+        """Number of Ions in SRIM simulation"""
         return self._num_ions
 
     @property
     def depth(self):
-        """ Depth [Ang] of bins in SRIM Calculation """
+        """Depth [Ang] of bins in SRIM Calculation"""
         return self._depth
 
     @property
     def number(self):
-        """ Replacement Collisions [Number/(Angstrom-Ion)]"""
+        """Replacement Collisions [Number/(Angstrom-Ion)]"""
         return self._number
 
 
 class EnergyToRecoils(SRIM_Output):
-    """ Energy transfered to atoms through binary collision """
+    """``E2RECOIL.txt`` Energy transfered to atoms through binary collision
+
+    Parameters
+    ----------
+    directory : :obj:`str`
+         directory of calculation
+    filename : :obj:`str`, optional
+         filename for EnergyToRecoils. Default ``E2RECOIL.txt``
+    """
     def __init__(self, directory, filename='E2RECOIL.txt'):
         with open(os.path.join(directory, filename), 'rb') as f:
             output = f.read()
@@ -264,7 +304,7 @@ class EnergyToRecoils(SRIM_Output):
 
     @property
     def ion(self):
-        """ Ion used in SRIM calculation
+        """Ion used in SRIM calculation
 
         **mass** could be wrong
         """
@@ -272,22 +312,22 @@ class EnergyToRecoils(SRIM_Output):
 
     @property
     def num_ions(self):
-        """ Number of Ions in SRIM simulation """
+        """Number of Ions in SRIM simulation"""
         return self._num_ions
 
     @property
     def depth(self):
-        """ Depth [Ang] of bins in SRIM Calculation """
+        """Depth [Ang] of bins in SRIM Calculation"""
         return self._depth
 
     @property
     def ions(self):
-        """ Energy [eV/(Angstrom-Ion)] transfered to material through ion collisions """
+        """Energy [eV/(Angstrom-Ion)] transfered to material through ion collisions"""
         return self._ions
 
     @property
     def absorbed(self):
-        """ Energy [eV/(Angstrom-Ion)] absorbed from collisions with Atom
+        """Energy [eV/(Angstrom-Ion)] absorbed from collisions with Atom
 
         TODO: fix terminology
         """
@@ -295,7 +335,15 @@ class EnergyToRecoils(SRIM_Output):
 
 
 class Phonons(SRIM_Output):
-    """ Distribution of Phonons """
+    """``PHONON.txt``  Distribution of Phonons
+
+    Parameters
+    ----------
+    directory : :obj:`str`
+         directory of calculation
+    filename : :obj:`str`, optional
+         filename for Phonons. Default ``PHONON.txt``
+    """
     def __init__(self, directory, filename='PHONON.txt'):
         with open(os.path.join(directory, filename), 'rb') as f:
             output = f.read()
@@ -311,7 +359,7 @@ class Phonons(SRIM_Output):
 
     @property
     def ion(self):
-        """ Ion used in SRIM calculation
+        """Ion used in SRIM calculation
 
         **mass** could be wrong
         """
@@ -319,32 +367,35 @@ class Phonons(SRIM_Output):
 
     @property
     def num_ions(self):
-        """ Number of Ions in SRIM simulation """
+        """Number of Ions in SRIM simulation"""
         return self._num_ions
 
     @property
     def depth(self):
-        """ Depth [Ang] of bins in SRIM Calculation """
+        """Depth [Ang] of bins in SRIM Calculation"""
         return self._depth
 
     @property
     def ions(self):
-        """ Number of phonons [Phonons/(Angstrom Ion)] created from ions collisions
-
-        """
+        """Number of phonons [Phonons/(Angstrom Ion)] created from ions collisions"""
         return self._ions
 
     @property
     def recoils(self):
         """Number of phonons [Phonons/(Angstrom Ion)] created from recoils
-        resulting from ion collisions
-
-        """
+        resulting from ion collisions"""
         return self._recoils
 
 
 class Range(SRIM_Output):
-    """ Table of the final distribution of the ions, and any recoiling target atoms
+    """``RANGE.txt`` Table of the final distribution of the ions, and any recoiling target atoms
+
+    Parameters
+    ----------
+    directory : :obj:`str`
+         directory of calculation
+    filename : :obj:`str`, optional
+         filename for Range. Default ``RANGE.txt``
     """
     def __init__(self, directory, filename='RANGE.txt'):
         with open(os.path.join(directory, filename), 'rb') as f:
@@ -361,7 +412,7 @@ class Range(SRIM_Output):
 
     @property
     def ion(self):
-        """ Ion used in SRIM calculation
+        """Ion used in SRIM calculation
 
         **mass** could be wrong
         """
@@ -369,63 +420,79 @@ class Range(SRIM_Output):
 
     @property
     def num_ions(self):
-        """ Number of Ions in SRIM simulation """
+        """Number of Ions in SRIM simulation"""
         return self._num_ions
 
     @property
     def depth(self):
-        """ Depth [Ang] of bins in SRIM Calculation """
+        """Depth [Ang] of bins in SRIM Calculation"""
         return self._depth
 
     @property
     def ions(self):
-        """ Ion final distribution [(Atoms/cm3)/(Atoms/cm2)] """
+        """Ion final distribution [(Atoms/cm3)/(Atoms/cm2)]"""
         return self._ions
 
     @property
     def elements(self):
-        """ Per elements [(Atoms/cm3)/(Atoms/cm2)] distribution of each element
-
-        """
+        """Per elements [(Atoms/cm3)/(Atoms/cm2)] distribution of each element"""
         return self._elements
 
 
 
 class Backscat(object):
     """ The kinetics of all backscattered ions (energy, location and trajectory)
+
+    TODO: one day to be implemented! submit pull request please!
     """
     pass
 
 
 class Transmit(object):
     """ The kinetics of all transmitted ions (energy, location and trajectory)
+
+    TODO: one day to be implemented! submit pull request please!
     """
     pass
 
 
 class Sputter(object):
     """ The kinetics of all target atoms sputtered from the target.
+
+    TODO: one day to be implemented! submit pull request please!
     """
     pass
 
 
 class Collision:
-    """Reads the SRIM Collisions.txt file
+    """Reads the SRIM Collisions file.
+
+    This is the most important file in my opinion. It records every
+    single collision and its energies. The file will get huge for
+    simulations with many collisions. Since the file can be larger
+    than the amount of RAM it will read the file in sections
+    (buffers).
+
+    Parameters
+    ----------
+    directory : :obj:`str`
+         directory of calculation
+    filename : :obj:`str`, optional
+         filename for Collisions. Default ``COLLISON.txt``
 
     """
-    def __init__(self, filename):
-        self.filename = filename
+    def __init__(self, directory, filename='COLLISON.txt'):
+        self.filename = os.path.join(directory, filename)
 
-        with open(filename, "r", encoding="latin-1") as f:
+        with open(filename, encoding="latin-1") as f:
             self._read_header(f)
 
         self._ion_index = buffered_findall(filename, b"  Ion    Energy")
 
     def _read_header(self, f):
-        """Read Header of COLLISIONS.TXT
+        """Read Header of COLLISON.txt
 
         Currently we do nothing with the header
-
         """
 
         # Collect the header of the file
@@ -597,6 +664,7 @@ class Collision:
 
 
 def buffered_findall(filename, string, start=0):
+    """A method of reading a file in buffered pieces (needed for HUGE files)"""
     with open(filename, 'rb') as f:
         filesize = os.path.getsize(filename)
         BUFFERSIZE = 4096
