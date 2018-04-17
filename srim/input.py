@@ -5,7 +5,7 @@
 
 class AutoTRIM(object):
     def __init__(self, mode=1, restart_directroy=None):
-        """Determines state of TRIM calculation
+        """Writes a file AUTOTRIM to TRIM directory for autostart
 
         Parameters
         ----------
@@ -25,15 +25,22 @@ class AutoTRIM(object):
 
 
 class TRIMInput(object):
-    """Input File representation of TRIM run"""
-    newline = '\r\n'
+    """Input File representation of TRIM run
 
-    def __init__(self, srim):
-        self._srim = srim
+    Parameters
+    ----------
+    trim : :class:`srim.srim.TRIM`
+        A TRIM calculation to use for writing a file
+    """
+    newline = '\r\n' # TRIM uses microsoft newlines
+
+    def __init__(self, trim):
+        self._trim = trim
 
     @property
     def srim_num_elements(self):
-        return sum(len(layer.elements) for layer in self._srim.target.layers)
+        """Number of unique elements in target (layer elements treated as unique)"""
+        return sum(len(layer.elements) for layer in self._trim.target.layers)
 
     def _write_title(self):
         return (
@@ -46,13 +53,13 @@ class TRIMInput(object):
             'Ion: Z, Mass [amu], Energy [keV], Angle [degrees], '
             'Number Ions, Bragg Corr, AutoSave Number'
         ) + self.newline + '{} {} {} {} {} {} {}'.format(
-            self._srim.ion.atomic_number,
-            self._srim.ion.mass,
-            self._srim.ion.energy / 1000.0, # eV -> keV
-            self._srim.settings.angle_ions,
-            self._srim.number_ions,
-            self._srim.settings.bragg_correction,
-            self._srim.settings.autosave
+            self._trim.ion.atomic_number,
+            self._trim.ion.mass,
+            self._trim.ion.energy / 1000.0,1 # eV -> keV
+            self._trim.settings.angle_ions,
+            self._trim.number_ions,
+            self._trim.settings.bragg_correction,
+            self._trim.settings.autosave
         ) + self.newline
 
     def _write_cascade_options(self):
@@ -60,9 +67,9 @@ class TRIMInput(object):
             'Cascades(1=Kitchn-Peese, 2=Full-Cascade, 3=Sputtering, '
             '4-5=Ions;6-7=Neutrons), Random Number Seed, Reminders'
         ) + self.newline + '{} {} {}'.format(
-        self._srim.calculation,
-            self._srim.settings.random_seed,
-            self._srim.settings.reminders
+        self._trim.calculation,
+            self._trim.settings.random_seed,
+            self._trim.settings.reminders
         ) + self.newline
 
     def _write_plot_on_off(self):
@@ -71,21 +78,21 @@ class TRIMInput(object):
             'TRANSMIT.txt, Sputtered, COLLISIONS.txt(0=no, 1=Ion, '
             '2=Ion+Recoils), Special EXYZ.txt file'
         ) + self.newline + '{} {} {} {} {} {}'.format(
-            self._srim.settings.ranges,
-            self._srim.settings.backscattered,
-            self._srim.settings.transmit,
-            self._srim.settings.sputtered,
-            self._srim.settings.collisions,
-            self._srim.settings.exyz
+            self._trim.settings.ranges,
+            self._trim.settings.backscattered,
+            self._trim.settings.transmit,
+            self._trim.settings.sputtered,
+            self._trim.settings.collisions,
+            self._trim.settings.exyz
         ) + self.newline
 
     def _write_target(self):
         return (
             'Target material : Number of Elements, Number of Layers'
         ) + self.newline + '"{}" {} {}'.format(
-            self._srim.settings.description,
+            self._trim.settings.description,
             self.srim_num_elements,
-            len(self._srim.target.layers),
+            len(self._trim.target.layers),
         ) + self.newline
 
     def _write_plot_options(self):
@@ -93,9 +100,9 @@ class TRIMInput(object):
             'PlotType (0-5); Plot Depths: Xmin, Xmax(Ang.) '
             '[=0 0 for Viewing Full Target]'
         ) + self.newline + '{} {} {}'.format(
-            self._srim.settings.plot_mode,
-            self._srim.settings.plot_xmin,
-            self._srim.settings.plot_xmax
+            self._trim.settings.plot_mode,
+            self._trim.settings.plot_xmin,
+            self._trim.settings.plot_xmax
         ) + self.newline
 
     def _write_elements(self):
@@ -103,7 +110,7 @@ class TRIMInput(object):
             'Target Elements:    Z   Mass [amu]'
         ) + self.newline
         index = 1
-        for layer in self._srim.target.layers:
+        for layer in self._trim.target.layers:
             for element in layer.elements:
                 elements_str += 'Atom {} = {} =     {} {}'.format(
                     index,
@@ -119,7 +126,7 @@ class TRIMInput(object):
             'Layer    Layer Name   Width Density'
         )
 
-        for layer in self._srim.target.layers:
+        for layer in self._trim.target.layers:
             for element in layer.elements:
                 layer_str += '  {}({})'.format(element.symbol, element.atomic_number)
 
@@ -129,7 +136,7 @@ class TRIMInput(object):
 
 
         element_index = 0
-        for layer_index, layer in enumerate(self._srim.target.layers, start=1):
+        for layer_index, layer in enumerate(self._trim.target.layers, start=1):
             layer_str += '{} "{}" {} {}'.format(
                 layer_index,
                 layer.name,
@@ -146,19 +153,19 @@ class TRIMInput(object):
     def _write_solid_gas(self):
         return (
             '0  Target layer phases (0=Solid, 1=Gas)'
-        ) + self.newline + ' '.join(str(layer.phase) for layer in self._srim.target.layers) + self.newline
+        ) + self.newline + ' '.join(str(layer.phase) for layer in self._trim.target.layers) + self.newline
 
     def _write_bragg_correction(self):
         return (
             'Target Compound Corrections (Bragg)'
-        ) + self.newline + ' 1' * len(self._srim.target.layers) + self.newline
+        ) + self.newline + ' 1' * len(self._trim.target.layers) + self.newline
 
     def _write_displacement_energies(self):
         ed_str = (
             'Individual target atom displacement energies (eV)'
         ) + self.newline
 
-        for layer in self._srim.target.layers:
+        for layer in self._trim.target.layers:
             for element in layer.elements:
                 ed_str += ' {}'.format(layer.elements[element]['E_d']) + self.newline
         return ed_str
@@ -168,7 +175,7 @@ class TRIMInput(object):
             'Individual target atom lattice binding energies (eV)'
         ) + self.newline
 
-        for layer in self._srim.target.layers:
+        for layer in self._trim.target.layers:
             for element in layer.elements:
                 lattice_str += ' {}'.format(layer.elements[element]['lattice']) + self.newline
         return lattice_str
@@ -178,7 +185,7 @@ class TRIMInput(object):
             'Individual target atom surface binding energies (eV)'
         ) + self.newline
 
-        for layer in self._srim.target.layers:
+        for layer in self._trim.target.layers:
             for element in layer.elements:
                 surface_str += ' {}'.format(layer.elements[element]['surface']) + self.newline
         return surface_str
@@ -186,9 +193,10 @@ class TRIMInput(object):
     def _write_version(self):
         return (
             'Stopping Power Version (1=2011, 0=2011)'
-        ) + self.newline + '{}'.format(self._srim.settings.version) + self.newline
+        ) + self.newline + '{}'.format(self._trim.settings.version) + self.newline
 
     def write(self):
+        """Write TRIMInput class to ``TRIM.IN``"""
         with open('TRIM.IN', 'wb') as f:
             methods = [
                 self._write_title,
@@ -215,9 +223,14 @@ class TRIMInput(object):
 
 
 class SRInput(object):
-    """ Input file for Stopping and Range (Calculations) """
+    """Input file for Stopping and Range (Calculations)
 
-    newline = '\r\n'
+    Parameters
+    ----------
+    sr : :class:`srim.srim.SR`
+        SR class to use for writting file
+    """
+    newline = '\r\n' # TRIM uses microsoft newlines
 
     def __init__(self, sr):
         self._sr = sr
@@ -282,6 +295,7 @@ class SRInput(object):
         ) + self.newline
 
     def write(self):
+        """Write SR calcualtion to ``SR.IN``"""
         with open('SR.IN', 'wb') as f:
             methods = [
                 self._write_filename,
