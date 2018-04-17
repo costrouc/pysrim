@@ -122,14 +122,14 @@ class TRIM(object):
         constructed ion for TRIM calculation
     calculation : :obj:`int`, optional
         Default 1 full cascade calculation
-        (0) Ion Distribution and Quick Calculation of Damage (quick KP)
-        (1) Detailed Calculation with full Damage Cascades (full cascades)
-        (2) Monolayer Collision Steps / Surface Sputtering
-        (3) Ions with specific energy/angle/depth (quick KP damage) using TRIM.DAT
-        (4) Ions with specific energy/angle/depth (full cascades) using TRIM.DAT
-        (5) Recoil cascades from neutrons, etc. (full cascades) using TRIM.DAT
-        (6) Recoil cascades and monolayer steps (full cascades) using TRIM.DAT
-        (7) Recoil cascades from neutrons, etc. (quick KP damage) using TRIM.DAT
+        (1) Ion Distribution and Quick Calculation of Damage (quick KP)
+        (2) Detailed Calculation with full Damage Cascades (full cascades)
+        (3) Monolayer Collision Steps / Surface Sputtering
+        (4) Ions with specific energy/angle/depth (quick KP damage) using TRIM.DAT
+        (5) Ions with specific energy/angle/depth (full cascades) using TRIM.DAT
+        (6) Recoil cascades from neutrons, etc. (full cascades) using TRIM.DAT
+        (7) Recoil cascades and monolayer steps (full cascades) using TRIM.DAT
+        (8) Recoil cascades from neutrons, etc. (quick KP damage) using TRIM.DAT
     number_ions : :obj:`int`, optional
         number of ions that you want to simulate. Default 1000. A lot
         better than the 99999 default in TRIM...
