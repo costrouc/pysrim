@@ -17,75 +17,91 @@ from .core.utils import (
 
 from .output import Results
 from .input import AutoTRIM, TRIMInput, SRInput
+from .config import DEFAULT_SRIM_DIRECTORY
 
 
-SRIM_DIRECTORY = os.path.join(os.sep, 'tmp', 'srim')
+class TRIMSettings(object):
+    """ TRIM Settings
 
-
-class SRIMSettings(object):
-    """ SRIM Settings (ReadOnly)
-
-    This object can construct all options available when running a calculation.
+    This object can construct all options available when running a TRIM calculation.
 
     Parameters
     ----------
-    description : str
-       A name to give calculation. Has no effect on the actual calculation.
-    reminders : str
+    description : :obj:`str`, optional
+       A name to give calculation. Has no effect on the actual
+       calculation.
+    reminders : :obj:`str`, optional
        TODO: could not find description. default 0
-    autosave : int
-       save calculations after every `autosave` steps. default 0 will not autosave except at end
-    plot_mode : int
+    autosave : :obj:`int`, optional
+       save calculations after every `autosave` steps. default 0 will
+       not autosave except at end
+    plot_mode : :obj:`int`, optional
+       Default 5.
        (0) ion distribution with recoils projected on y-plane
        (1) ion distribution with recoils projected on z-plane
        (2) ion distribution without recoils projected on y-plane
        (3) transverse plot of ions + recoil cascades, yz-plane
        (4) all four (0-3) on one screen
        (5) no graphics (default and at least 5X faster than others)
-    plot_xmin : float
-       minimum x depth to plot only really matters if ``plot_mode`` between 0-4.
-    plot_xmax : float
-       maximum x depth to plot only really matters if ``plot_mode`` between 0-4.
-    ranges : bool
-       whether include RANGES.txt, RANGE_3D.txt to output files. Default (0) False
-    backscattered : bool
-       whether include BACKSCAT.txt to output files. Default (0) False
-    transmit : bool
-       whether include TRANSMIT.txt to output files. Default (0) False
-    sputtered : bool
-       whether include SPUTTER.txt to output files. Default (0) False
-    collisions : bool
-       whether include COLLISON.txt to output files. Yes they did mispell collisions. Default (0) False
+    plot_xmin : :obj:`float`, optional
+       minimum x depth to plot only really matters if ``plot_mode``
+       between 0-4. Default 0.0.
+    plot_xmax : :obj:`float`, optional
+       maximum x depth to plot only really matters if ``plot_mode``
+       between 0-4. Default 0.0.
+    ranges : :obj:`bool`, optional
+       whether include ``RANGES.txt``, ``RANGE_3D.txt`` to output
+       files. Default (0) False
+    backscattered : :obj:`bool`, optional
+       whether include ``BACKSCAT.txt`` to output files. Default (0)
+       False
+    transmit : :obj:`bool`, optional
+       whether include ``TRANSMIT.txt`` to output files. Default (0)
+       False
+    sputtered : :obj:`bool`, optional
+       whether include ``SPUTTER.txt`` to output files. Default (0)
+       False
+    collisions : :obj:`bool`, optional
+       whether include ``COLLISON.txt`` to output files. Yes they did
+       mispell collisions. Default (0) False
     exyz : int
-       increment in eV to use for EXYZ.txt file. Default (0)
-    angle_ions : float
-       angle of incidence of the ion with respect to the target surface. Default (0) perpendicular to the target surface along x-axis. Values 0 - 89.9.
-    bragg_correction : float
+       increment in eV to use for ``EXYZ.txt`` file. Default (0)
+    angle_ions : :obj:`float`, optional
+       angle of incidence of the ion with respect to the target
+       surface. Default (0) perpendicular to the target surface along
+       x-axis. Values 0 - 89.9.
+    bragg_correction : :obj:`float`, optional
        bragg correction to stopping. Default (0) no correction
-    random_seed : int
-       a random seed to start calculation with. Default (0) results should be reproducible (not always what you want)
-    version : int
+    random_seed : :obj:`int`, optional
+       a random seed to start calculation with. Default (0) results
+       should be reproducible (not always what you want)
+    version : :obj:`int`, optional
        SRIM-2008 or SRIM-2008 so not really much choice. Default (0)
+
+    Notes
+    -----
+        This class should never explicitely created. Instead set as
+        kwargs in :class:`srim.srim.TRIM`
     """
-    def __init__(self, **args):
+    def __init__(self, **kwargs):
         """Initialize settings for a TRIM running"""
         self._settings = {
-            'description': check_input(str, is_quoteless, args.get('description', 'srim-python run')),
-            'reminders': check_input(int, is_zero_or_one, args.get('reminders', 0)),
-            'autosave': check_input(int, is_zero_or_one, args.get('autosave', 0)),
-            'plot_mode': check_input(int, is_zero_to_five, args.get('plot_mode', 5)),
-            'plot_xmin': check_input(float, is_positive, args.get('plot_xmin', 0.0)),
-            'plot_xmax': check_input(float, is_positive, args.get('plot_xmax', 0.0)),
-            'ranges': check_input(int, is_zero_or_one, args.get('ranges', 0)),
-            'backscattered': check_input(int, is_zero_or_one, args.get('backscattered', 0)),
-            'transmit': check_input(int, is_zero_or_one, args.get('transmit', 0)),
-            'sputtered': check_input(int, is_zero_or_one, args.get('ranges', 0)),
-            'collisions': check_input(int, is_zero_to_two, args.get('collisions', 0)),
-            'exyz': check_input(int, is_positive, args.get('exyz', 0)),
-            'angle_ions': check_input(float, is_srim_degrees, args.get('angle_ions', 0.0)),
-            'bragg_correction': float(args.get('bragg_correction', 1.0)), # TODO: Not sure what correct values are
-            'random_seed': check_input(int, is_positive, args.get('random_seed', 0)),
-            'version': check_input(int, is_zero_or_one, args.get('version', 0)),
+            'description': check_input(str, is_quoteless, kwargs.get('description', 'srim-python run')),
+            'reminders': check_input(int, is_zero_or_one, kwargs.get('reminders', 0)),
+            'autosave': check_input(int, is_zero_or_one, kwargs.get('autosave', 0)),
+            'plot_mode': check_input(int, is_zero_to_five, kwargs.get('plot_mode', 5)),
+            'plot_xmin': check_input(float, is_positive, kwargs.get('plot_xmin', 0.0)),
+            'plot_xmax': check_input(float, is_positive, kwargs.get('plot_xmax', 0.0)),
+            'ranges': check_input(int, is_zero_or_one, kwargs.get('ranges', 0)),
+            'backscattered': check_input(int, is_zero_or_one, kwargs.get('backscattered', 0)),
+            'transmit': check_input(int, is_zero_or_one, kwargs.get('transmit', 0)),
+            'sputtered': check_input(int, is_zero_or_one, kwargs.get('ranges', 0)),
+            'collisions': check_input(int, is_zero_to_two, kwargs.get('collisions', 0)),
+            'exyz': check_input(int, is_positive, kwargs.get('exyz', 0)),
+            'angle_ions': check_input(float, is_srim_degrees, kwargs.get('angle_ions', 0.0)),
+            'bragg_correction': float(kwargs.get('bragg_correction', 1.0)), # TODO: Not sure what correct values are
+            'random_seed': check_input(int, is_positive, kwargs.get('random_seed', 0)),
+            'version': check_input(int, is_zero_or_one, kwargs.get('version', 0)),
         }
 
         if self.plot_xmin > self.plot_xmax:
@@ -95,25 +111,47 @@ class SRIMSettings(object):
         return self._settings[attr]
 
 
-class SRIM(object):
-    """ Automate SRIM Calculations
+class TRIM(object):
+    """ Automate TRIM Calculations
 
+    Parameters
+    ----------
+    target : :class:`srim.core.target.Target`
+        constructed target for TRIM calculation
+    ion : :class:`srim.core.ion.Ion`
+        constructed ion for TRIM calculation
+    calculation : :obj:`int`, optional
+        Default 1 full cascade calculation
+        (0) Ion Distribution and Quick Calculation of Damage (quick KP)
+        (1) Detailed Calculation with full Damage Cascades (full cascades)
+        (2) Monolayer Collision Steps / Surface Sputtering
+        (3) Ions with specific energy/angle/depth (quick KP damage) using TRIM.DAT
+        (4) Ions with specific energy/angle/depth (full cascades) using TRIM.DAT
+        (5) Recoil cascades from neutrons, etc. (full cascades) using TRIM.DAT
+        (6) Recoil cascades and monolayer steps (full cascades) using TRIM.DAT
+        (7) Recoil cascades from neutrons, etc. (quick KP damage) using TRIM.DAT
+    number_ions : :obj:`int`, optional
+        number of ions that you want to simulate. Default 1000. A lot
+        better than the 99999 default in TRIM...
+    kwargs :
+        See :class:`srim.srim.TRIMSettings` for available TRIM
+        options. There are many and none are required defaults are
+        appropriate for most cases.
+
+    Notes
+    -----
+        If you are doing a simulation with over 1,000 ions it is
+        recomended to split the calculaion into several smaller
+        calculations. TRIM has been known to unexpectedly crash mainly
+        due to memory usage.
     """
-    def __init__(self, target, ion, calculation=1, number_ions=1000, **args):
-        """ Initialize srim object with settings
-
-        Parameters
-        ----------
-        args
-           Look at SRIMSettings
-
-        """
-        self.settings = SRIMSettings(**args)
+    def __init__(self, target, ion, calculation=1, number_ions=1000, **kwargs):
+        """ Initialize TRIM calcualtion"""
+        self.settings = TRIMSettings(**kwargs)
         self.calculation = check_input(int, is_one_to_seven, calculation)
         self.number_ions = check_input(int, is_positive, number_ions)
         self.target = target
         self.ion = ion
-
 
     def _write_input_files(self):
         """ Write necissary TRIM input files for calculation """
@@ -122,6 +160,17 @@ class SRIM(object):
 
     @staticmethod
     def copy_output_files(src_directory, dest_directory, check_srim_output=True):
+        """Copies known TRIM files in directory to destination directory
+
+        Parameters
+        ----------
+        src_directory : :obj:`str`
+            source directory to look for TRIM output files
+        dest_directory : :obj:`str`
+            destination directory to copy TRIM output files to
+        check_srim_output : :obj:`bool`, optional
+            ensure that all files exist
+        """
         known_files = {
             'TRIM.IN', 'PHONON.txt', 'E2RECOIL.txt', 'IONIZ.txt',
             'LATERAL.txt', 'NOVAC.txt', 'RANGE.txt', 'VACANCY.txt',
@@ -130,10 +179,10 @@ class SRIM(object):
         }
 
         if not os.path.isdir(src_directory):
-            raise ValueError('src_directory must be path')
+            raise ValueError('src_directory must be directory')
 
         if not os.path.isdir(dest_directory):
-            raise ValueError('dest_directory must be path')
+            raise ValueError('dest_directory must be directory')
 
         for known_file in known_files:
             if os.path.isfile(os.path.join(
@@ -144,23 +193,65 @@ class SRIM(object):
                 shutil.copy(os.path.join(
                     src_directory, 'SRIM Outputs', known_file), dest_directory)
 
-    def run(self, srim_directory=SRIM_DIRECTORY):
-        current_directory = os.getcwd()
-        os.chdir(srim_directory)
-        self._write_input_files()
-        # Make sure compatible with Windows, OSX, and Linux
-        # If 'wine' command exists use it to launch TRIM
-        if distutils.spawn.find_executable("wine"):
-            subprocess.check_call(['wine', str(os.path.join('.', 'TRIM.exe'))])
-        else:
-            subprocess.check_call([str(os.path.join('.', 'TRIM.exe'))])
-        os.chdir(current_directory)
+    def run(self, srim_directory=DEFAULT_SRIM_DIRECTORY):
+        """Run configured srim calculation
 
-        return Results(srim_directory)
+        This method:
+         - writes the input file to ``<srim_directory/SR Module/TRIM.IN``
+         - launches ``<srim_directory>/SR Module/SRModule.exe``. Uses ``wine`` if available (needed for linux and osx)
+
+        Parameters
+        ----------
+        srim_directory : :obj:`str`, optional
+            path to srim directory. ``SRIM.exe`` should be located in
+            this directory. Default ``/tmp/srim/`` will absolutely
+            need to change for windows.
+        """
+        current_directory = os.getcwd()
+        try:
+            os.chdir(srim_directory)
+            self._write_input_files()
+            # Make sure compatible with Windows, OSX, and Linux
+            # If 'wine' command exists use it to launch TRIM
+            if distutils.spawn.find_executable("wine"):
+                subprocess.check_call(['wine', str(os.path.join('.', 'TRIM.exe'))])
+            else:
+                subprocess.check_call([str(os.path.join('.', 'TRIM.exe'))])
+            os.chdir(current_directory)
+            return Results(srim_directory)
+        finally:
+            os.chdir(current_directory)
 
 
 class SRSettings(object):
-    """ SR Settings """
+    """ SR Settings
+
+    Parameters
+    ----------
+    energy_min : :obj:`float`, optional
+       lowest energy in [eV] to calculation range
+    output_type : :obj:`int`, optional
+       specify units for output table
+       (1) eV/Angstrom
+       (2) keV/micron
+       (3) MeV/mm
+       (4) keV / (ug/cm2)
+       (5) MeV / (mg/cm2)
+       (6) keV / (mg/cm2)
+       (7) eV / (1E15 atoms/cm2)
+       (8) L.S.S reduced units
+    output_filename : :obj:`str`, optional
+       filename to give for SR output from calcualtion
+    correction : :obj:`float`, optional
+       Bragg rule correction. Usually no correction needed for heavy
+       elements. Default 1.0 implies 100% of value (no change). 1.1
+       will increase by 10%.
+
+    Notes
+    -----
+        This class should never explicitely created. Instead set as
+        kwargs in :class:`srim.srim.SR`
+    """
     def __init__(self, **args):
         self._settings = {
             'energy_min': check_input(float, is_positive, args.get('energy_min', 1.0E3)),
@@ -174,24 +265,51 @@ class SRSettings(object):
 
 
 class SR(object):
-    """ Automate SR Calculations """
-    def __init__(self, layer, ion, **args):
-        self.settings = SRSettings(**args)
+    """ Automate SR Calculations
+
+    Parameters
+    ----------
+    leyer : :class:`srim.core.layer.Layer`
+        constructed layer for SR calculation
+    ion : :class:`srim.core.ion.Ion`
+        constructed ion for SR calculation
+    kwargs :
+        See :class:`srim.srim.SRSettings` for available SR
+        options. There are a few and none are required. Defaults are
+        appropriate for most cases.
+    """
+    def __init__(self, layer, ion, **kwargs):
+        self.settings = SRSettings(**kwargs)
         self.layer = layer
         self.ion = ion
 
-    def  _write_input_file(self):
+    def _write_input_file(self):
         """ Write necissary SR input file for calculation """
         SRInput(self).write()
 
-    def run(self, srim_directory=SRIM_DIRECTORY):
+    def run(self, srim_directory=DEFAULT_SRIM_DIRECTORY):
+        """Run configured srim calculation
+
+        This method:
+         - writes the input file to ``<srim_directory/SR Module/TRIM.IN``
+         - launches ``<srim_directory>/SR Module/SRModule.exe``. Uses ``wine`` if available (needed for linux and osx)
+
+        Parameters
+        ----------
+        srim_directory : :obj:`str`, optional
+            path to srim directory. ``SRIM.exe`` should be located in
+            this directory. Default ``/tmp/srim`` will absolutely need
+            to be changed for windows.
+        """
         current_directory = os.getcwd()
-        os.chdir(os.path.join(srim_directory, 'SR Module'))
-        self._write_input_file()
-        # Make sure compatible with Windows, OSX, and Linux
-        # If 'wine' command exists use it to launch TRIM
-        if distutils.spawn.find_executable("wine"):
-            subprocess.check_call(['wine', str(os.path.join('.', 'SRModule.exe'))])
-        else:
-            subprocess.check_call([str(os.path.join('.', 'SRModule.exe'))])
-        os.chdir(current_directory)
+        try:
+            os.chdir(os.path.join(srim_directory, 'SR Module'))
+            self._write_input_file()
+            # Make sure compatible with Windows, OSX, and Linux
+            # If 'wine' command exists use it to launch TRIM
+            if distutils.spawn.find_executable("wine"):
+                subprocess.check_call(['wine', str(os.path.join('.', 'SRModule.exe'))])
+            else:
+                subprocess.check_call([str(os.path.join('.', 'SRModule.exe'))])
+        finally:
+            os.chdir(current_directory)

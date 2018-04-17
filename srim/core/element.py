@@ -3,13 +3,15 @@ from .elementdb import ElementDB
 class Element(object):
     """ Element from periodic table
 
+    Parameters
+    ----------
+    identifier : str, int
+        Symbol, Name, or Atomic Number of element
+    mass : float, optional
+        Mass [amu] of element. Default is most common isotope atomic weight
     """
     def __init__(self, identifier, mass=None):
-        """ Initializes element from identifier and mass
-
-        :param str or int identifier: Symbol, Name, or Atomic Number of element
-        :param float mass: Mass [amu] of element
-        """
+        """Initializes element from identifier and mass"""
         element = ElementDB.lookup(identifier)
 
         self._symbol = element['symbol']
@@ -20,7 +22,7 @@ class Element(object):
             self._mass = mass
         else:
             self._mass = element['mass']
-            
+
     def __eq__(self, element):
         if (self.symbol == element.symbol and
             self.name == element.name and
@@ -53,4 +55,3 @@ class Element(object):
     @property
     def mass(self):
         return self._mass
-
