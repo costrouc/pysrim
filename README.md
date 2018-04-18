@@ -1,4 +1,4 @@
-![srim heatmap](https://gitlab.com/costrouc/srim-python/raw/master/examples/images/length-heatmap-log.png)
+![srim heatmap](https://gitlab.com/costrouc/srim-python/raw/master/examples/images/length-heatmap-log-cropped.png)
 
 # srim-python: automating SRIM input and output analysis
 
