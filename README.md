@@ -52,20 +52,32 @@
 
 # Features
 
-## Automate running SRIM and TRIM with Windows, OSX (wine), and Linux (wine)
+## Automate running SRIM and TRIM on all operating systems
 
-`/tmp/srim` is the path to the SRIM executable directory. `pysrim`
-will add all the necessary input files. If this ran successfully for
-you a SRIM window will popup and start the calculation. If a plot of
-the cascade is showing make sure to minimize it to speed it up!
+While TRIM is a great code it has many downsides regarding
+automation. The `TRIM.IN` input file is tedious to write yourself and
+the gui that constructs the `TRIM.IN` will crash at unexpeced moments.
+One of these crashes everyone has encountered is the fact that a float
+text field can never be empty. TRIM also has a tendancy to crash
+becuase it stores all cascades in memory. Meaning that for large runs
+with full cascades greater than 1,000 ions it will run out of
+memory. `pysrim` addresses all of these issues by providing a simple
+API wrapper for the input file (supporting all of the features),
+ability to run on all operating systems (using
+[wine](https://appdb.winehq.org/objectManager.php?sClass=version&iId=13202)
+for linux and OSX), and allowing batch runs of calculations see [this
+notebook
+example](https://gitlab.com/costrouc/srim-python/blob/master/examples/notebooks/SiC.ipynb).
 
-Also some advice. Since you can automate the calculation, it is nice
-to break the calculation into several pieces so that if it crashes you
-do not lose all your results. For example if you need to do 10,000
-ions maybe break it into 1,000 ions x 10 calculations. We all know
-that SRIM has a tendancy to crash at the worst times...
+Below is a hello world example of using `pysrim` for running a TRIM
+calcualtion. Note that `/tmp/srim` is the path to the SRIM executable
+directory (`SRIM.exe` should reside in this directory). `pysrim` will
+add all the necessary input files. If this ran successfully for you a
+SRIM window will popup and start the calculation.
 
 ``` python
+from srim import Ion, Layer, Target, TRIM
+
 ion = Ion('Ni', energy=3.0e6)
 layer = Layer({
         'Ni': {
@@ -75,9 +87,12 @@ layer = Layer({
             'surface': 3.0
         }}, density=8.9, width=20000.0)
 target = Target([layer])
-srim = SRIM(target, ion, number_ions=100, calculation=1) # Calculation=2 => full cascade
-results = srim.run('/tmp/srim')
+# calculation=1 (kp quick), calculation=2 (full cascade)
+trim = TRIM(target, ion, number_ions=100, calculation=1)
+results = trim.run('/tmp/srim')
 ```
+
+See [documentation](https://pysrim.readthedocs.io/en/latest/) for all available options.
 
 ## Copy SRIM output files to directory
 
@@ -85,16 +100,29 @@ After a SRIM calculation has completed run `copy_output_files` to take
 all of the output files and move them to a directory of your liking.
 
 ``` python
-SRIM.copy_output_files('/tmp/srim', '/home/costrouc/scratch/srim')
+from srim import TRIM
+
+TRIM.copy_output_files('/tmp/srim', '/home/costrouc/scratch/srim')
 ```
 
 ## Post processes SRIM output as numpy arrays
 
-`srim-python` was not designed to create nice plots for you becuase
-this would never be flexible enough for your use case. Instead
-`srim-python` provides classes with properties for each column of the
-output results file as nice numpy arrays. The posibilities are endless
-at this point.
+By far the hardest part about running TRIM calculations is analyzing
+the output files. `pysrim` comes with parsers for
+[IONIZ.txt](https://pysrim.readthedocs.io/en/latest/source/srim.html#srim.output.Ioniz),
+[VACANCY.txt](https://pysrim.readthedocs.io/en/latest/source/srim.html#srim.output.Vacancy),
+[NOVAC.txt](https://pysrim.readthedocs.io/en/latest/source/srim.html#srim.output.NoVacancy),
+[E2RECOIL.txt](https://pysrim.readthedocs.io/en/latest/source/srim.html#srim.output.EnergyToRecoils),
+[PHONON.txt](https://pysrim.readthedocs.io/en/latest/source/srim.html#srim.output.Phonons),
+[RANGE.txt](https://pysrim.readthedocs.io/en/latest/source/srim.html#srim.output.Range),
+[COLLISON.txt](https://pysrim.readthedocs.io/en/latest/source/srim.html#srim.output.Collision). The
+COLLISON.txt file can get quite large greater than 10 Gb so the
+`Collision` parse uses a buffered reader that can handle any file
+size. `pysrim` comes with some helpful plotting utilities such a
+plotting the DPA vs depth. However, `pysrim's` most powerful feature
+is that all of the text files are exposed as numpy arrays. The example
+below shows how to plot DPA using a simple math and numpy. This
+enables the user to seamlessly use TRIM and do analysis.
 
 ``` python
 def plot_damage_energy(folder, ax):
@@ -118,17 +146,20 @@ output file and gives simple access to each column. This did require
 some complex regex to get working just right.
 
 ``` python
-fig, ax = plt.subplots(1, len(folders), sharey=True, sharex=True)
+folders = ['test_files/2', 'test_files/4']
+image_directory = 'examples/images'
 
-for i, folder in enumerate(folders):
-    plot_damage_energy(folder, ax[i])
-    plot_ionization(folder, ax[i])
-    ax[i].legend()
-    ax[i].set_ylabel('eV')
-    ax[i].set_xlabel('Depth [Angstroms]')
+fig, axes = plt.subplots(1, len(folders), sharey=True, sharex=True)
+
+for ax, folder in zip(np.ravel(axes), folders):
+    plot_damage_energy(folder, ax)
+    plot_ionization(folder, ax)
+    ax.legend()
+    ax.set_ylabel('eV')
+    ax.set_xlabel('Depth [Angstroms]')
 fig.suptitle('Ionization Energy vs Depth', fontsize=15)
-fig.set_size_inches((10, 4))
-fig.tight_layout()
+fig.set_size_inches((20, 6))
+fig.savefig(os.path.join(image_directory, 'ionizationvsdepth.png'), transparent=True)
 ```
 
 ![srim heatmap](https://gitlab.com/costrouc/srim-python/raw/master/examples/images/ionization-vs-depth.png)
@@ -146,6 +177,8 @@ have used this in a
 
 # Installation
 
+Installation of `pysrim` is easy via pip or conda.
+
 Available on PyPi
 
  -  `pip install pysrim`
@@ -154,22 +187,20 @@ Available on Conda
 
  - `conda install -c costrouc pysrim`
 
+Next you will need to install SRIM on your machine.
 
 ## Linux and OSX
 
-SRIM can run perfectly on linux and OSX with
-[wine](https://www.winehq.org/). See
-[compatibility](https://appdb.winehq.org/objectManager.php?sClass=version&iId=13202).
+For linux an OSX you will need to first have wine installed. See [this post](https://www.davidbaumgold.com/tutorials/wine-mac/) on installation of wine on OSX. For linux you will typically be able to install wine via `apt get install wine` or `yum install wine`. SRIM is [compatible](https://appdb.winehq.org/objectManager.php?sClass=version&iId=13202) with wine.
 
-Run the [installation script](https://gitlab.com/costrouc/srim-python/raw/master/install.sh) with bash.
+Once you have wine installed run the [installer script](https://gitlab.com/costrouc/srim-python/raw/master/install.sh) `install.sh`.
 
 Click extract and then done.
 
 ## Windows
 
 A collegue of mine has gotten it to work easily on Windows but I
-myself have no experience. It should just work if you point the
-package to the SRIM executable.
+myself have no experience. Just download the executable at [srim.org](http://srim.org/). Next you will extract the SRIM files into a directory on your windows machine. Note the directory of installation as it will be needed from `trim.run()`.
 
 # Contributing
 
