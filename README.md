@@ -182,7 +182,7 @@ fig.set_size_inches((20, 6))
 fig.savefig(os.path.join(image_directory, 'ionizationvsdepth.png'), transparent=True)
 ```
 
-![srim heatmap](https://gitlab.com/costrouc/srim-python/raw/master/examples/images/ionization-vs-depth.png)
+![srim heatmap](https://gitlab.com/costrouc/srim-python/raw/master/examples/images/ionizationvsdepth.png)
 
 See [jupyter
 notebook](<https://gitlab.com/costrouc/srim-python/blob/master/examples/notebooks/Analysis.ipynb)
