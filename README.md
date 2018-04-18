@@ -1,11 +1,18 @@
 ![srim heatmap](https://gitlab.com/costrouc/srim-python/raw/master/examples/images/length-heatmap-log-cropped.png)
 
-# srim-python: automating SRIM input and output analysis
+# srim-python: automating SRIM, analysis, publication quality plots
+
+`pysrim` is a python package that aims to wrap and extend SRIM a
+popular tool for simulating ions traveling through a material. There
+are many pain points to SRIM and this package aims to address
+them. These inclue compatibility with all OS's, automation and crash
+recovery of SRIM calculations, parsing of all output files, and
+publication quality plots.
 
 <table>
 <tr>
   <td>Latest Release</td>
-  <td><img src="https://img.shields.io/pypi/v/pysrim.svg" alt="latest release" /></td>
+  <td><img src="https://img.shields.io/pypi/v/pysrim.svg" alt="latest release"/></td>
 </tr>
 </tr>
   <td></td>
@@ -21,34 +28,19 @@
 </tr>
 <tr>
   <td>Build Status</td>
-  <td>
-    <a href="https://gitlab.com/costrouc/srim-python/pipelines">
-    <img src="https://gitlab.com/costrouc/srim-python/badges/master/pipeline.svg" alt="gitlab pipeline status" />
-    </a>
-  </td>
+  <td> <a href="https://gitlab.com/costrouc/srim-python/pipelines"> <img
+src="https://gitlab.com/costrouc/srim-python/badges/master/pipeline.svg"
+alt="gitlab pipeline status" /> </a> </td>
 </tr>
 <tr>
-  <td>Coverage</td>
-  <td><img src="https://gitlab.com/costrouc/srim-python/badges/master/coverage.svg" alt="coverage" /></td>
-</tr>
-<tr>
-  <td>Conda</td>
-  <td>
-    <a href="https://gitlab.com/costrouc/srim-python">
-    <img src="https://anaconda.org/costrouc/pysrim/badges/downloads.svg" alt="conda downloads" />
-    </a>
-  </td>
+  <td>Coverage</td> <td><img src="https://gitlab.com/costrouc/srim-python/badges/master/coverage.svg" alt="coverage" /></td> </tr> <tr> <td>Conda</td>
+  <td> <a href="https://gitlab.com/costrouc/srim-python"> <img src="https://anaconda.org/costrouc/pysrim/badges/downloads.svg" alt="conda downloads" /> </a> </td>
 </tr>
 <tr>
   <td>Documentation</td>
-  <td>
-    <a href="https://pysrim.readthedocs.io/en/latest/">
-    <img src="https://readthedocs.org/projects/pysrim/badge/?version=latest" alt="readthedocs documentation" />
-    </a>
-  </td>
+  <td> <a href="https://pysrim.readthedocs.io/en/latest/"> <img src="https://readthedocs.org/projects/pysrim/badge/?version=latest" alt="readthedocs documentation" /> </a> </td>
 </tr>
 </table>
-
 
 # Features
 

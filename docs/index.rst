@@ -6,15 +6,25 @@
 Welcome to pysrim's documentation!
 ==================================
 
-For now I will not write comprehensive sphinx documentation. Examples
-of pysrim usage can be found in the `jupyter notebooks in the example
-folder of the repo
-<https://gitlab.com/costrouc/srim-python/tree/master/examples/notebooks>`_. One
-notebook gives an example of plots that were created for a
-`publication <https://doi.org/10.1016/j.cossms.2017.09.003>`_.
+.. image:: ../examples/images/length-heatmap-log-cropped.png
 
-The primary purpose of this documentation for now is to document the
-api. For now it is probably best to read the source code.
+`pysrim` is a python package that aims to wrap and extend SRIM a
+popular tool for simulating ions traveling through a material. There
+are many pain points to SRIM and this package aims to address
+them. These inclue compatibility with all OS's, automation and crash
+recovery of SRIM calculations, parsing of all output files, and
+publication quality plots.
+
+``pysrim`` is heavily tested and documented. See ``modindex`` to
+search through api documentation or using the search to find a
+specific function.
+
+Please see installation for getting pysrim intalled on your
+machine. Next you will want to follow the simple tutorial to get
+started. For a much more advanced example please see `SiC ion damage
+production jupyter notebook
+<https://gitlab.com/costrouc/srim-python/blob/master/examples/notebooks/SiC.ipynb>`_.
+
 
 .. toctree::
    :maxdepth: 2
