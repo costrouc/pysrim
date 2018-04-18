@@ -78,7 +78,10 @@ SRIM window will popup and start the calculation.
 ``` python
 from srim import Ion, Layer, Target, TRIM
 
+# Construct a 3MeV Nickel ion
 ion = Ion('Ni', energy=3.0e6)
+
+# Construct a layer of nick 20um thick with a displacement energy of 30 eV
 layer = Layer({
         'Ni': {
             'stoich': 1.0,
@@ -86,10 +89,21 @@ layer = Layer({
             'lattice': 0.0,
             'surface': 3.0
         }}, density=8.9, width=20000.0)
+
+# Construct a target of a single layer of Nickel
 target = Target([layer])
-# calculation=1 (kp quick), calculation=2 (full cascade)
-trim = TRIM(target, ion, number_ions=100, calculation=1)
-results = trim.run('/tmp/srim')
+
+# Initialize a TRIM calculation with given target and ion for 25 ions, quick calculation
+trim = TRIM(target, ion, number_ions=25, calculation=1)
+
+# Specify the directory of SRIM.exe
+# For windows users the path will include C://...
+srim_executable_directory = '/tmp/srim'
+
+# takes about 10 seconds on my laptop
+results = trim.run(srim_executable_directory)
+# If all went successfull you should have seen a TRIM window popup and run 25 ions!
+# results is `srim.output.Results` and contains all output files parsed
 ```
 
 See [documentation](https://pysrim.readthedocs.io/en/latest/) for all available options.
@@ -115,16 +129,22 @@ the output files. `pysrim` comes with parsers for
 [E2RECOIL.txt](https://pysrim.readthedocs.io/en/latest/source/srim.html#srim.output.EnergyToRecoils),
 [PHONON.txt](https://pysrim.readthedocs.io/en/latest/source/srim.html#srim.output.Phonons),
 [RANGE.txt](https://pysrim.readthedocs.io/en/latest/source/srim.html#srim.output.Range),
+and
 [COLLISON.txt](https://pysrim.readthedocs.io/en/latest/source/srim.html#srim.output.Collision). The
-COLLISON.txt file can get quite large greater than 10 Gb so the
-`Collision` parse uses a buffered reader that can handle any file
-size. `pysrim` comes with some helpful plotting utilities such a
-plotting the DPA vs depth. However, `pysrim's` most powerful feature
-is that all of the text files are exposed as numpy arrays. The example
-below shows how to plot DPA using a simple math and numpy. This
-enables the user to seamlessly use TRIM and do analysis.
+COLLISON.txt file can get quite large so the `Collision` parser uses a
+buffered reader that can handle any file size. Additinally a class
+[srim.output.Results](https://pysrim.readthedocs.io/en/latest/source/srim.html#srim.output.Results)
+will processes all output files in a directory and provide a
+dictionary of each parsed output file. `pysrim` comes with some
+helpful plotting utilities such a plotting the DPA vs depth. However,
+`pysrim's` most powerful feature is that all of the text files are
+exposed as numpy arrays. The example below shows how to plot DPA using
+a simple math and numpy. This enables the user to seamlessly use TRIM
+and do analysis.
 
 ``` python
+from srim.output import Phonons, Ioniz
+
 def plot_damage_energy(folder, ax):
     phon = Phonons(folder)
     dx = max(phon.depth) / 100.0
