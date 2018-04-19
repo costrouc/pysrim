@@ -5,7 +5,7 @@
 `pysrim` is a python package that aims to wrap and extend SRIM a
 popular tool for simulating ions traveling through a material. There
 are many pain points to SRIM and this package aims to address
-them. These inclue compatibility with all OS's, automation and crash
+them. These include compatibility with all OS's, automation and crash
 recovery of SRIM calculations, parsing of all output files, and
 publication quality plots.
 
@@ -41,6 +41,10 @@ alt="gitlab pipeline status" /> </a> </td>
   <td> <a href="https://pysrim.readthedocs.io/en/latest/"> <img src="https://readthedocs.org/projects/pysrim/badge/?version=latest" alt="readthedocs documentation" /> </a> </td>
 </tr>
 </table>
+
+# Documentation
+
+Link to [documentation on readthedocs](https://pysrim.readthedocs.io/en/latest/)
 
 # Features
 
