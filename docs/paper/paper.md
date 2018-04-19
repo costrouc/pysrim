@@ -35,16 +35,17 @@ ion path [@was2016fundamentals]. Some of the important properties that
 can be gleaned from investigating the initial damage from the ion
 include: number of vacancies produced, energy deposited per unit
 length, track diameter, and implantation profile. These properties
-enables further simulations and allow computing a common radiation
-damage unit displacements per atom (DPA) which can be used to compare
-experiments [@backman2013molecular] [@stoller2013use]. Additionally
-the ejection of materials near the surface due to incident ions is
-important to techniques such as RBS, SIMS, and sputtering. The
-interaction of ions within a material can be broken into two parts:
-electronic and nuclear stopping. Electronic stopping is the energy
-lost from the ion due to inelastic collisions with electrons along its
-path. Nuclear stopping is the energy lost due to elastic collisions
-between the ion and atomic nuclei within the material.
+enable further simulations and allow computing a common radiation
+damage unit, displacements per atom (DPA), which can be used to
+compare experiments [@backman2013molecular]
+[@stoller2013use]. Additionally the ejection of materials near the
+surface due to incident ions is important to techniques such as RBS,
+SIMS, and sputtering [@vickerman2011surface]. The interaction of ions
+within a material can be broken into two parts: electronic and nuclear
+stopping. Electronic stopping is the energy lost from the ion due to
+inelastic collisions with electrons along its path. Nuclear stopping
+is the energy lost due to elastic collisions between the ion and
+atomic nuclei within the material.
 
 The Stopping and Range of Ions in Matter (SRIM) is a well known
 software in the nuclear community that allows the simulation, via
