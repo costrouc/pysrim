@@ -1,5 +1,5 @@
 ---
-title: Automation of SRIM
+title: "pysrim: Automation, Analysis, and Plotting of SRIM Calculations"
 tags:
   - SRIM
   - nuclear materials
@@ -10,9 +10,17 @@ authors:
   - name: Christopher Ostrouchov
     orcid: 0000-0002-8734-4564
     affiliaton: 1
+  - name: Yanwen Zhang
+    orcid: 0000-0000-0000-0000
+    affiliation: "2, 1"
+  - name: William Weber
+    orcid: 0000-0000-0000-0000
+    affiliation: "1, 2"
 affiliations:
   - name: "Department of Material Science and Engineering, University of Tennessee"
     index: 1
+  - name: "Materials Science and Technology Division, Oak Ridge National Laboratory"
+    index: 2
 date: 18 April 2018
 bibliography: paper.bib
 ---
@@ -80,11 +88,11 @@ files. These output files include:
 [RANGE.txt](https://pysrim.readthedocs.io/en/latest/source/srim.html#srim.output.Range),
 and
 [COLLISON.txt](https://pysrim.readthedocs.io/en/latest/source/srim.html#srim.output.Collision). Once
-the output file is parsed the data is available in numpy arrays. From
+the output file is parsed the data is available in `numpy` arrays. From
 here the user is free to create plots of interesting relationships in
 their data. `pysrim` additionally provides plotting utilities for
 producing figures commonly needed in nuclear materials. This software
-has been used for the SRIM calcualtions, analysis, and plotting in two
+has been used for the SRIM calculations, analysis, and plotting in two
 publications [@zhang2017coupled] [@zhang2014effect].
 
 ![Plots produced by `pysrim` of vacancies produced for ions traveling
