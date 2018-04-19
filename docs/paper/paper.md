@@ -28,33 +28,33 @@ bibliography: paper.bib
 # Summary
 
 The behavior of ions traveling through a material is of great interest
-to many fields. For instance radiation materials and ion beam
+to many fields. For instance nuclear materials and ion beam
 modification are most concerned with the bulk of the material and
 understanding the damage formation and evolution of defects along the
 ion path [@was2016fundamentals]. Some of the important properties that
 can be gleaned from investigating the initial damage from the ion
 include: number of vacancies produced, energy deposited per unit
-length, track diameter, and average implantation distance. These
-properties enables further simulations and allow computing a common
-radiation damage unit displacements per atom (DPA) which can be used
-to compare irradiation experiments [@stoller2013use]
-[@backman2013molecular]. Additionally the ejection of materials near
-the surface due to incident ions is important to techniques such as
-RBS, SIMS, and sputtering. The interaction of ions with a material can
-be broken into two parts: electronic and nuclear stopping. Electronic
-stopping is the energy lost from the ion due to inelastic collisions
-with electrons along its path. While nuclear stopping is the energy
-lost due to collisions between the ion and atoms nuclei within the
-material.
+length, track diameter, and implantation profile. These properties
+enables further simulations and allow computing a common radiation
+damage unit displacements per atom (DPA) which can be used to compare
+experiments [@backman2013molecular] [@stoller2013use]. Additionally
+the ejection of materials near the surface due to incident ions is
+important to techniques such as RBS, SIMS, and sputtering. The
+interaction of ions within a material can be broken into two parts:
+electronic and nuclear stopping. Electronic stopping is the energy
+lost from the ion due to inelastic collisions with electrons along its
+path. Nuclear stopping is the energy lost due to elastic collisions
+between the ion and atomic nuclei within the material.
 
 The Stopping and Range of Ions in Matter (SRIM) is a well known
-software in nuclear community that allow the simulation via Monte
-Carlo of ions through a material through simulation of electronic and
-nuclear stopping [@ziegler2010srim]. SRIM was originally developed in
-1985 and has had numerous updates on the electronic stopping powers
-since then with the nuclear stopping well explained by the ZBL
-potential [@ziegler1988stopping]. The executable SRIM is free to use
-for non-comercial use but the source code is not available to the
+software in the nuclear community that allows the simulation, via
+Monte Carlo, of ions through a material by modeling the energy
+transfer through electronic and nuclear stopping
+[@ziegler2010srim]. SRIM was originally developed in 1985 and has had
+numerous updates on the electronic stopping powers since then with the
+nuclear stopping well explained by the ZBL potential
+[@ziegler1988stopping]. The executable SRIM is free to use for
+non-commercial use but the source code is not available to the
 community despite requests. While SRIM is a scientifically accurate
 code it does not get updated frequently and has many bugs from a
 usability standpoint.
@@ -95,8 +95,8 @@ producing figures commonly needed in nuclear materials. This software
 has been used for the SRIM calculations, analysis, and plotting in two
 publications [@zhang2017coupled] [@zhang2014effect].
 
-![Plots produced by `pysrim` of vacancies produced for ions traveling
-through $SiC$ material. (top) $Si$ ion (bottom) $Ni$
+![Plots produced by `pysrim` of vacancies for ions traveling through
+$SiC$ material. (top) $Si$ ion (bottom) $Ni$
 ion](length-heatmap-log-cropped.png)
 
 # Acknowledgements

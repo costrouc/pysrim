@@ -1,6 +1,6 @@
 ![srim heatmap](https://gitlab.com/costrouc/srim-python/raw/master/examples/images/length-heatmap-log-cropped.png)
 
-# srim-python: automating SRIM, analysis, publication quality plots
+# pysrim: Automation, Analysis, and Plotting of SRIM Calculations
 
 `pysrim` is a python package that aims to wrap and extend SRIM a
 popular tool for simulating ions traveling through a material. There
