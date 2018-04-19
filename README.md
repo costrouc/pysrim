@@ -1,4 +1,4 @@
-![srim heatmap](https://gitlab.com/costrouc/srim-python/raw/master/examples/images/length-heatmap-log-cropped.png)
+![srim heatmap](https://gitlab.com/costrouc/pysrim/raw/master/examples/images/length-heatmap-log-cropped.png)
 
 # pysrim: Automation, Analysis, and Plotting of SRIM Calculations
 
@@ -28,13 +28,13 @@ publication quality plots.
 </tr>
 <tr>
   <td>Build Status</td>
-  <td> <a href="https://gitlab.com/costrouc/srim-python/pipelines"> <img
-src="https://gitlab.com/costrouc/srim-python/badges/master/pipeline.svg"
+  <td> <a href="https://gitlab.com/costrouc/pysrim/pipelines"> <img
+src="https://gitlab.com/costrouc/pysrim/badges/master/pipeline.svg"
 alt="gitlab pipeline status" /> </a> </td>
 </tr>
 <tr>
-  <td>Coverage</td> <td><img src="https://gitlab.com/costrouc/srim-python/badges/master/coverage.svg" alt="coverage" /></td> </tr> <tr> <td>Conda</td>
-  <td> <a href="https://gitlab.com/costrouc/srim-python"> <img src="https://anaconda.org/costrouc/pysrim/badges/downloads.svg" alt="conda downloads" /> </a> </td>
+  <td>Coverage</td> <td><img src="https://gitlab.com/costrouc/pysrim/badges/master/coverage.svg" alt="coverage" /></td> </tr> <tr> <td>Conda</td>
+  <td> <a href="https://gitlab.com/costrouc/pysrim"> <img src="https://anaconda.org/costrouc/pysrim/badges/downloads.svg" alt="conda downloads" /> </a> </td>
 </tr>
 <tr>
   <td>Documentation</td>
@@ -59,7 +59,7 @@ ability to run on all operating systems (using
 [wine](https://appdb.winehq.org/objectManager.php?sClass=version&iId=13202)
 for linux and OSX), and allowing batch runs of calculations see [this
 notebook
-example](https://gitlab.com/costrouc/srim-python/blob/master/examples/notebooks/SiC.ipynb).
+example](https://gitlab.com/costrouc/pysrim/blob/master/examples/notebooks/SiC.ipynb).
 
 Below is a hello world example of using `pysrim` for running a TRIM
 calcualtion. Note that `/tmp/srim` is the path to the SRIM executable
@@ -152,7 +152,7 @@ def plot_ionization(folder, ax):
 ```
 
 Set `folders` to list of directories to SRIM outputs. See
-[Analysis](https://gitlab.com/costrouc/srim-python/blob/master/examples/notebooks/Analysis.ipynb)
+[Analysis](https://gitlab.com/costrouc/pysrim/blob/master/examples/notebooks/Analysis.ipynb)
 for detailed example. Notice how there is a python class for each SRIM
 output file and gives simple access to each column. This did require
 some complex regex to get working just right.
@@ -174,15 +174,15 @@ fig.set_size_inches((20, 6))
 fig.savefig(os.path.join(image_directory, 'ionizationvsdepth.png'), transparent=True)
 ```
 
-![srim heatmap](https://gitlab.com/costrouc/srim-python/raw/master/examples/images/ionizationvsdepth.png)
+![srim heatmap](https://gitlab.com/costrouc/pysrim/raw/master/examples/images/ionizationvsdepth.png)
 
 See [jupyter
-notebook](<https://gitlab.com/costrouc/srim-python/blob/master/examples/notebooks/Analysis.ipynb)
+notebook](<https://gitlab.com/costrouc/pysrim/blob/master/examples/notebooks/Analysis.ipynb)
 for full demonstration of features.
 
 An example of creating some publication graphics with pysrim can also
 be found in that
-[directory](https://gitlab.com/costrouc/srim-python/blob/master/examples/notebooks/SiC.ipynb). I
+[directory](https://gitlab.com/costrouc/pysrim/blob/master/examples/notebooks/SiC.ipynb). I
 have used this in a
 [publication](https://doi.org/10.1016/j.cossms.2017.09.003).
 
@@ -205,7 +205,7 @@ Next you will need to install SRIM on your machine.
 
 For linux an OSX you will need to first have wine installed. See [this post](https://www.davidbaumgold.com/tutorials/wine-mac/) on installation of wine on OSX. For linux you will typically be able to install wine via `apt get install wine` or `yum install wine`. SRIM is [compatible](https://appdb.winehq.org/objectManager.php?sClass=version&iId=13202) with wine.
 
-Once you have wine installed run the [installer script](https://gitlab.com/costrouc/srim-python/raw/master/install.sh) `install.sh`.
+Once you have wine installed run the [installer script](https://gitlab.com/costrouc/pysrim/raw/master/install.sh) `install.sh`.
 
 Click extract and then done.
 

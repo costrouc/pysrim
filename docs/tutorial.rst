@@ -98,7 +98,7 @@ Plotting and Analysis of Results
 
 Now we assume that we have completed several interesting SRIM
 calculations. For this tutorial we will use `results
-<https://gitlab.com/costrouc/srim-python/tree/master/test_files>`_
+<https://gitlab.com/costrouc/pysrim/tree/master/test_files>`_
 within the ``pysrim`` repository. We will analyze results such as
 damage energy, ionization, and vacancy production.
 
@@ -189,6 +189,6 @@ Total number of vacancies vs depth.
 
 For a much more advanced example please see `SiC ion damage production
 jupyter notebook
-<https://gitlab.com/costrouc/srim-python/blob/master/examples/notebooks/SiC.ipynb>`_. This
+<https://gitlab.com/costrouc/pysrim/blob/master/examples/notebooks/SiC.ipynb>`_. This
 tutorial is also available in `notebook form
-<https://gitlab.com/costrouc/srim-python/blob/master/examples/notebooks/Analysis.ipynb>`_.
+<https://gitlab.com/costrouc/pysrim/blob/master/examples/notebooks/Analysis.ipynb>`_.

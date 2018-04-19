@@ -86,7 +86,7 @@ class TRIMSettings(object):
     def __init__(self, **kwargs):
         """Initialize settings for a TRIM running"""
         self._settings = {
-            'description': check_input(str, is_quoteless, kwargs.get('description', 'srim-python run')),
+            'description': check_input(str, is_quoteless, kwargs.get('description', 'pysrim run')),
             'reminders': check_input(int, is_zero_or_one, kwargs.get('reminders', 0)),
             'autosave': check_input(int, is_zero_or_one, kwargs.get('autosave', 0)),
             'plot_mode': check_input(int, is_zero_to_five, kwargs.get('plot_mode', 5)),

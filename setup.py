@@ -16,7 +16,7 @@ setup(
     version='0.3.0',
     description='Srim Automation of Tasks via Python',
     long_description='Pythonic Wrapper to SRIM',
-    url='https://gitlab.com/costrouc/srim-python',
+    url='https://gitlab.com/costrouc/pysrim',
     author='Christopher Ostrouchov',
     author_email='chris.ostrouchov+pysrim@gmail.com',
     license="MIT",
@@ -32,7 +32,7 @@ setup(
         'Programming Language :: Python :: 3.6',
     ],
     keywords='material srim automation plotting',
-    download_url='https://gitlab.com/costrouc/srim-python/repository/master/archive.zip',
+    download_url='https://gitlab.com/costrouc/pysrim/repository/master/archive.zip',
     packages=find_packages(exclude=['examples', 'tests', 'test_files', 'docs']),
     package_data={
         'srim': ['data/*.yaml'],

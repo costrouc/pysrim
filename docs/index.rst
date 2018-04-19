@@ -23,7 +23,7 @@ Please see installation for getting pysrim intalled on your
 machine. Next you will want to follow the simple tutorial to get
 started. For a much more advanced example please see `SiC ion damage
 production jupyter notebook
-<https://gitlab.com/costrouc/srim-python/blob/master/examples/notebooks/SiC.ipynb>`_.
+<https://gitlab.com/costrouc/pysrim/blob/master/examples/notebooks/SiC.ipynb>`_.
 
 
 .. toctree::

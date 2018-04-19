@@ -24,7 +24,7 @@ Linux and OSX
 
 For linux an OSX you will need to first have wine installed. See `this post <https://www.davidbaumgold.com/tutorials/wine-mac/>`_ on installation of wine on OSX. For linux you will typically be able to install wine via ``apt get install wine`` or ``yum install wine``. SRIM is `compatible <https://appdb.winehq.org/objectManager.php?sClass=version&iId=13202>`_ with wine.
 
-Once you have wine installed run the `installer script <https://gitlab.com/costrouc/srim-python/raw/master/install.sh>`_ ``install.sh``.
+Once you have wine installed run the `installer script <https://gitlab.com/costrouc/pysrim/raw/master/install.sh>`_ ``install.sh``.
 
 Click extract and then done.
 

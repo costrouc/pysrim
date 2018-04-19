@@ -1,4 +1,4 @@
-""" Integration Testing for srim-python
+""" Integration Testing for pysrim
 
 """
 
