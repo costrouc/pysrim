@@ -46,8 +46,11 @@ deploy_docker_srim:
     - docker:dind
   script:
     - export DOCKER_IMAGE="costrouc/srim"
+    - export PKG_VERSION=${CI_COMMIT_TAG:5}
     - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-    - docker build -t $DOCKER_IMAGE:latest -f Dockerfile.srim .
+    - docker build -t $DOCKER_IMAGE:$PKG_VERSION -f Dockerfile.srim .
+    - docker tag $DOCKER_IMAGE:$PKG_VERSION $DOCKER_IMAGE:latest
+    - docker push $DOCKER_IMAGE:$PKG_VERSION
     - docker push $DOCKER_IMAGE:latest
   only:
-    - /^srim$/ # trigger to build srim dockerfile
+    - /^srim-v\d+\.\d+\.\d+([abc]\d*)?$/ # trigger to build srim dockerfile
