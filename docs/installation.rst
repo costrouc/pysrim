@@ -32,10 +32,10 @@ faking an X11 session. `xvfb-run -a ` creates a fake X11 session
 within the docker container therefore allowing SRIM to run on servers
 without displays. This is the method that I always use to run SRIM.
 
-Image: `costrouc/pysrim<https://hub.docker.com/r/costrouc/pysrim/tags/>`_
+Image: `costrouc/pysrim <https://hub.docker.com/r/costrouc/pysrim/tags/>`_
 
 See
-`examples/docker<https://gitlab.com/costrouc/pysrim/tree/master/examples/docker>`_
+`examples/docker <https://gitlab.com/costrouc/pysrim/tree/master/examples/docker>`_
 for an example of how to use the docker image.
 
 
