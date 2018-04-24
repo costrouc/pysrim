@@ -11,12 +11,17 @@ publication quality plots.
 
 There is now a docker image
 [costrouc/pysrim](https://hub.docker.com/r/costrouc/pysrim/tags/) for
-running pysrim and SRIM! **No setup necissary**. If you would like to
-try it run the short command below (obviously requires docker).  All
-output files will be stored in `/tmp/output` for the example.
+running pysrim and SRIM! **No setup necissary and does not require a
+display so it is server ready**. If you would like to try it run the
+short command below (obviously requires docker). All output files will
+be stored in `/tmp/output` for this example.
 
 ``` bash
-docker run -v $PWD/examples/docker:/opt/pysrim/ -v /tmp/output:/tmp/output -it costrouc/pysrim sh -c "xvfb-run -a python3.6 /opt/pysrim/ni.py"
+docker run -v $PWD/examples/docker:/opt/pysrim/ \
+           -v /tmp/output:/tmp/output \
+           -it costrouc/pysrim sh -c \
+           "xvfb-run -a python3.6 /opt/pysrim/ni.py"
+ls /tmp/output
 ```
 
 <table>
