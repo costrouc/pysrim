@@ -13,9 +13,9 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='pysrim',
-    version='0.5.0',
+    version='0.5.1',
     description='Srim Automation of Tasks via Python',
-    long_description='Pythonic Wrapper to SRIM',
+    long_description=long_description,
     url='https://gitlab.com/costrouc/pysrim',
     author='Christopher Ostrouchov',
     author_email='chris.ostrouchov+pysrim@gmail.com',
