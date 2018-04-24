@@ -5,7 +5,10 @@ container. First load the python script into
 
 ``` bash
 cd examples/docker
-docker run -v $PWD:/opt/pysrim/ -v /tmp/output:/tmp/output -it costrouc/pysrim sh -c "xvfb-run -a python3.6 /opt/pysrim/ni.py"
+docker run -v $PWD:/opt/pysrim/ \
+           -v /tmp/output:/tmp/output \
+           -it costrouc/pysrim sh -c "xvfb-run -a python3.6 /opt/pysrim/ni.py"
+ls /tmp/output
 ```
 
 This will start a docker container with a volume at `/opt/pysrim`
