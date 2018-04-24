@@ -217,7 +217,23 @@ Available on Conda
 
  - `conda install -c costrouc pysrim`
 
-Next you will need to install SRIM on your machine.
+Available on Docker
+
+ - `docker pull costrouc/pysrim`
+
+Unless you are using the docker image, you will need to install SRIM
+on your machine using the instructions bellow for linux, OSX, and
+windows.
+
+## Docker
+
+There is a docker container with `pysrim` and SRIM already
+installed. Some interesting tricks had to be done with using wine and
+faking an X11 session. `xvfb-run -a ` creates a fake X11 session
+within the docker container therefore allowing SRIM to run on servers
+without displays. This is the method that I always use to run SRIM.
+
+Image: [costrouc/pysrim](https://hub.docker.com/r/costrouc/pysrim/tags/)
 
 ## Linux and OSX
 

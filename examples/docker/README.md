@@ -15,4 +15,4 @@ This will start a docker container with a volume at `/opt/pysrim`
 (with `ni.py` directory) and `/tmp/output` mounted in both the host
 and src container for all srim output.
 
-There is no loss of performance.
+There is no loss in performance.
