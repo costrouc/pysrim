@@ -19,8 +19,7 @@ be stored in `/tmp/output` for this example.
 ``` bash
 docker run -v $PWD/examples/docker:/opt/pysrim/ \
            -v /tmp/output:/tmp/output \
-           -it costrouc/pysrim sh -c \
-           "xvfb-run -a python3.6 /opt/pysrim/ni.py"
+           -it costrouc/pysrim sh -c "xvfb-run -a python3.6 /opt/pysrim/ni.py"
 ls /tmp/output
 ```
 
