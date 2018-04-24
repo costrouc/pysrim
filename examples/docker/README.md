@@ -1,7 +1,7 @@
 # Running pysrim in docker container
 
-This is an example of running pysrim within the provided docker
-container. First load the python script into
+This is an example of running pysrim within the [provided docker
+container](https://hub.docker.com/r/costrouc/pysrim/tags/) `costrouc/pysrim`
 
 ``` bash
 cd examples/docker
