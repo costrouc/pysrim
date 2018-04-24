@@ -30,7 +30,8 @@ There is a docker container with `pysrim` and SRIM already
 installed. Some interesting tricks had to be done with using wine and
 faking an X11 session. `xvfb-run -a ` creates a fake X11 session
 within the docker container therefore allowing SRIM to run on servers
-without displays. This is the method that I always use to run SRIM.
+without displays. This is the method that I always use to run SRIM
+calculations.
 
 Image: `costrouc/pysrim <https://hub.docker.com/r/costrouc/pysrim/tags/>`_
 
