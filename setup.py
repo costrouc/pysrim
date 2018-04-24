@@ -13,7 +13,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='pysrim',
-    version='0.4.1',
+    version='0.5.0',
     description='Srim Automation of Tasks via Python',
     long_description='Pythonic Wrapper to SRIM',
     url='https://gitlab.com/costrouc/pysrim',
@@ -21,7 +21,7 @@ setup(
     author_email='chris.ostrouchov+pysrim@gmail.com',
     license="MIT",
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Natural Language :: English',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 2.6',
