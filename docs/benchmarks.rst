@@ -19,6 +19,30 @@ process. But the docker container is significantly faster using
 =xvfb-run= best performance is linux 8.3 ions/second vs docker 13.2
 ions/second. This puts the docker container to be about 60% faster.
 
+The python simple script to be run is a Nickel in Nickel irradiation.
+
+.. code-block:: python
+
+   import os
+   from srim import Ion, Layer, Target, TRIM
+
+   ion = Ion('Ni', energy=3.0e6)
+   layer = Layer({
+           'Ni': {
+               'stoich': 1.0,
+               'E_d': 30.0,
+               'lattice': 0.0,
+               'surface': 3.0
+           }}, density=8.9, width=20000.0)
+   target = Target([layer])
+   trim = TRIM(target, ion, number_ions=100, calculation=1)
+   srim_executable_directory = '/tmp/srim'
+   results = trim.run(srim_executable_directory)
+   os.makedirs('/tmp/output', exist_ok=True)
+   TRIM.copy_output_files('/tmp/srim', '/tmp/output')
+
+And the benchmarks results.
+
 .. code-block:: bash
 
    time parallel -j 6 python ni.py -- 1 2
