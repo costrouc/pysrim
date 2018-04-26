@@ -14,7 +14,10 @@ There is now a docker image
 running pysrim and SRIM! **No setup necissary and does not require a
 display so it is server ready**. If you would like to try it run the
 short command below (obviously requires docker). All output files will
-be stored in `/tmp/output` for this example.
+be stored in `/tmp/output` for this example. [Benchmarks
+show](https://pysrim.readthedocs.io/en/latest/benchmarks.html) the
+docker container is around 50-60% faster. I believe this is due to
+using [xvfb](https://linux.die.net/man/1/xvfb)
 
 ``` bash
 docker run -v $PWD/examples/docker:/opt/pysrim/ \
