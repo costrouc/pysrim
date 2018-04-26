@@ -32,7 +32,7 @@ production jupyter notebook
 
    installation
    tutorial
-
+   benchmarks
 
 Indices and tables
 ==================

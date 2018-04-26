@@ -18,7 +18,7 @@ layer = Layer({
 target = Target([layer])
 
 # Initialize a TRIM calculation with given target and ion for 25 ions, quick calculation
-trim = TRIM(target, ion, number_ions=25, calculation=1)
+trim = TRIM(target, ion, number_ions=100, calculation=1)
 
 # Specify the directory of SRIM.exe
 # For windows users the path will include C://...
