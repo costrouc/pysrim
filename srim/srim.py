@@ -121,7 +121,7 @@ class TRIM(object):
     ion : :class:`srim.core.ion.Ion`
         constructed ion for TRIM calculation
     calculation : :obj:`int`, optional
-        Default 1 full cascade calculation
+        Default 1 quick KP calculation
         (1) Ion Distribution and Quick Calculation of Damage (quick KP)
         (2) Detailed Calculation with full Damage Cascades (full cascades)
         (3) Monolayer Collision Steps / Surface Sputtering
