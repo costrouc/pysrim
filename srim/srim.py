@@ -175,7 +175,8 @@ class TRIM(object):
             'TRIM.IN', 'PHONON.txt', 'E2RECOIL.txt', 'IONIZ.txt',
             'LATERAL.txt', 'NOVAC.txt', 'RANGE.txt', 'VACANCY.txt',
             'COLLISON.txt', 'BACKSCAT.txt', 'SPUTTER.txt',
-            'RANGE_3D.txt', 'TRANSMIT.txt', 'TRIMOUT.txt'
+            'RANGE_3D.txt', 'TRANSMIT.txt', 'TRIMOUT.txt',
+            'TDATA.txt'
         }
 
         if not os.path.isdir(src_directory):
