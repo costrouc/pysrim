@@ -2,6 +2,7 @@
 
 """
 import os
+import random
 import subprocess
 import shutil
 import distutils.spawn
@@ -73,8 +74,8 @@ class TRIMSettings(object):
     bragg_correction : :obj:`float`, optional
        bragg correction to stopping. Default (0) no correction
     random_seed : :obj:`int`, optional
-       a random seed to start calculation with. Default (0) results
-       should be reproducible (not always what you want)
+       a random seed to start calculation with. Default random integer
+       between 0 and 100,000. Thus all calculations by default are random.
     version : :obj:`int`, optional
        SRIM-2008 or SRIM-2008 so not really much choice. Default (0)
 
@@ -100,7 +101,7 @@ class TRIMSettings(object):
             'exyz': check_input(int, is_positive, kwargs.get('exyz', 0)),
             'angle_ions': check_input(float, is_srim_degrees, kwargs.get('angle_ions', 0.0)),
             'bragg_correction': float(kwargs.get('bragg_correction', 1.0)), # TODO: Not sure what correct values are
-            'random_seed': check_input(int, is_positive, kwargs.get('random_seed', 0)),
+            'random_seed': check_input(int, is_positive, kwargs.get('random_seed', random.randint(0, 100000))),
             'version': check_input(int, is_zero_or_one, kwargs.get('version', 0)),
         }
 
