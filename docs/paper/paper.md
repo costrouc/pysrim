@@ -80,7 +80,7 @@ from SRIM crashes. Along with cross platform support, a Docker
 container image using `pysrim` has been constructed that allows SRIM
 to run on a linux server without a display determined from benchmarks
 to be around 50% faster. All of these features allow SRIM to be fully
-automated via `pysrim`.
+automated via `pysrim` and follow best practices.
 
 After running these calculations SRIM will produce many output files
 all of which are not convenient to parse. Traditionally research
