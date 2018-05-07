@@ -13,7 +13,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='pysrim',
-    version='0.5.3',
+    version='0.5.4',
     description='Srim Automation of Tasks via Python',
     long_description=long_description,
     long_description_content_type="text/markdown",
