@@ -51,7 +51,7 @@ deploy_docker_pysrim:
     - export PKG_VERSION=$CI_COMMIT_TAG
     - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - docker build -t $DOCKER_IMAGE:$PKG_VERSION -f Dockerfile.pysrim .
+    - docker build -t $DOCKER_IMAGE:$PKG_VERSION -f Dockerfile.pysrim --build-arg VERSION=$PKG_VERSION .
     - docker tag $DOCKER_IMAGE:$PKG_VERSION $DOCKER_IMAGE:latest
     - docker tag $DOCKER_IMAGE:$PKG_VERSION $GITLAB_IMAGE:$PKG_VERSION
     - docker tag $DOCKER_IMAGE:$PKG_VERSION $GITLAB_IMAGE:latest
