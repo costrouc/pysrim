@@ -47,10 +47,17 @@ For linux an OSX you will need to first have wine installed. See `this post <htt
 
 Once you have wine installed run the `installer script <https://gitlab.com/costrouc/pysrim/raw/master/install.sh>`_ ``install.sh``.
 
-Click extract and then done.
+Click extract and then done. The installed version should be
+SRIM 2013. To check for this see that an executable ``TRIM.exe`` is in
+the directory.
 
 Windows
 -------
 
 A collegue of mine has gotten it to work easily on Windows but I
-myself have no experience. Just download the executable at [srim.org](http://srim.org/). Next you will extract the SRIM files into a directory on your windows machine. Note the directory of installation as it will be needed from `trim.run()`.
+myself have no experience. Just download the executable at
+[srim.org](http://srim.org/). Next you will extract the SRIM files
+into a directory on your windows machine. Note the directory of
+installation as it will be needed from `trim.run()`. Make sure that
+your installed version is SRIM 2013. To check for this see that an
+executable ``TRIM.exe`` is in the directory.

@@ -8,17 +8,17 @@ ion = Ion('Ni', energy=3.0e6)
 # Construct a layer of nick 20um thick with a displacement energy of 30 eV
 layer = Layer({
         'Ni': {
-            'stoich': 1.0,
+            'stoich': 0.5,
             'E_d': 30.0,
             'lattice': 0.0,
             'surface': 3.0
-        }}, density=8.9, width=20000.0)
+        }, 'Au': {'stoich': 0.5, 'E_d': 25.0, 'lattice': 0.0, 'surface': 3.0}}, density=8.9, width=20000.0)
 
 # Construct a target of a single layer of Nickel
 target = Target([layer])
 
 # Initialize a TRIM calculation with given target and ion for 25 ions, quick calculation
-trim = TRIM(target, ion, number_ions=100, calculation=1)
+trim = TRIM(target, ion, number_ions=100000, calculation=1)
 
 # Specify the directory of SRIM.exe
 # For windows users the path will include C://...

@@ -98,15 +98,16 @@ Plotting and Analysis of Results
 
 Now we assume that we have completed several interesting SRIM
 calculations. For this tutorial we will use `results
-<https://gitlab.com/costrouc/pysrim/tree/master/test_files>`_
-within the ``pysrim`` repository. We will analyze results such as
-damage energy, ionization, and vacancy production.
+<https://gitlab.com/costrouc/pysrim/tree/master/test_files>`_ within
+the ``pysrim`` repository. You will need to download these files. We
+will analyze results such as damage energy, ionization, and vacancy
+production.
 
 .. code-block:: python
 
    def plot_damage_energy(folder, ax):
         results = Results(folder)
-        phon = results['phonons']
+        phon = results.phonons
         dx = max(phon.depth) / 100.0 # to units of Angstroms
         energy_damage = (phon.ions + phon.recoils) * dx
         ax.plot(phon.depth, energy_damage / phon.num_ions, label='{}'.format(folder))
@@ -114,20 +115,21 @@ damage energy, ionization, and vacancy production.
 
     def plot_ionization(folder, ax):
         results = Results(folder)
-        ioniz = results['ioniz']
+        ioniz = results.ioniz
         dx = max(ioniz.depth) / 100.0 # to units of Angstroms
         ax.plot(ioniz.depth, ioniz.ions, label='Ionization from Ions')
         ax.plot(ioniz.depth, ioniz.recoils, label='Ionization from Recoils')
 
     def plot_vacancies(folder, ax):
         results = Results(folder)
-        vac = results['vacancy']
+        vac = results.vacancy
         vacancy_depth = vac.knock_ons + np.sum(vac.vacancies, axis=1)
         ax.plot(vac.depth, vacancy_depth, label="Total vacancies at depth")
         return sum(vacancy_depth)
 
     folders = ['test_files/2', 'test_files/4']
     image_directory = 'examples/images'
+    os.makedirs(image_directory, exist_ok=True)
 
 Here we initialize three plotting functions.
 
