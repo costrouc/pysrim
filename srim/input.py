@@ -148,7 +148,8 @@ class TRIMInput(object):
                 layer_str += ' {} '.format(layer.elements[element]['stoich'])
                 layer_str += ' 0.0' * (self.srim_num_elements - element_index - len(layer.elements))
                 element_index += len(layer.elements)
-        return layer_str + self.newline
+            layer_str += self.newline
+        return layer_str
 
     def _write_solid_gas(self):
         return (
@@ -167,8 +168,8 @@ class TRIMInput(object):
 
         for layer in self._trim.target.layers:
             for element in layer.elements:
-                ed_str += ' {}'.format(layer.elements[element]['E_d']) + self.newline
-        return ed_str
+                ed_str += ' {}'.format(layer.elements[element]['E_d'])
+        return ed_str + self.newline
 
     def _write_lattice_binding(self):
         lattice_str = (
@@ -177,8 +178,8 @@ class TRIMInput(object):
 
         for layer in self._trim.target.layers:
             for element in layer.elements:
-                lattice_str += ' {}'.format(layer.elements[element]['lattice']) + self.newline
-        return lattice_str
+                lattice_str += ' {}'.format(layer.elements[element]['lattice'])
+        return lattice_str + self.newline
 
     def _write_surface_binding(self):
         surface_str = (
@@ -187,8 +188,8 @@ class TRIMInput(object):
 
         for layer in self._trim.target.layers:
             for element in layer.elements:
-                surface_str += ' {}'.format(layer.elements[element]['surface']) + self.newline
-        return surface_str
+                surface_str += ' {}'.format(layer.elements[element]['surface'])
+        return surface_str + self.newline
 
     def _write_version(self):
         return (
