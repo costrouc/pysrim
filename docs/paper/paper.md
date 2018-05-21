@@ -111,7 +111,9 @@ ion](length-heatmap-log-cropped.png)
 # Acknowledgements
 
 CO acknowledges support from the University of Tennessee Governor's
-Chair Program. YZ and WJW were supported by the U.S. Department of
+Chair Program and the Center for Materials Processing, a Tennessee
+Higher Education Commission (THEC) supported Accomplished Center of
+Excellence. YZ and WJW were supported by the U.S. Department of
 Energy, Office of Science, Basic Energy Sciences, Division of Material
 Science and Engineering.
 
