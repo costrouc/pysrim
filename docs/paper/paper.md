@@ -13,7 +13,7 @@ authors:
   - name: Yanwen Zhang
     orcid: 0000-0000-0000-0000
     affiliation: 2
-  - name: William Weber
+  - name: William J. Weber
     orcid: 0000-0000-0000-0000
     affiliation: "1, 2"
 affiliations:
