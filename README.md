@@ -31,7 +31,7 @@ ls /tmp/output
   <td>Latest Release</td>
   <td><img src="https://img.shields.io/pypi/v/pysrim.svg" alt="latest release"/></td>
 </tr>
-</tr>
+<tr>
   <td></td>
   <td><img src="https://anaconda.org/costrouc/pysrim/badges/version.svg" alt="latest release" /></td>
 </tr>

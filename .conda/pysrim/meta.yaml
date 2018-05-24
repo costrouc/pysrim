@@ -1,0 +1,46 @@
+{% set build = 0 %}
+{% set version = 'v0.5.7' %}
+
+package:
+  name: pysrim
+  version: {{ version }}
+
+source:
+  git_url: ../../
+
+build:
+  noarch: python
+
+requirements:
+  build:
+    - python
+    - setuptools >=38.6.0
+    - pytest-runner
+    - pyyaml
+    - numpy
+  run:
+    - python
+    - pyyaml
+    - numpy
+
+test: {}
+
+about:
+  home: https://gitlab.com/costrouc/pysrim
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE
+  summary: 'pysrim: Automation, Analysis, and Plotting of SRIM Calculations'
+  description: |
+    pysrim is a python package that aims to wrap and extend SRIM a
+    popular tool for simulating ions traveling through a material. There
+    are many pain points to SRIM and this package aims to address
+    them. These include compatibility with all OS's, automation and crash
+    recovery of SRIM calculations, parsing of all output files, and
+    publication quality plots.
+  doc_url: https://pysrim.readthedocs.io/
+  dev_url: https://gitlab.com/costrouc/pysrim
+
+extra:
+  recipe-maintainers:
+    - costrouc

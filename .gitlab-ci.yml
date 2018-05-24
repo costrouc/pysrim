@@ -34,9 +34,8 @@ deploy_conda:
   image: continuumio/miniconda3:latest
   stage: deploy
   script:
-    - conda install anaconda-client setuptools conda-build -y
-    - python setup.py bdist_conda
-    - anaconda -t $ANACONDA_TOKEN upload -u $ANACONDA_USERNAME /opt/conda/conda-bld/linux-64/pysrim*.tar.bz2
+    - conda install conda-build anaconda-client -y
+    - conda build --user $ANACONDA_USERNAME --token $ANACONDA_TOKEN .conda/pysrim
   only:
     - /^v\d+\.\d+\.\d+([abc]\d*)?$/  # PEP-440 compliant version (tags)
 
