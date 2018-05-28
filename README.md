@@ -1,5 +1,9 @@
 ![srim heatmap](https://gitlab.com/costrouc/pysrim/raw/master/examples/images/length-heatmap-log-cropped.png)
 
+**All issues and contributions should be done on
+[Gitlab](https://gitlab.com/costrouc/pysrim). Github is used only as a
+mirror for visibility**
+
 # pysrim: Automation, Analysis, and Plotting of SRIM Calculations
 
 `pysrim` is a python package that aims to wrap and extend SRIM a
