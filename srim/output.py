@@ -484,10 +484,10 @@ class Collision:
     def __init__(self, directory, filename='COLLISON.txt'):
         self.filename = os.path.join(directory, filename)
 
-        with open(filename, encoding="latin-1") as f:
+        with open(self.filename, encoding="latin-1") as f:
             self._read_header(f)
 
-        self._ion_index = buffered_findall(filename, b"  Ion    Energy")
+        self._ion_index = buffered_findall(self.filename, b"  Ion    Energy")
 
     def _read_header(self, f):
         """Read Header of COLLISON.txt
