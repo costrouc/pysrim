@@ -199,8 +199,8 @@ class TRIM(object):
         """Run configured srim calculation
 
         This method:
-         - writes the input file to ``<srim_directory/SR Module/TRIM.IN``
-         - launches ``<srim_directory>/SR Module/SRModule.exe``. Uses ``wine`` if available (needed for linux and osx)
+         - writes the input file to ``<srim_directory>/TRIM.IN``
+         - launches ``<srim_directory>/TRIM.exe``. Uses ``wine`` if available (needed for linux and osx)
 
         Parameters
         ----------
