@@ -192,7 +192,7 @@ class TRIM(object):
                 shutil.copy(os.path.join(
                     src_directory, known_file), dest_directory)
             elif os.path.isfile(os.path.join(src_directory, 'SRIM Outputs', known_file)) and check_srim_output:
-                shutil.copy(os.path.join(
+                shutil.move(os.path.join(
                     src_directory, 'SRIM Outputs', known_file), dest_directory)
 
     def run(self, srim_directory=DEFAULT_SRIM_DIRECTORY):
