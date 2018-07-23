@@ -192,15 +192,15 @@ class TRIM(object):
                 shutil.copy(os.path.join(
                     src_directory, known_file), dest_directory)
             elif os.path.isfile(os.path.join(src_directory, 'SRIM Outputs', known_file)) and check_srim_output:
-                shutil.copy(os.path.join(
+                shutil.move(os.path.join(
                     src_directory, 'SRIM Outputs', known_file), dest_directory)
 
     def run(self, srim_directory=DEFAULT_SRIM_DIRECTORY):
         """Run configured srim calculation
 
         This method:
-         - writes the input file to ``<srim_directory/SR Module/TRIM.IN``
-         - launches ``<srim_directory>/SR Module/SRModule.exe``. Uses ``wine`` if available (needed for linux and osx)
+         - writes the input file to ``<srim_directory>/TRIM.IN``
+         - launches ``<srim_directory>/TRIM.exe``. Uses ``wine`` if available (needed for linux and osx)
 
         Parameters
         ----------

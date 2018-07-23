@@ -184,7 +184,7 @@ class Material(object):
     @property
     def chemical_formula(self):
         """Material's chemical formula"""
-        return ' '.join('{} {:1.2f}'.format(element.symbol, self.elements[element]) for element in self.elements)
+        return ' '.join('{} {:1.2f}'.format(element.symbol, self.elements[element]['stoich']) for element in self.elements)
 
     def __repr__(self):
         material_str = "<Material formula:{} density:{:2.3f}>"
