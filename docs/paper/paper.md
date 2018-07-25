@@ -11,10 +11,10 @@ authors:
     orcid: 0000-0002-8734-4564
     affiliaton: 1
   - name: Yanwen Zhang
-    orcid: 0000-0000-0000-0000
+    orcid: 0000-0003-1833-3885
     affiliation: 2
   - name: William J. Weber
-    orcid: 0000-0000-0000-0000
+    orcid: 0000-0002-9017-7365
     affiliation: "1, 2"
 affiliations:
   - name: "Department of Material Science and Engineering, University of Tennessee"
