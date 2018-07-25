@@ -38,7 +38,7 @@ class Ion(Element):
         super(Ion, self).__init__(identifier, mass)
 
     def __repr__(self):
-        return "<Ion element:{} mass:{:2.2f} energy:{%1.2E} eV>".format(
+        return "<Ion element:{} mass:{:2.2f} energy:{:1.2E} eV>".format(
             self.name, self.mass, self.energy)
 
     @property
