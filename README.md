@@ -61,6 +61,10 @@ alt="gitlab pipeline status" /> </a> </td>
   <td>Documentation</td>
   <td> <a href="https://pysrim.readthedocs.io/en/latest/"> <img src="https://readthedocs.org/projects/pysrim/badge/?version=latest" alt="readthedocs documentation" /> </a> </td>
 </tr>
+<tr>
+    <td>Publication</td>
+    <td><a href="http://joss.theoj.org/papers/d5ff2e218ff209390eb4882822e7b382"><img src="http://joss.theoj.org/papers/d5ff2e218ff209390eb4882822e7b382/status.svg"></a></td>
+</tr>
 </table>
 
 # Documentation
