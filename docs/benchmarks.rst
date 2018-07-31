@@ -17,7 +17,9 @@ my two core Lenovo t440s.
 Docker startup cost is 8.5 seconds vs 5.8 seconds for standard linux
 process. But the docker container is significantly faster using
 =xvfb-run= best performance is linux 8.3 ions/second vs docker 13.2
-ions/second. This puts the docker container to be about 60% faster.
+ions/second. From these tests it indicates that the docker container
+may have better performance due to rending in a virtual X frame
+buffer.
 
 The python simple script to be run is a Nickel in Nickel irradiation.
 
@@ -78,10 +80,10 @@ And the benchmarks results.
 .. code-block:: bash
 
    time parallel -j 6 \
-            sudo docker run \
-                    -v $PWD/examples/docker/:/opt/pysrim/ \
-                    -v /tmp/output:/tmp/output
-                    -it costrouc/pysrim sh -c "xvfb-run -a python3.6 /opt/pysrim/ni.py" -- 1 2
+            docker run \
+                 -v $PWD/examples/docker/:/opt/pysrim/ \
+                 -v /tmp/output:/tmp/output
+                 -it costrouc/pysrim sh -c "xvfb-run -a python3.6 /opt/pysrim/ni.py" -- 1 2
 
 +------+-------+------------+----------------+---------------------+
 | ions | cores | docker [s] | docker [ion/s] | docker [ion/s core] |
