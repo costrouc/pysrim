@@ -17,9 +17,8 @@ my two core Lenovo t440s.
 Docker startup cost is 8.5 seconds vs 5.8 seconds for standard linux
 process. But the docker container is significantly faster using
 =xvfb-run= best performance is linux 8.3 ions/second vs docker 13.2
-ions/second. From these tests it indicates that the docker container
-may have better performance due to rending in a virtual X frame
-buffer.
+ions/second. These tests indicate that the docker container may have
+better performance due to rending in a virtual X frame buffer.
 
 The python simple script to be run is a Nickel in Nickel irradiation.
 
