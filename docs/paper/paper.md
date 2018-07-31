@@ -78,9 +78,11 @@ this by: 1) having an api compatible with windows, linux, and OS X; 2)
 having support for chunking of large calculations; and 3) recovering
 from SRIM crashes. Along with cross platform support, a Docker
 container image using `pysrim` has been constructed that allows SRIM
-to run on a linux server without a display determined from benchmarks
-to be around 50% faster. All of these features allow SRIM to be fully
-automated via `pysrim` and follow best practices.
+to run on a linux server without a
+display. [Benchmarks](https://pysrim.readthedocs.io/en/latest/benchmarks.html)
+show that the docker container may have better performance. All of
+these features allow SRIM to be fully automated via `pysrim` and
+follow best practices.
 
 After running these calculations SRIM will produce many output files
 all of which are not convenient to parse. Traditionally research
