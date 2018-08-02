@@ -1,5 +1,5 @@
 {% set build = 0 %}
-{% set version = 'v0.5.7' %}
+{% set version = 'v0.5.8' %}
 
 package:
   name: pysrim
