@@ -65,6 +65,10 @@ alt="gitlab pipeline status" /> </a> </td>
     <td>Publication</td>
     <td><a href="http://joss.theoj.org/papers/d5ff2e218ff209390eb4882822e7b382"><img src="http://joss.theoj.org/papers/d5ff2e218ff209390eb4882822e7b382/status.svg"></a></td>
 </tr>
+<tr>
+    <td>DOI Repository Archive</td>
+    <td><a href="https://zenodo.org/badge/latestdoi/135215837"><img src="https://zenodo.org/badge/135215837.svg" alt="DOI"></a></td>
+</tr>
 </table>
 
 # Documentation
