@@ -9,6 +9,10 @@ name = "pypi"
 
 pyyaml = "*"
 numpy = "*"
+jupyterlab = "*"
+matplotlib = "*"
+scipy = "*"
+seaborn = "*"
 
 
 [dev-packages]
