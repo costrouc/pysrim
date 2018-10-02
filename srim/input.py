@@ -122,34 +122,25 @@ class TRIMInput(object):
         return elements_str
 
     def _write_layer(self):
-        layer_str = (
-            'Layer    Layer Name   Width Density'
-        )
+        layers_str_header_1 = 'Layer    Layer Name   Width Density'
+        layers_str_header_2 = 'Number   Description  (Ang) (g/cm^3)'
+        layers_str = []
 
         for layer in self._trim.target.layers:
             for element in layer.elements:
-                layer_str += '  {}({})'.format(element.symbol, element.atomic_number)
-
-        layer_str += self.newline + (
-            'Number   Description  (Ang) (g/cm^3)'
-        ) + '  Stoich' * self.srim_num_elements + self.newline
-
+                layers_str_header_1 += '  {}({})'.format(element.symbol, element.atomic_number)
+                layers_str_header_2 += 'Stoich'
 
         element_index = 0
         for layer_index, layer in enumerate(self._trim.target.layers, start=1):
-            layer_str += '{} "{}" {} {}'.format(
-                layer_index,
-                layer.name,
-                layer.width,
-                layer.density
-            )
+            layer_str = '{} "{}" {} {}'.format(layer_index, layer.name, layer.width, layer.density)
             layer_str += ' 0.0' * element_index
             for element in layer.elements:
                 layer_str += ' {} '.format(layer.elements[element]['stoich'])
-                layer_str += ' 0.0' * (self.srim_num_elements - element_index - len(layer.elements))
-                element_index += len(layer.elements)
-            layer_str += self.newline
-        return layer_str
+            layer_str += ' 0.0' * (self.srim_num_elements - element_index - len(layer.elements))
+            element_index += len(layer.elements)
+            layers_str.append(layer_str)
+        return self.newline.join([layers_str_header_1, layers_str_header_2] + layers_str) + self.newline
 
     def _write_solid_gas(self):
         return (
