@@ -3,7 +3,8 @@ import os
 import pytest
 
 from srim.output import (
-    Ioniz, NoVacancy, Vacancy, EnergyToRecoils, Phonons, Range, Results
+    Ioniz, NoVacancy, Vacancy, EnergyToRecoils, Phonons, Range,
+    Results, SRResults
 )
 
 TESTDATA_DIRECTORY = 'test_files'
@@ -74,3 +75,17 @@ def test_resuls_init_kp_calculation():
     assert isinstance(results.etorecoils, EnergyToRecoils)
     assert isinstance(results.phonons, Phonons)
     assert isinstance(results.range, Range)
+
+def test_results_srim_calcluation():
+    results = SRResults(os.path.join(TESTDATA_DIRECTORY, 'SRIM'))
+    assert results.ion == {'A1': 131.293, 'Z1': 54, 'name': 'Xenon'}
+    assert results.data.shape == (6, 159)
+    assert results.units == "MeV/(mg/cm2)"
+    assert results.target == {
+        'density atoms/cm3': 9.6421e+22,
+        'density g/cm3': 3.21,
+        'target composition': {
+            'C': [6, 50.0, 29.95],
+            'Si': [14, 50.0, 70.05]
+        }
+    }

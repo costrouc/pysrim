@@ -16,7 +16,7 @@ from .core.utils import (
     is_quoteless
 )
 
-from .output import Results
+from .output import Results, SRResults
 from .input import AutoTRIM, TRIMInput, SRInput
 from .config import DEFAULT_SRIM_DIRECTORY
 
@@ -313,5 +313,7 @@ class SR(object):
                 subprocess.check_call(['wine', str(os.path.join('.', 'SRModule.exe'))])
             else:
                 subprocess.check_call([str(os.path.join('.', 'SRModule.exe'))])
+
+            return SRResults(os.path.join(srim_directory, 'SR Module'))
         finally:
             os.chdir(current_directory)

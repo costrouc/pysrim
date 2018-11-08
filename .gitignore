@@ -65,3 +65,6 @@ target/
 # pyenv
 .python-version
 venv
+
+# pytest
+.pytest_cache
