@@ -13,7 +13,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='pysrim',
-    version='0.5.9',
+    version='0.5.10',
     description='Srim Automation of Tasks via Python',
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -31,6 +31,7 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
     keywords='material srim automation plotting',
     download_url='https://gitlab.com/costrouc/pysrim/repository/master/archive.zip',
