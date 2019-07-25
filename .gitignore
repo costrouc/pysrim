@@ -68,3 +68,6 @@ venv
 
 # pytest
 .pytest_cache
+
+# nix
+result
