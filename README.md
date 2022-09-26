@@ -1,8 +1,4 @@
-![srim heatmap](https://gitlab.com/costrouc/pysrim/raw/master/examples/images/length-heatmap-log-cropped.png)
-
-**All issues and contributions should be done on
-[Gitlab](https://gitlab.com/costrouc/pysrim). Github is used only as a
-mirror for visibility**
+![srim heatmap](https://github.com/costrouc/pysrim/raw/master/examples/images/length-heatmap-log-cropped.png)
 
 # pysrim: Automation, Analysis, and Plotting of SRIM Calculations
 
@@ -252,22 +248,32 @@ Image: [costrouc/pysrim](https://hub.docker.com/r/costrouc/pysrim/tags/)
 
 ## Linux and OSX
 
-For linux an OSX you will need to first have wine installed. See [this post](https://www.davidbaumgold.com/tutorials/wine-mac/) on installation of wine on OSX. For linux you will typically be able to install wine via `apt get install wine` or `yum install wine`. SRIM is [compatible](https://appdb.winehq.org/objectManager.php?sClass=version&iId=13202) with wine.
+For linux an OSX you will need to first have wine installed. See [this
+post](https://www.davidbaumgold.com/tutorials/wine-mac/) on
+installation of wine on OSX. For linux you will typically be able to
+install wine via `apt get install wine` or `yum install wine`. SRIM is
+[compatible](https://appdb.winehq.org/objectManager.php?sClass=version&iId=13202)
+with wine.
 
-Once you have wine installed run the [installer script](https://gitlab.com/costrouc/pysrim/raw/master/install.sh) `install.sh`.
+Once you have wine installed run the [installer
+script](https://gitlab.com/costrouc/pysrim/raw/master/install.sh)
+`install.sh`.
 
 Click extract and then done.
 
 ## Windows
 
 A collegue of mine has gotten it to work easily on Windows but I
-myself have no experience. Just download the executable at [srim.org](http://srim.org/). Next you will extract the SRIM files into a directory on your windows machine. Note the directory of installation as it will be needed from `trim.run()`.
+myself have no experience. Just download the executable at
+[srim.org](http://srim.org/). Next you will extract the SRIM files
+into a directory on your windows machine. Note the directory of
+installation as it will be needed from `trim.run()`.
 
 # Contributing
 
 All contributions, bug reports, bug fixes, documentation improvements,
 enhancements and ideas are welcome! These should be submitted at the
-[Gitlab repository](https://gitlab.com/costrouc/pysrim). Github is
+[Github repository](https://github.com/costrouc/pysrim). Github is
 only used for visibility.
 
 Contributors:
