@@ -5,7 +5,11 @@ import os
 import random
 import subprocess
 import shutil
-import distutils.spawn
+
+try:
+    from shutil import which as find_executable
+except ImportError:
+    from distutils.spawn import find_executable
 
 from .core.utils import (
     check_input,
@@ -215,7 +219,7 @@ class TRIM(object):
             self._write_input_files()
             # Make sure compatible with Windows, OSX, and Linux
             # If 'wine' command exists use it to launch TRIM
-            if distutils.spawn.find_executable("wine"):
+            if find_executable("wine"):
                 subprocess.check_call(['wine', str(os.path.join('.', 'TRIM.exe'))])
             else:
                 subprocess.check_call([str(os.path.join('.', 'TRIM.exe'))])
@@ -309,7 +313,7 @@ class SR(object):
             self._write_input_file()
             # Make sure compatible with Windows, OSX, and Linux
             # If 'wine' command exists use it to launch TRIM
-            if distutils.spawn.find_executable("wine"):
+            if find_executable("wine"):
                 subprocess.check_call(['wine', str(os.path.join('.', 'SRModule.exe'))])
             else:
                 subprocess.check_call([str(os.path.join('.', 'SRModule.exe'))])
