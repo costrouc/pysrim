@@ -1,4 +1,6 @@
-from srim.srim import TRIM, SR
+import pytest
+
+from srim.srim import TRIM, SR, TRIMSettings
 from srim.core.target import Target
 from srim.core.layer import Layer
 from srim.core.ion import Ion
@@ -12,6 +14,17 @@ def test_simple_trim_init():
     target = Target([layer])
 
     trim = TRIM(target, ion)
+
+
+def test_trim_settings_autosave_accepts_positive_intervals():
+    settings = TRIMSettings(autosave=5)
+
+    assert settings.autosave == 5
+
+
+def test_trim_settings_autosave_rejects_negative_intervals():
+    with pytest.raises(ValueError):
+        TRIMSettings(autosave=-1)
 
 
 def test_simple_srim_init():
