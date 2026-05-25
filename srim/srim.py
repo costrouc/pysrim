@@ -89,7 +89,7 @@ class TRIMSettings(object):
         self._settings = {
             'description': check_input(str, is_quoteless, kwargs.get('description', 'pysrim run')),
             'reminders': check_input(int, is_zero_or_one, kwargs.get('reminders', 0)),
-            'autosave': check_input(int, is_zero_or_one, kwargs.get('autosave', 0)),
+            'autosave': check_input(int, is_positive, kwargs.get('autosave', 0)),
             'plot_mode': check_input(int, is_zero_to_five, kwargs.get('plot_mode', 5)),
             'plot_xmin': check_input(float, is_positive, kwargs.get('plot_xmin', 0.0)),
             'plot_xmax': check_input(float, is_positive, kwargs.get('plot_xmax', 0.0)),
