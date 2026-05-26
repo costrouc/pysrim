@@ -10,8 +10,8 @@ import numpy as np
 
 from .core.ion import Ion
 
-# Valid double_regex 4, 4.0, 4.0e100
-double_regex = r'[-+]?\d+\.?\d*(?:[eE][-+]?\d+)?'
+# Valid double_regex 4, 4.0, .4, 4.0e100
+double_regex = r'[-+]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][-+]?\d+)?'
 symbol_regex = r'[A-Z][a-z]?'
 int_regex = '[+-]?\d+'
 
