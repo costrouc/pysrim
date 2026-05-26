@@ -4,7 +4,7 @@ import pytest
 
 from srim.output import (
     Ioniz, NoVacancy, Vacancy, EnergyToRecoils, Phonons, Range,
-    Results, SRResults
+    Results, SRIM_Output, SRResults
 )
 
 TESTDATA_DIRECTORY = 'test_files'
@@ -16,6 +16,12 @@ def test_ioniz_init(directory):
     assert ion.depth.shape == (100,)
     assert ion.ions.shape == (100,)
     assert ion.recoils.shape == (100,)
+
+
+def test_read_ion_accepts_leading_decimal_energy():
+    ion = SRIM_Output()._read_ion(b"Ion = H Energy = .5 keV")
+    assert ion.symbol == "H"
+    assert ion.energy == 500.0
 
 
 @pytest.mark.parametrize("directory", [("1"), ("2"), ("3"), ("4")])
